@@ -1,0 +1,14 @@
+pyuic6 -x src/auto.ui -o src/auto.py
+pyuic6 -x src/option.ui -o src/option.py
+
+v1.0.0:
+Create GUI
+Add Pin/Setting action
+There is a warning from terminal when running code and i can not fix :D
+# qt.qpa.window: SetProcessDpiAwarenessContext() failed: The operation completed successfully.
+# Qt's default DPI awareness context is DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2.
+
+v1.0.1:
+Add Play/Stop action
+Change some GUI Widgets
+Fix quit logic

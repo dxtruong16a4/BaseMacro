@@ -5,15 +5,13 @@ import requests
 import pyautogui
 import cv2
 import numpy as np
-
-dir = Path(__file__).resolve().parent.parent
-img_dir = dir / 'img'
+from src.config import img_dir
 
 def check_connection():
     try:
         requests.get("https://www.google.com")
         return True
-    except requests.exceptions.ConnectionError:
+    except requests.exceptions.RequestException:
         return False
 
 def capture(img_name):
@@ -25,11 +23,9 @@ def capture(img_name):
     """
     screenshot = pyautogui.screenshot()
     screenshot_cv = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
-    output_folder = Path('img')
-    output_folder.mkdir(parents=True, exist_ok=True)
-    filename = output_folder / f'{img_name}.jpg'
+    img_dir.mkdir(parents=True, exist_ok=True)
+    filename = img_dir / f'{img_name}.jpg'
     cv2.imwrite(str(filename), screenshot_cv)
-    # print(f"Đã lưu ảnh vào: {filename}")
 
 def check_img_similarity(
         img1: Union[str, Image.Image],

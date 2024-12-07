@@ -1,2 +1,0 @@
-pyuic6 -x src/auto.ui -o src/auto.py
-pyuic6 -x src/option.ui -o src/option.py
