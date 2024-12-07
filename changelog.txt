@@ -12,3 +12,8 @@ v1.0.1:
 Add Play/Stop action
 Change some GUI Widgets
 Fix quit logic
+
+v1.0.2:
+Rename some OptionMenu attributes
+Rename some MainWindow methods
+Change config.son

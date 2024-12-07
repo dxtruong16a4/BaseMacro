@@ -1,3 +1,10 @@
 {
-    "speed": "normal"
+    "app": {
+        "speed": "normal",
+        "add_shortcut": "Ctrl+O",
+        "play_shortcut": "Ctrl+P",
+        "stop_shortcut": "Ctrl+Shift+P",
+        "setting_shortcut": "Ctrl+I"
+    },
+    "task": {}
 }

@@ -13,8 +13,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setFixedSize(592, 296)
         # Actions
         self.uic.actionAdd.triggered.connect(self.add_task)        
-        self.uic.actionPlay.triggered.connect(self.play)
-        self.uic.actionStop.triggered.connect(self.stop)
+        self.uic.actionPlay.triggered.connect(self.play_task)
+        self.uic.actionStop.triggered.connect(self.stop_task)
         self.uic.actionSetting.triggered.connect(self.show_setting)
         self.uic.actionPin.triggered.connect(self.pin_window)
         # Button Actions        
@@ -24,7 +24,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.setting_flag = False
         self.isPlaying = False
         # Other Attributes        
-        self.speed = json.load(open("config.json"))["speed"]
+        self.speed = json.load(open("config.json"))["app"]["speed"]
         self.old_position = self.pos()
         # Scene Connection
         self.sceneConnect = QtWidgets.QGraphicsScene()
@@ -67,9 +67,9 @@ class MainWindow(QtWidgets.QMainWindow):
     def add_task(self):
         pass
 
-    def play(self):
+    def play_task(self):
         self.play_animation()
-        self.play_task()
+        self.do_task()
 
     def play_animation(self):
         self.isPlaying = not self.isPlaying
@@ -89,12 +89,12 @@ class MainWindow(QtWidgets.QMainWindow):
             self.playing_movie.setPaused(True)
             self.uic.actionPlay.setIcon(QtGui.QIcon(root_dir + "/assets/play.png"))
     
-    def play_task(self):
+    def do_task(self):
         pass
 
-    def stop(self):
+    def stop_task(self):
         self.stop_animation()
-        self.stop_task()
+        self.exit_task()
 
     def stop_animation(self):
         if self.playing_movie.state() in (QtGui.QMovie.MovieState.Running, QtGui.QMovie.MovieState.Paused):
@@ -104,7 +104,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.playing_movie.stop()
             self.uic.actionPlay.setIcon(QtGui.QIcon(root_dir + "/assets/play.png"))
 
-    def stop_task(self):
+    def exit_task(self):
         pass
 
     def pin_window(self):
@@ -120,6 +120,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.show()
 
     def show_setting(self):
+        self.stop_task()
         self.setting_flag = True
         self.setting_win = OptionMenu()
         self.setting_win.show()
