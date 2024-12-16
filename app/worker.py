@@ -1,5 +1,6 @@
 from PyQt6 import QtCore
 from utils.utils import check_connection
+from app.taskmanager import Task
 
 class ConnectionWorker(QtCore.QObject):
     connection_status = QtCore.pyqtSignal(bool)
@@ -26,17 +27,25 @@ class ConnectionWorker(QtCore.QObject):
         self._wait_condition.wakeAll()
         self._mutex.unlock()
 
-class TaskWorker(QtCore.QThread):
-    task_finished = QtCore.pyqtSignal()
+class WorkerSignals(QtCore.QObject):
+    """Tín hiệu để giao tiếp giữa luồng và main thread."""
+    progress = QtCore.pyqtSignal(str)
 
-    def __init__(self, parent=None):
-        super(TaskWorker, self).__init__(parent)
-        self.is_running = True
+class TaskWorker(QtCore.QRunnable):
+    """Worker để xử lý từng task từ hàng đợi."""
+    def __init__(self, queue, signals):
+        super().__init__()
+        self.queue = queue
+        self.signals = signals
 
     def run(self):
-        while self.is_running:
-            pass
-        self.task_finished.emit()
-
-    def stop(self):
-        self.is_running = False
+        while not self.queue.empty():
+            task_data = self.queue.get()
+            if isinstance(task_data, Task):
+                task = task_data
+            else:
+                task = Task(name=task_data)
+            self.signals.progress.emit(f"Processing: {task}")
+            task.run()
+            self.signals.progress.emit(f"Completed: {task}")
+            self.queue.task_done()

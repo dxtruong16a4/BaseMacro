@@ -1,6 +1,10 @@
 pyuic6 -x src/auto.ui -o src/auto.py
 pyuic6 -x src/option.ui -o src/option.py
 
+self.tableTask.setColumnCount(1)
+self.tableTask.setRowCount(0)
+self.tableTask.setHorizontalHeaderLabels(["Task"])
+
 v1.0.0:
 Create GUI
 Add Pin/Setting action
@@ -17,3 +21,11 @@ v1.0.2:
 Rename some OptionMenu attributes
 Rename some MainWindow methods
 Change config.son
+
+v1.0.3:
+Add some Widgets
+Rename MainWindow attributes
+Queue to manager tasks
+ThreadPool to execute tasks
+Fix move up/down, remove, clear methods
+Add more example of tasks
