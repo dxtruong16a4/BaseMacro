@@ -1,8 +1,10 @@
 from PyQt6 import QtCore
+import queue
 from utils.utils import check_connection
 from app.taskmanager import Task
 
 class ConnectionWorker(QtCore.QObject):
+    """Worker để kiểm tra kết nối mạng."""
     connection_status = QtCore.pyqtSignal(bool)
 
     def __init__(self):
@@ -28,24 +30,37 @@ class ConnectionWorker(QtCore.QObject):
         self._mutex.unlock()
 
 class WorkerSignals(QtCore.QObject):
-    """Tín hiệu để giao tiếp giữa luồng và main thread."""
+    """Class chứa các signal của worker."""
     progress = QtCore.pyqtSignal(str)
+    task_completed = QtCore.pyqtSignal()
 
 class TaskWorker(QtCore.QRunnable):
-    """Worker để xử lý từng task từ hàng đợi."""
-    def __init__(self, queue, signals):
+    """Worker để chạy các task."""
+    def __init__(self, queue: queue.Queue, signals: WorkerSignals):
         super().__init__()
         self.queue = queue
         self.signals = signals
+        self.running = True
+
+    def stop(self):
+        """Dừng worker"""
+        self.running = False
 
     def run(self):
-        while not self.queue.empty():
-            task_data = self.queue.get()
-            if isinstance(task_data, Task):
-                task = task_data
-            else:
-                task = Task(name=task_data)
-            self.signals.progress.emit(f"Processing: {task}")
-            task.run()
-            self.signals.progress.emit(f"Completed: {task}")
+        while self.running and not self.queue.empty():
+            task = self.queue.get()
+            if isinstance(task, Task):
+                self.signals.progress.emit(f"Processing: {task.name}")
+                task.run()
+                if task.is_completed():
+                    self.signals.progress.emit(f"Completed: {task.name}")
             self.queue.task_done()
+        if self.queue.empty():
+            self.signals.task_completed.emit()
+
+# class UpdateLabelWorker(QtCore.QObject):
+#     """Worker để cập nhật label."""
+#     progress = QtCore.pyqtSignal(str)
+
+#     def run(self, log):
+#         self.progress.emit(log)

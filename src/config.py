@@ -1,6 +1,6 @@
-import os
+from pathlib import Path
 
-dir = os.path.dirname(__file__)
-root_dir = os.path.join(dir, "..")
-img_dir = os.path.join(root_dir, "img")
-assets_dir = os.path.join(root_dir, "assets")
+dir = Path(__file__).resolve().parent
+root_dir = dir.parent
+img_dir = root_dir / "img"
+assets_dir = root_dir / "assets"

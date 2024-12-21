@@ -1,10 +1,14 @@
+import pygetwindow
+import requests
+import pyautogui
+import os
+import cv2
+import pytesseract
+import numpy as np
+import winreg as reg
 from pathlib import Path
 from PIL import Image
 from typing import Union, Tuple
-import requests
-import pyautogui
-import cv2
-import numpy as np
 from src.config import img_dir
 
 def check_connection():
@@ -28,8 +32,8 @@ def capture(img_name):
     cv2.imwrite(str(filename), screenshot_cv)
 
 def check_img_similarity(
-        img1: Union[str, Image.Image],
-        img2: Union[str, Image.Image],
+        img1: Union[str, np.ndarray],
+        img2: Union[str, np.ndarray],
         search_region: Tuple[int, int, int, int] = None,
         threshold: float = 0.8
     ) -> bool:
@@ -52,9 +56,9 @@ def check_img_similarity(
         img_b_gray = cv2.imread(str(image_b_path), cv2.IMREAD_GRAYSCALE)
         if img_a_gray is None or img_b_gray is None:
             raise FileNotFoundError("One or both images could not be loaded.")
-    elif isinstance(img1, Image.Image) and isinstance(img2, Image.Image):
-        img_a_gray = np.array(img1.convert('L'))
-        img_b_gray = np.array(img2.convert('L'))
+    elif isinstance(img1, np.ndarray) and isinstance(img2, np.ndarray):
+        img_a_gray = cv2.cvtColor(img1, cv2.COLOR_BGR2GRAY) if len(img1.shape) == 3 else img1
+        img_b_gray = cv2.cvtColor(img2, cv2.COLOR_BGR2GRAY) if len(img2.shape) == 3 else img2
     else:
         raise ValueError("img1 and img2 must both be either filenames or PIL Image objects.")
     if search_region:
@@ -91,3 +95,62 @@ def get_image_position(img1, img2, threshold=0.8):
         return max_loc
     else:
         return None, None
+    
+def getDefaultBrowser():
+    """
+    Get the default browser of the user and map it to a window title.
+    """
+    path = r"Software\Microsoft\Windows\Shell\Associations\UrlAssociations\http\UserChoice"
+    browser = None
+    try:
+        with reg.OpenKey(reg.HKEY_CURRENT_USER, path) as key:
+            progid = reg.QueryValueEx(key, 'Progid')[0]
+            browser_titles = {
+                "ChromeHTML": "Chrome",
+                "FirefoxHTML": "Firefox",
+                "MSEdgeHTM": "Edge",
+                "OperaGXHTML": "Opere"
+            }
+            browser = browser_titles.get(progid, None)
+    except FileNotFoundError:
+        pass
+    return browser
+
+def maximizeWindowTitle(title):
+    """
+    Maximize the window with the given title.
+
+    Parameters:
+    title (str): The title of the window to open.
+    """
+    try:
+        windows = pygetwindow.getWindowsWithTitle(title)
+        if windows:
+            windows[0].maximize()
+    except IndexError:
+        pass
+
+def getTextFromImage(img_path):
+    """
+    Get text from an image using OCR.
+
+    Parameters:
+    img_path (str): The path to the image file.
+
+    Returns:
+    str: The text extracted from the image.
+    """
+    try:
+        # Đường dẫn tới tesseract nếu cần thiết
+        pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
+        
+        # Kiểm tra file tồn tại
+        if not os.path.exists(img_path):
+            return "Error: Image file not found."
+
+        # Mở ảnh và thực hiện OCR
+        img = Image.open(img_path)
+        text = pytesseract.image_to_string(img, lang="eng")
+        return text.strip()
+    except Exception as e:
+        return f"Error: {e}"

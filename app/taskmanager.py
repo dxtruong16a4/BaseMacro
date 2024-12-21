@@ -82,12 +82,17 @@ class Task(QObject):
 
     def stop(self):
         """Dừng tiến trình con nếu đang chạy"""
-        if self.process:
+        if self.process and self.process.poll() is None:
             self.task_notified.emit(f"Attempting to stop task '{self.name}'...")
-            self.process.terminate()
-            self.process.wait()
-            self.task_notified.emit(f"Task '{self.name}' đã dừng.")
-            self.task_completed.emit(f"Task '{self.name}' was stopped.")
+            try:
+                self.process.terminate()
+                self.process.wait(timeout=5)
+            except subprocess.TimeoutExpired:
+                self.process.kill()
+                self.task_notified.emit(f"Task '{self.name}' bị buộc dừng.")
+            finally:
+                self.task_notified.emit(f"Task '{self.name}' đã dừng.")
+                self.task_completed.emit(f"Task '{self.name}' was stopped.")
 
     @classmethod
     def get_number_of_tasks(cls):

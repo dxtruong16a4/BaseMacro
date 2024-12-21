@@ -29,3 +29,7 @@ Queue to manager tasks
 ThreadPool to execute tasks
 Fix move up/down, remove, clear methods
 Add more example of tasks
+
+v1.0.4:
+config.py: Using Pathlib instead of OS module
+Fix some methods in utils
