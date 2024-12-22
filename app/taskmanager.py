@@ -57,7 +57,7 @@ class Task(QObject):
             self.progress = 0
 
     def run(self):
-        """Chạy tiến trình con, gọi file Python hoặc ứng dụng"""
+        """Run command line task."""
         if not hasattr(self, "file_path") or not self.file_path:
             self.task_notified.emit(f"Task '{self.name}' không có đường dẫn file để chạy.")
             return
@@ -81,7 +81,7 @@ class Task(QObject):
             self.task_completed.emit(f"Error: {str(e)}")
 
     def stop(self):
-        """Dừng tiến trình con nếu đang chạy"""
+        """Stop command line task."""
         if self.process and self.process.poll() is None:
             self.task_notified.emit(f"Attempting to stop task '{self.name}'...")
             try:
@@ -99,7 +99,7 @@ class Task(QObject):
         return cls._number_of_tasks
 
     def __str__(self):
-        return f"Task(name={self.name}, progress={self.progress}, completed={self.completed})"
+        return self.name
 
     def __eq__(self, other):
         if isinstance(other, Task):

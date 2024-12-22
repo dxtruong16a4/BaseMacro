@@ -1,6 +1,7 @@
 import json
 import os
 import queue
+import datetime
 from PyQt6 import QtWidgets, QtCore, QtGui
 from src.auto import Ui_MainWindow
 from src.config import root_dir
@@ -59,10 +60,13 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def update_connection_status(self, is_connected):
         self.sceneConnect.clear()
+        current_time = self.getTime()
         if is_connected:
             self.sceneConnect.addPixmap(self.connected_pixmap)
+            self.uic.textBrowser.append(f"{current_time}: Connected to the network.")
         else:
             self.sceneConnect.addPixmap(self.disconnected_pixmap)
+            self.uic.textBrowser.append(f"{current_time}: Disconnected from the network.")
 
     def start_connection_worker(self):
         self.connection_thread.start()
@@ -73,7 +77,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.connection_thread.wait()
 
     def update_loggers(self, log):
-        self.uic.textBrowser.setText(self.uic.textBrowser.toPlainText() + log + "\n")
+        current_time = self.getTime()
+        self.uic.textBrowser.append(f"{current_time}: " + log)
 
     def add_task(self):
         files, _ = QtWidgets.QFileDialog.getOpenFileNames(self, "Select Python Files", "", "Python Files (*.py)")
@@ -102,8 +107,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def play_animation(self):
         self.isPlaying = not self.isPlaying
-        if self.isPlaying:            
-            self.uic.lblCurrentTask.setText("Playing...")
+        if self.isPlaying:
             self.scenePlaying.clear()
             self.movie_label = QtWidgets.QLabel()
             self.movie_label.setMovie(self.playing_movie)
@@ -113,7 +117,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.playing_movie.start()
             self.uic.actionPlay.setIcon(QtGui.QIcon(str(root_dir / "assets" / "pause.png")))
         else:
-            self.uic.lblCurrentTask.setText("Paused")
             self.scenePlaying.clear()
             self.playing_movie.setPaused(True)
             self.uic.actionPlay.setIcon(QtGui.QIcon(str(root_dir / "assets" / "play.png")))
@@ -123,13 +126,14 @@ class MainWindow(QtWidgets.QMainWindow):
             signals = WorkerSignals()
             taskworker = TaskWorker(self.queue, signals)
             signals.task_completed.connect(self.handle_task_completed)
+            signals.progress.connect(self.updateLabelTask)
             self.threadpool.start(taskworker)
         else:
             self.uic.lblNotification.setText("Queue is empty. Please add some tasks.")
             QtCore.QTimer.singleShot(1000, self.stop_task_performed)
 
     def handle_task_completed(self):
-        """Khi một task hoàn thành, kiểm tra và tiếp tục xử lý các task còn lại."""
+        """when a task is completed, check and continue to process the remaining tasks."""
         if not self.queue.empty():
             self.play_task()
         if self.queue.empty():
@@ -148,10 +152,27 @@ class MainWindow(QtWidgets.QMainWindow):
         self.uic.btnRemove.setEnabled(True)
         self.uic.btnClear.setEnabled(True)
 
+    def updateLabelTask(self, task_name: str):
+        """Update task labels in the UI."""
+        self.current_task = None
+        for task in self.tasks:
+            if task.name == task_name:
+                self.current_task = task
+                break        
+        if self.current_task is None:
+            return
+        current_index = self.tasks.index(self.current_task)
+        previous_task = self.tasks[current_index - 1] if current_index > 0 else None
+        next_task = self.tasks[current_index + 1] if current_index < len(self.tasks) - 1 else None
+        self.uic.lblCurrentTask.setText(str(self.current_task.name))
+        self.uic.lblPreTask.setText(str(previous_task.name if previous_task else "None"))
+        self.uic.lblNextTask.setText(str(next_task.name if next_task else "None"))
+        self.uic.lblNumOfTaskDone.setText(f"{current_index + 1}/{len(self.tasks)}")
+
     def stop_task_performed(self):
         self.stop_animation()
         self.stop_task()
-        self.uic.tableTask.setRowCount(0)
+        self.clear_widgets()
 
     def stop_animation(self):
         if self.playing_movie.state() in (QtGui.QMovie.MovieState.Running, QtGui.QMovie.MovieState.Paused):
@@ -171,6 +192,13 @@ class MainWindow(QtWidgets.QMainWindow):
         # self.queue = queue.Queue()
         self.tasks.clear()
         self.uic.lblNotification.setText("All tasks have been stopped and cleared.")
+
+    def clear_widgets(self):        
+        self.uic.tableTask.setRowCount(0)
+        self.uic.lblPreTask.setText("")
+        self.uic.lblCurrentTask.setText("")
+        self.uic.lblNextTask.setText("")
+        self.uic.lblNumOfTaskDone.setText("")
 
     def pin_window(self):
         if self.pinFlag:
@@ -222,7 +250,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.uic.tableTask.setCurrentCell(current_row + 1, 0)
 
     def remove_task(self, task_name):
-        """Xóa task khỏi tableTask và danh sách self.tasks."""
+        """Remove task from tableTask and self.tasks list."""
         if not self.uic.btnRemove.isEnabled():
             return
         for row in range(self.uic.tableTask.rowCount()):
@@ -245,13 +273,27 @@ class MainWindow(QtWidgets.QMainWindow):
         self.queue.queue.clear()
         self.uic.tableTask.setRowCount(0)
 
+    def getTime(self):
+        return datetime.datetime.now().strftime("%H:%M:%S")
+
     def moveEvent(self, event):
         if self.pinFlag:
             self.lock_position()
     
-    def closeEvent(self, event):        
+    def closeEvent(self, event: QtGui.QCloseEvent):
         if self.setting_flag:
             self.setting_win.close()
             self.setting_flag = False
         self.stop_threads()
+        self.write_log(self.uic.textBrowser.toPlainText())
         event.accept()
+
+    def write_log(self, log):
+        log_dir = "log"
+        log_file = os.path.join(log_dir, "log.txt")
+        os.makedirs(log_dir, exist_ok=True)        
+        try:
+            with open(log_file, "a") as f:
+                f.write(log + "\n")
+        except Exception as e:
+            pass

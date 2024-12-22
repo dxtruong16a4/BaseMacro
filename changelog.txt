@@ -33,3 +33,8 @@ Add more example of tasks
 v1.0.4:
 config.py: Using Pathlib instead of OS module
 Fix some methods in utils
+Fix bug when stop tasks
+
+v1.0.5:
+Fix some methods in macro.py
+Update UI (text browser)

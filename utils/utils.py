@@ -6,7 +6,6 @@ import cv2
 import pytesseract
 import numpy as np
 import winreg as reg
-from pathlib import Path
 from PIL import Image
 from typing import Union, Tuple
 from src.config import img_dir
@@ -17,15 +16,84 @@ def check_connection():
         return True
     except requests.exceptions.RequestException:
         return False
-
-def capture(img_name):
+    
+def getDefaultBrowser():
     """
-    Capture a screenshot and save it with the specified name.
+    Get the default browser of the user and map it to a window title.
+    """
+    path = r"Software\Microsoft\Windows\Shell\Associations\UrlAssociations\http\UserChoice"
+    browser = None
+    try:
+        with reg.OpenKey(reg.HKEY_CURRENT_USER, path) as key:
+            progid = reg.QueryValueEx(key, 'Progid')[0]
+            browser_titles = {
+                "ChromeHTML": "Chrome",
+                "FirefoxHTML": "Firefox",
+                "MSEdgeHTM": "Edge",
+                "OperaGXHTML": "Opere"
+            }
+            browser = browser_titles.get(progid, None)
+    except FileNotFoundError:
+        pass
+    return browser
+
+def maximizeWindowTitle(title):
+    """
+    Maximize the window with the given title.
+
+    Parameters:
+    title (str): The title of the window to open.
+    """
+    try:
+        windows = pygetwindow.getWindowsWithTitle(title)
+        if windows:
+            windows[0].maximize()
+    except IndexError:
+        pass
+
+def get_image_position(img1, img2, threshold=0.8):
+    """
+    Get the position and size of img1 within img2 using template matching.
+
+    Parameters:
+    img1 (PIL.Image.Image): The smaller image to search for within img2.
+    img2 (PIL.Image.Image): The larger image in which to search for img1.
+    threshold (float): The similarity threshold (between 0 and 1) to consider a match. 
+                       Default is 0.8, meaning a match is found if the similarity score 
+                       is 0.8 or higher.
+
+    Returns:
+    tuple: (x, y, width, height) of the matched region if the similarity score 
+           is greater than or equal to the threshold, otherwise (None, None, None, None).
+    """
+    img1_gray = img1.convert('L')
+    img2_gray = img2.convert('L')
+    img1_np = np.array(img1_gray)
+    img2_np = np.array(img2_gray)
+    result = cv2.matchTemplate(img2_np, img1_np, cv2.TM_CCOEFF_NORMED)
+    _, max_val, _, max_loc = cv2.minMaxLoc(result)
+
+    if max_val >= threshold:
+        x, y = max_loc
+        width, height = img1.size
+        return x, y, width, height
+    else:
+        return None, None, None, None
+
+def capture(img_name, region=None):
+    """
+    Capture a screenshot (entire screen or specific region) and save it with the specified name.
 
     Parameters:
     img_name (str): The name to use for the saved image file.
+    region (Tuple[int, int, int, int], optional): The region to capture (x, y, width, height). Defaults to None for full screen.
     """
-    screenshot = pyautogui.screenshot()
+    if region:
+        x, y, width, height = region
+        screenshot = pyautogui.screenshot(region=(x, y, width, height))
+    else:
+        screenshot = pyautogui.screenshot()
+
     screenshot_cv = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
     img_dir.mkdir(parents=True, exist_ok=True)
     filename = img_dir / f'{img_name}.jpg'
@@ -70,66 +138,6 @@ def check_img_similarity(
     _, max_val, _, _ = cv2.minMaxLoc(result)
     return max_val >= threshold
 
-def get_image_position(img1, img2, threshold=0.8):
-    """
-    Get the position of img1 within img2 using template matching.
-
-    Parameters:
-    img1 (PIL.Image.Image): The smaller image to search for within img2.
-    img2 (PIL.Image.Image): The larger image in which to search for img1.
-    threshold (float): The similarity threshold (between 0 and 1) to consider a match. 
-                       Default is 0.8, meaning a match is found if the similarity score 
-                       is 0.8 or higher.
-
-    Returns:
-    tuple: (x, y) coordinates of the top-left position of the matched region if the similarity score 
-           is greater than or equal to the threshold, otherwise (None, None).
-    """
-    img1_gray = img1.convert('L')
-    img2_gray = img2.convert('L')
-    img1_np = np.array(img1_gray)
-    img2_np = np.array(img2_gray)
-    result = cv2.matchTemplate(img2_np, img1_np, cv2.TM_CCOEFF_NORMED)
-    _, max_val, _, max_loc = cv2.minMaxLoc(result)
-    if max_val >= threshold:
-        return max_loc
-    else:
-        return None, None
-    
-def getDefaultBrowser():
-    """
-    Get the default browser of the user and map it to a window title.
-    """
-    path = r"Software\Microsoft\Windows\Shell\Associations\UrlAssociations\http\UserChoice"
-    browser = None
-    try:
-        with reg.OpenKey(reg.HKEY_CURRENT_USER, path) as key:
-            progid = reg.QueryValueEx(key, 'Progid')[0]
-            browser_titles = {
-                "ChromeHTML": "Chrome",
-                "FirefoxHTML": "Firefox",
-                "MSEdgeHTM": "Edge",
-                "OperaGXHTML": "Opere"
-            }
-            browser = browser_titles.get(progid, None)
-    except FileNotFoundError:
-        pass
-    return browser
-
-def maximizeWindowTitle(title):
-    """
-    Maximize the window with the given title.
-
-    Parameters:
-    title (str): The title of the window to open.
-    """
-    try:
-        windows = pygetwindow.getWindowsWithTitle(title)
-        if windows:
-            windows[0].maximize()
-    except IndexError:
-        pass
-
 def getTextFromImage(img_path):
     """
     Get text from an image using OCR.
@@ -141,14 +149,9 @@ def getTextFromImage(img_path):
     str: The text extracted from the image.
     """
     try:
-        # Đường dẫn tới tesseract nếu cần thiết
-        pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"
-        
-        # Kiểm tra file tồn tại
+        pytesseract.pytesseract.tesseract_cmd = r"C:\Program Files\Tesseract-OCR\tesseract.exe"        
         if not os.path.exists(img_path):
             return "Error: Image file not found."
-
-        # Mở ảnh và thực hiện OCR
         img = Image.open(img_path)
         text = pytesseract.image_to_string(img, lang="eng")
         return text.strip()
