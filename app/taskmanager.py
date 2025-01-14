@@ -106,34 +106,3 @@ class Task(QObject):
             return (self.name == other.name and
                     self.progress == other.progress and self.completed == other.completed)
         return False
-
-class TaskManager:
-    def __init__(self):
-        self.tasks = []
-
-    def add_task(self, task):
-        if isinstance(task, Task) and task not in self.tasks:
-            self.tasks.append(task)
-
-    def remove_task(self, task):
-        if task in self.tasks:
-            self.tasks.remove(task)
-            Task._number_of_tasks -= 1
-
-    def get_task(self, name):
-        for task in self.tasks:
-            if task.name == name:
-                return task
-        return None
-
-    def get_all_tasks(self):
-        return self.tasks
-
-    def get_number_of_tasks(self):
-        return len(self.tasks)
-
-    def get_completed_tasks(self):
-        return [task for task in self.tasks if task.is_completed()]
-
-    def get_incomplete_tasks(self):
-        return [task for task in self.tasks if not task.is_completed()]

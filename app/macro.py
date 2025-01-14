@@ -1,10 +1,9 @@
 import pygetwindow
-import pyautogui
 import time
 
 class Macro:
     def __init__(self):
-        pass
+        pass        
 
     def is_window_open(self, window_name):
         windows = pygetwindow.getWindowsWithTitle(window_name)
@@ -19,6 +18,7 @@ class Macro:
         return False
 
     def open_window(self, window_name):
+        import pyautogui
         if not self.is_window_open(window_name):
             pyautogui.press('win')
             time.sleep(0.5)
@@ -28,6 +28,7 @@ class Macro:
                 pyautogui.alert(f"Failed to open window: {window_name}")
 
     def close_window(self, window_name):
+        import pyautogui
         windows = pygetwindow.getWindowsWithTitle(window_name)
         if windows:
             window = windows[0]

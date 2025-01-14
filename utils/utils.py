@@ -1,6 +1,5 @@
 import pygetwindow
 import requests
-import pyautogui
 import os
 import cv2
 import pytesseract
@@ -81,6 +80,7 @@ def get_image_position(img1, img2, threshold=0.8):
         return None, None, None, None
 
 def capture(img_name, region=None):
+    import pyautogui
     """
     Capture a screenshot (entire screen or specific region) and save it with the specified name.
 

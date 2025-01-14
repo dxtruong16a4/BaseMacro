@@ -63,10 +63,10 @@ class MainWindow(QtWidgets.QMainWindow):
         current_time = self.getTime()
         if is_connected:
             self.sceneConnect.addPixmap(self.connected_pixmap)
-            self.uic.textBrowser.append(f"{current_time}: Connected to the network.")
+            self.uic.textBrowser.append(f"<font color='green'>{current_time}: Connected to the network.</font>")
         else:
             self.sceneConnect.addPixmap(self.disconnected_pixmap)
-            self.uic.textBrowser.append(f"{current_time}: Disconnected from the network.")
+            self.uic.textBrowser.append(f"<font color='red'>{current_time}: Disconnected from the network.</font>")
 
     def start_connection_worker(self):
         self.connection_thread.start()
@@ -75,6 +75,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.connection_worker.stop()
         self.connection_thread.quit()
         self.connection_thread.wait()
+        self.stop_task_performed()
 
     def update_loggers(self, log):
         current_time = self.getTime()
@@ -85,14 +86,17 @@ class MainWindow(QtWidgets.QMainWindow):
         if files:
             for index, file in enumerate(files):
                 file_name = os.path.basename(file).replace('.py', '')
+                if not file_name:
+                    self.uic.lblNotification.setText("Invalid file name. Please select a valid Python file.")
+                    continue                
                 row_position = self.uic.tableTask.rowCount()
                 self.uic.tableTask.insertRow(row_position)
                 self.uic.tableTask.setItem(row_position, 0, QtWidgets.QTableWidgetItem(file_name))
-                self.uic.lblNotification.setText(self.uic.lblNotification.text() + f"{file_name} added. ")
+                self.uic.lblNotification.setText(self.uic.lblNotification.text() + f"{file_name} added. ")                
                 task = Task(name=file_name, id=index)
                 task.file_path = file
                 task.task_notified.connect(self.update_loggers)
-                task.task_completed.connect(self.remove_task)
+                task.task_completed.connect(lambda task_name=file_name: self.remove_task())                
                 self.queue.put(task)
                 self.tasks.append(task)
 
@@ -225,34 +229,39 @@ class MainWindow(QtWidgets.QMainWindow):
         if not self.uic.btnUp.isEnabled():
             return
         current_row = self.uic.tableTask.currentRow()
-        if current_row > 0:
-            task_current = self.queue.queue[current_row]
-            task_above = self.queue.queue[current_row - 1]
-            self.queue.queue[current_row - 1], self.queue.queue[current_row] = task_current, task_above
-            self.uic.tableTask.insertRow(current_row - 1)
-            for column in range(self.uic.tableTask.columnCount()):
-                self.uic.tableTask.setItem(current_row - 1, column, self.uic.tableTask.takeItem(current_row + 1, column))
-            self.uic.tableTask.removeRow(current_row + 1)
-            self.uic.tableTask.setCurrentCell(current_row - 1, 0)
+        if current_row <= 0:
+            return
+        task_current = self.queue.queue[current_row]
+        task_above = self.queue.queue[current_row - 1]
+        self.queue.queue[current_row - 1], self.queue.queue[current_row] = task_current, task_above
+        self.tasks[current_row - 1], self.tasks[current_row] = self.tasks[current_row], self.tasks[current_row - 1]
+        self.uic.tableTask.insertRow(current_row - 1)
+        for column in range(self.uic.tableTask.columnCount()):
+            self.uic.tableTask.setItem(current_row - 1, column, self.uic.tableTask.takeItem(current_row + 1, column))
+        self.uic.tableTask.removeRow(current_row + 1)
+        self.uic.tableTask.setCurrentCell(current_row - 1, 0)
 
     def move_down(self):
         if not self.uic.btnDown.isEnabled():
             return
         current_row = self.uic.tableTask.currentRow()
-        if current_row < self.uic.tableTask.rowCount() - 1:
-            task_current = self.queue.queue[current_row]
-            task_below = self.queue.queue[current_row + 1]
-            self.queue.queue[current_row], self.queue.queue[current_row + 1] = task_below, task_current
-            self.uic.tableTask.insertRow(current_row + 2)
-            for column in range(self.uic.tableTask.columnCount()):
-                self.uic.tableTask.setItem(current_row + 2, column, self.uic.tableTask.takeItem(current_row, column))
-            self.uic.tableTask.removeRow(current_row)
-            self.uic.tableTask.setCurrentCell(current_row + 1, 0)
+        if current_row < 0 or current_row >= self.uic.tableTask.rowCount() - 1:
+            return
+        task_current = self.queue.queue[current_row]
+        task_below = self.queue.queue[current_row + 1]
+        self.queue.queue[current_row], self.queue.queue[current_row + 1] = task_below, task_current
+        self.tasks[current_row], self.tasks[current_row + 1] = self.tasks[current_row + 1], self.tasks[current_row]
+        self.uic.tableTask.insertRow(current_row + 2)
+        for column in range(self.uic.tableTask.columnCount()):
+            self.uic.tableTask.setItem(current_row + 2, column, self.uic.tableTask.takeItem(current_row, column))
+        self.uic.tableTask.removeRow(current_row)
+        self.uic.tableTask.setCurrentCell(current_row + 1, 0)
 
-    def remove_task(self, task_name):
+    def remove_task(self):
         """Remove task from tableTask and self.tasks list."""
         if not self.uic.btnRemove.isEnabled():
             return
+        task_name = self.uic.tableTask.item(self.uic.tableTask.currentRow(), 0).text()
         for row in range(self.uic.tableTask.rowCount()):
             item = self.uic.tableTask.item(row, 0)
             if item and item.text() == task_name:
@@ -274,24 +283,30 @@ class MainWindow(QtWidgets.QMainWindow):
         self.uic.tableTask.setRowCount(0)
 
     def getTime(self):
-        return datetime.datetime.now().strftime("%H:%M:%S")
+        return datetime.datetime.now().strftime("[%d-%b] %H:%M:%S")
 
     def moveEvent(self, event):
         if self.pinFlag:
             self.lock_position()
     
     def closeEvent(self, event: QtGui.QCloseEvent):
-        if self.setting_flag:
-            self.setting_win.close()
-            self.setting_flag = False
-        self.stop_threads()
-        self.write_log(self.uic.textBrowser.toPlainText())
-        event.accept()
+        self.setting_win.hide()
+        reply = QtWidgets.QMessageBox.question(self, 'Confirm Exit', 'Are you sure you want to close the application?', 
+                                            QtWidgets.QMessageBox.StandardButton.Yes | QtWidgets.QMessageBox.StandardButton.No, QtWidgets.QMessageBox.StandardButton.No)
+        if reply == QtWidgets.QMessageBox.StandardButton.Yes:
+            if self.setting_flag:
+                self.setting_win.close()
+                self.setting_flag = False
+            self.stop_threads()
+            self.write_log(self.uic.textBrowser.toPlainText())
+            event.accept()
+        else:
+            event.ignore()
 
     def write_log(self, log):
         log_dir = "log"
         log_file = os.path.join(log_dir, "log.txt")
-        os.makedirs(log_dir, exist_ok=True)        
+        os.makedirs(log_dir, exist_ok=True)
         try:
             with open(log_file, "a") as f:
                 f.write(log + "\n")

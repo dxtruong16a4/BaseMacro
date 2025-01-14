@@ -1,40 +1,44 @@
 pyuic6 -x src/auto.ui -o src/auto.py
 pyuic6 -x src/option.ui -o src/option.py
 
-self.tableTask.setColumnCount(1)
-self.tableTask.setRowCount(0)
-self.tableTask.setHorizontalHeaderLabels(["Task"])
-
 v1.0.0:
-Create GUI
-Add Pin/Setting action
+Created GUI
+Added Pin/Setting action
 There is a warning from terminal when running code and i can not fix :D
 # qt.qpa.window: SetProcessDpiAwarenessContext() failed: The operation completed successfully.
 # Qt's default DPI awareness context is DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2.
 
 v1.0.1:
-Add Play/Stop action
-Change some GUI Widgets
-Fix quit logic
+Addedd Play/Stop action
+Changed some GUI Widgets
+Fixed quit logic
 
 v1.0.2:
-Rename some OptionMenu attributes
-Rename some MainWindow methods
-Change config.son
+Renamed some OptionMenu attributes
+Renamed some MainWindow methods
+Changed config.son
 
 v1.0.3:
-Add some Widgets
-Rename MainWindow attributes
-Queue to manager tasks
-ThreadPool to execute tasks
-Fix move up/down, remove, clear methods
-Add more example of tasks
+Added some Widgets
+Renamed MainWindow attributes
+Added Queue to manager tasks
+Added ThreadPool to execute tasks
+Fixed move up/down, remove, clear methods
+Added more example of tasks
 
 v1.0.4:
 config.py: Using Pathlib instead of OS module
-Fix some methods in utils
-Fix bug when stop tasks
+Fixed some methods in utils
+Fixed bug when stop tasks
 
 v1.0.5:
-Fix some methods in macro.py
-Update UI (text browser)
+Fixed some methods in macro.py
+Updated UI (text browser)
+
+v1.0.6
+Fixed warning from terminal from v1.0.0
+Fixed some bugs from move_up/move_down/remove_task methods
+Fixed the order of attribute "tasks" in MainWindow when moving tasks up and down
+Updated time format in getTime method to include seconds
+Added dialog window to confirm quitting
+

@@ -2,6 +2,7 @@ from PyQt6 import QtCore
 import queue
 from utils.utils import check_connection
 from app.taskmanager import Task
+from app.macro import Macro
 
 class ConnectionWorker(QtCore.QObject):
     """Connection worker."""
@@ -57,3 +58,6 @@ class TaskWorker(QtCore.QRunnable):
             self.queue.task_done()
         if self.queue.empty():
             self.signals.task_completed.emit()
+
+class LongTask(Macro):
+    """Long task."""
