@@ -1,0 +1,43 @@
+v1.0.0:
+Created GUI
+Added Pin/Setting action
+There is a warning from terminal when running code and i can not fix :D
+# qt.qpa.window: SetProcessDpiAwarenessContext() failed: The operation completed successfully.
+# Qt's default DPI awareness context is DPI_AWARENESS_CONTEXT_PER_MONITOR_AWARE_V2.
+
+v1.0.1:
+Addedd Play/Stop action
+Changed some GUI Widgets
+Fixed quit logic
+
+v1.0.2:
+Renamed some OptionMenu attributes
+Renamed some MainWindow methods
+Changed config.son
+
+v1.0.3:
+Added some Widgets
+Renamed MainWindow attributes
+Added Queue to manager tasks
+Added ThreadPool to execute tasks
+Fixed move up/down, remove, clear methods
+Added more example of tasks
+
+v1.0.4:
+config.py: Using Pathlib instead of OS module
+Fixed some methods in utils
+Fixed bug when stop tasks
+
+v1.0.5:
+Fixed some methods in macro.py
+Updated UI (text browser)
+
+v1.0.6
+Fixed warning from terminal from v1.0.0
+Fixed some bugs from move_up/move_down/remove_task methods
+Fixed the order of attribute "tasks" in MainWindow when moving tasks up and down
+Updated time format in getTime method to include seconds
+Added dialog window to confirm quitting
+
+v1.0.7
+Rebuild project (from now is v1.0.0)
