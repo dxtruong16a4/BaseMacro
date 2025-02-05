@@ -1,6 +1,3 @@
-pyuic6 -x src/auto.ui -o src/auto.py
-pyuic6 -x src/option.ui -o src/option.py
-
 v1.0.0:
 Created GUI
 Added Pin/Setting action
@@ -42,3 +39,5 @@ Fixed the order of attribute "tasks" in MainWindow when moving tasks up and down
 Updated time format in getTime method to include seconds
 Added dialog window to confirm quitting
 
+v1.0.7
+Rebuild project (from now is v1.0.0)
