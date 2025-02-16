@@ -1,8 +1,8 @@
 #include "dialogabout.h"
 #include "ui_dialogabout.h"
-#include "DefaultConstants.h"
+#include "../core/DefaultConstants.h"
 
-DialogAbout* DialogAbout::uniqueInstance = nullptr;
+std::unique_ptr<DialogAbout> DialogAbout::uniqueInstance = nullptr;
 
 DialogAbout::DialogAbout(QWidget *parent)
     : DialogBase(parent)
@@ -14,23 +14,20 @@ DialogAbout::DialogAbout(QWidget *parent)
 DialogAbout::~DialogAbout()
 {
     delete ui;
-    if (uniqueInstance == this) {
-        uniqueInstance = nullptr;
-    }
 }
 
 DialogAbout* DialogAbout::getInstance()
 {
-    if (uniqueInstance == nullptr) {
-        uniqueInstance = new DialogAbout();
+    if (!uniqueInstance) {
+        uniqueInstance = std::make_unique<DialogAbout>();
     }
-    return uniqueInstance;
+    return uniqueInstance.get();
 }
 
 void DialogAbout::closeEvent(QCloseEvent *event)
 {
-    this->hide();
-    event->ignore();
+    uniqueInstance.reset();
+    event->accept();
 }
 
 void DialogAbout::on_commandLinkButton_clicked()

@@ -3,10 +3,10 @@
 ConfigManager::ConfigManager(const QString& filePath) : configFilePath(filePath), settings(filePath, QSettings::IniFormat) {
     if (!configFileExists()) {
         if (createDefaultConfig()) {
-            qDebug() << "File config.ini created successfully.";
+            // qDebug() << "File config.ini created successfully.";
         }
     } else {
-        qDebug() << "File config.ini exists.";
+        // qDebug() << "File config.ini exists.";
     }
 }
 
@@ -17,15 +17,14 @@ bool ConfigManager::configFileExists() const {
 
 bool ConfigManager::createDefaultConfig() {
     QFile configFile(configFilePath);
-    if (configFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
-        QTextStream out(&configFile);
-        out << configSample;
-        configFile.close();
-        return true;
-    } else {
-        qDebug() << "Error creating config file:" << configFile.errorString();
+    if (!configFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QMessageBox::warning(nullptr, QLatin1String("Error"),
+                             QLatin1String("Error creating config file: ") + configFile.errorString());
         return false;
     }
+    QTextStream out(&configFile);
+    out << configSample;
+    return true;
 }
 
 void ConfigManager::loadSettings(int& width, int& height, int& x, int& y, QString& pinCorner, int& opac, bool& isHide)

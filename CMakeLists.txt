@@ -9,30 +9,48 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_SOURCE_DIR}/src/ui)
+
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+
+file(GLOB ASSETS_FILES assets/*)
 
 set(PROJECT_SOURCES
         src/main.cpp
         src/mainwindow.cpp
-        src/dialogabout.cpp
-        src/configmanager.cpp
-        src/threadmanager.cpp
-        src/dialoghowtouse.cpp
-        src/dialogtips.cpp
-        src/settingswindow.cpp
+
+        src/widgets/dialoghowtouse.cpp
+        src/widgets/dialogtips.cpp
+        src/widgets/dialogabout.cpp
+        src/widgets/settingswindow.cpp
+        src/widgets/macroeditor.cpp
+
+        src/core/actionpool.cpp
+        src/core/baseaction.cpp
+        src/core/configmanager.cpp
+        src/core/filemanager.cpp
+        src/core/macrobuild.cpp
+        src/core/threadmanager.cpp
 )
 
 set(PROJECT_HEADERS
-        include/mainwindow.h
-        include/dialogabout.h
-        include/configmanager.h
-        include/DefaultConstants.h
-        include/threadmanager.h
-        include/dialoghowtouse.h
-        include/dialogtips.h
-        include/DialogBase.h
-        include/settingswindow.h
+        src/mainwindow.h
+
+        src/widgets/DialogBase.h
+        src/widgets/dialoghowtouse.h
+        src/widgets/dialogtips.h
+        src/widgets/dialogabout.h
+        src/widgets/settingswindow.h
+        src/widgets/macroeditor.h
+
+        src/core/actionpool.h
+        src/core/baseaction.h
+        src/core/configmanager.h
+        src/core/DefaultConstants.h
+        src/core/filemanager.h
+        src/core/macrobuild.h
+        src/core/threadmanager.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -40,11 +58,13 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         ${PROJECT_HEADERS}
-        src/mainwindow.ui
-        src/dialogabout.ui
-        src/dialoghowtouse.ui
-        src/dialogtips.ui
-        src/settingswindow.ui
+        ${ASSETS_FILES}
+        src/ui/mainwindow.ui
+        src/ui/dialogabout.ui
+        src/ui/dialoghowtouse.ui
+        src/ui/dialogtips.ui
+        src/ui/settingswindow.ui
+        src/ui/macroeditor.ui
     )
 else()
     if(ANDROID)
@@ -59,6 +79,28 @@ else()
         )
     endif()
 endif()
+
+qt_add_resources(BaseMacro "icon"
+    PREFIX "/"
+    FILES
+        assets/logo.ico
+        assets/logo.png
+        assets/bracket.png
+        assets/break-continue.png
+        assets/code.png
+        assets/delay.png
+        assets/find.png
+        assets/goto.png
+        assets/if.png
+        assets/keyboard.png
+        assets/label.png
+        assets/loop.png
+        assets/mouse.png
+        assets/paste.png
+        assets/stop.png
+        assets/website.png
+)
+
 
 target_include_directories(BaseMacro PRIVATE include ${Qt${QT_VERSION_MAJOR}Widgets_INCLUDE_DIRS})
 target_link_libraries(BaseMacro PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)

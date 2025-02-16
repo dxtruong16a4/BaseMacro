@@ -1,22 +1,24 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "./core/DefaultConstants.h"
+#include "./core/ConfigManager.h"
+#include "./widgets/settingswindow.h"
+#include "./widgets/dialoghowtouse.h"
+#include "./widgets/dialogabout.h"
+#include "./widgets/dialogtips.h"
+#include "./widgets/macroeditor.h"
+
 #include <QMainWindow>
 #include <QEvent>
 #include <QCloseEvent>
+#include <QKeyEvent>
 #include <QMessageBox>
 #include <QDesktopServices>
 #include <QUrl>
 #include <QString>
 #include <QVector>
 #include <QDebug>
-
-#include "DefaultConstants.h"
-#include "ConfigManager.h"
-#include "settingswindow.h"
-#include "dialoghowtouse.h"
-#include "dialogabout.h"
-#include "dialogtips.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -66,6 +68,12 @@ private slots:
 
     void on_actionAbout_triggered();
 
+    void on_btnRun_clicked();
+
+    void on_btnOpenEditor_clicked();
+
+    void on_btnStop_clicked();
+
 private:
     MainWindow(QWidget *parent = nullptr);
     Ui::MainWindow *ui;
@@ -76,13 +84,15 @@ private:
     QPoint SizeBeforePinned = QPoint(DWIDTH, DHEIGHT);
     QPoint getCorner(const QString& key);
     ConfigManager *configManager;
-    void cleanUp();
     void SaveConfig();
     void PinWindow(bool pinned);
+    QPoint getCenteredPosition(QWidget *parent, QWidget *child);
 
 protected:
     void closeEvent(QCloseEvent *event) override;
     void moveEvent(QMoveEvent *event) override;
     void showEvent(QShowEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 };
+
 #endif // MAINWINDOW_H

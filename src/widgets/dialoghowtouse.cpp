@@ -1,7 +1,7 @@
 #include "dialoghowtouse.h"
 #include "ui_dialoghowtouse.h"
 
-DialogHowToUse* DialogHowToUse::uniqueInstance = nullptr;
+std::unique_ptr<DialogHowToUse> DialogHowToUse::uniqueInstance = nullptr;
 
 DialogHowToUse::DialogHowToUse(QWidget *parent)
     : DialogBase(parent)
@@ -13,21 +13,18 @@ DialogHowToUse::DialogHowToUse(QWidget *parent)
 DialogHowToUse::~DialogHowToUse()
 {
     delete ui;
-    if (uniqueInstance == this) {
-        uniqueInstance = nullptr;
-    }
 }
 
 DialogHowToUse* DialogHowToUse::getInstance()
 {
-    if (uniqueInstance == nullptr) {
-        uniqueInstance = new DialogHowToUse();
+    if (!uniqueInstance) {
+        uniqueInstance = std::make_unique<DialogHowToUse>();
     }
-    return uniqueInstance;
+    return uniqueInstance.get();
 }
 
 void DialogHowToUse::closeEvent(QCloseEvent *event)
 {
-    this->hide();
-    event->ignore();
+    uniqueInstance.reset();
+    event->accept();
 }

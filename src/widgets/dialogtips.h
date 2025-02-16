@@ -3,6 +3,7 @@
 
 #include "DialogBase.h"
 
+#include <memory>
 #include <QDialog>
 #include <QCloseEvent>
 
@@ -24,7 +25,8 @@ protected:
 private:
     explicit DialogTips(QWidget *parent = nullptr);
     Ui::DialogTips *ui;
-    static DialogTips* uniqueInstance;
+    static std::unique_ptr<DialogTips> uniqueInstance;
+    friend std::unique_ptr<DialogTips> std::make_unique<DialogTips>();
 };
 
 #endif // DIALOGTIPS_H

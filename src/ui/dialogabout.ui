@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>DialogAbout</class>
  <widget class="QDialog" name="DialogAbout">
+  <property name="windowModality">
+   <enum>Qt::WindowModality::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -30,6 +33,10 @@
   </property>
   <property name="windowTitle">
    <string>About</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../out/build/debug/.qt/rcc/icon.qrc">
+    <normaloff>:/assets/logo.ico</normaloff>:/assets/logo.ico</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">QDialog {
@@ -168,6 +175,8 @@ Version: 1.0.0</string>
  <tabstops>
   <tabstop>commandLinkButton</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../out/build/debug/.qt/rcc/icon.qrc"/>
+ </resources>
  <connections/>
 </ui>

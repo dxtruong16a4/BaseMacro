@@ -1,7 +1,7 @@
 #include "dialogtips.h"
 #include "ui_dialogtips.h"
 
-DialogTips* DialogTips::uniqueInstance = nullptr;
+std::unique_ptr<DialogTips> DialogTips::uniqueInstance = nullptr;
 
 DialogTips::DialogTips(QWidget *parent)
     : DialogBase(parent)
@@ -13,21 +13,18 @@ DialogTips::DialogTips(QWidget *parent)
 DialogTips::~DialogTips()
 {
     delete ui;
-    if (uniqueInstance == this) {
-        uniqueInstance = nullptr;
-    }
 }
 
 DialogTips* DialogTips::getInstance()
 {
-    if (uniqueInstance == nullptr) {
-        uniqueInstance = new DialogTips();
+    if (!uniqueInstance) {
+        uniqueInstance = std::make_unique<DialogTips>();
     }
-    return uniqueInstance;
+    return uniqueInstance.get();
 }
 
 void DialogTips::closeEvent(QCloseEvent *event)
 {
-    this->hide();
-    event->ignore();
+    uniqueInstance.reset();
+    event->accept();
 }

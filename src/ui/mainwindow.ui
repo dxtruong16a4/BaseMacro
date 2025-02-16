@@ -19,12 +19,16 @@
   <property name="windowTitle">
    <string>Base Macro</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../out/build/debug/.qt/rcc/icon.qrc">
+    <normaloff>:/assets/logo.ico</normaloff>:/assets/logo.ico</iconset>
+  </property>
   <property name="statusTip">
    <string>Welcome to Base Macro!</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow {
-	background: #1A1A1A
+	background: #1A1A1A;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -394,6 +398,9 @@ background:#7F7F7F
          <layout class="QHBoxLayout" name="horizontalLayout_3">
           <item>
            <widget class="QSplitter" name="splitter">
+            <property name="styleSheet">
+             <string notr="true"/>
+            </property>
             <property name="orientation">
              <enum>Qt::Orientation::Horizontal</enum>
             </property>
@@ -443,7 +450,7 @@ background:#7F7F7F
               <string/>
              </property>
              <property name="styleSheet">
-              <string notr="true">background:#404040</string>
+              <string notr="true">background:#404040;</string>
              </property>
              <property name="placeholderText">
               <string>Logger</string>
@@ -598,7 +605,7 @@ background:#7F7F7F
     <string>Open</string>
    </property>
    <property name="statusTip">
-    <string>Open Task list</string>
+    <string>Open a Task list</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+O</string>
@@ -792,6 +799,8 @@ background:#7F7F7F
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../out/build/debug/.qt/rcc/icon.qrc"/>
+ </resources>
  <connections/>
 </ui>

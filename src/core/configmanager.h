@@ -1,13 +1,15 @@
 #ifndef CONFIGMANAGER_H
 #define CONFIGMANAGER_H
 
+#include "DefaultConstants.h"
+
 #include <QString>
 #include <QDebug>
 #include <QSettings>
 #include <QFile>
 #include <QFileInfo>
 #include <QDebug>
-#include "DefaultConstants.h"
+#include <QMessageBox>
 
 class ConfigManager
 {
@@ -35,7 +37,7 @@ public:
     bool getHide();
 
 private:
-    QString configFilePath = FILEPATH;
+    QString configFilePath = SETTINGFILEPATH;
     const QString configSample = CONFIGSAMPLE;
     QSettings settings;
 };
