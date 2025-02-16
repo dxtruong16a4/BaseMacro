@@ -1,0 +1,1179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MacroEditor</class>
+ <widget class="QMainWindow" name="MacroEditor">
+  <property name="windowModality">
+   <enum>Qt::WindowModality::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>641</width>
+    <height>480</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>640</width>
+    <height>480</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Macro Editor</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
+    <normaloff>:/assets/logo.ico</normaloff>:/assets/logo.ico</iconset>
+  </property>
+  <property name="toolTip">
+   <string/>
+  </property>
+  <property name="statusTip">
+   <string>Welcome to Macro Editor!</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+	background: #1A1A1A;
+}</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="1">
+     <widget class="QWidget" name="widget" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QListWidget" name="listMacro">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QListWidget
+{
+	background:#333333;
+	border-radius:10px;
+	border: 1px solid #555;
+}
+QListWidget::item
+{
+    background: #505050;
+    color: white;
+    border-radius: 5px;
+	padding: 4px;
+}
+QListWidget::item:hover 
+{
+    background: #F0F0F0;
+ 	color: black;
+}
+QListWidget::item:selected
+{
+    background: #0078D7;
+    color: white;
+    border: 1px solid #005A9E;
+}</string>
+         </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::DragDropMode::InternalMove</enum>
+         </property>
+         <property name="defaultDropAction">
+          <enum>Qt::DropAction::MoveAction</enum>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+         </property>
+         <property name="spacing">
+          <number>4</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>64</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="layoutDirection">
+       <enum>Qt::LayoutDirection::LeftToRight</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QScrollArea {
+    background: #333333;
+    border-radius: 10px;
+    border: 1px solid #444;
+}
+
+QScrollBar::handle:vertical {
+    background: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 1,
+        stop: 0 #666, stop: 1 #222
+    );
+    border-radius: 6px;
+    min-height: 25px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 1,
+        stop: 0 #999, stop: 1 #444
+    );
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #222;
+    min-height: 35px;
+}
+</string>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignmentFlag::AlignCenter</set>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>50</width>
+         <height>550</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QWidget
+{
+	background: #333333;
+}</string>
+       </property>
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
+         <widget class="QPushButton" name="btnClick">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Insert click action</string>
+          </property>
+          <property name="statusTip">
+           <string>Insert click action</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover
+{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed
+{
+border-radius:10px;
+background:#7F7F7F;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
+            <normaloff>:/assets/mouse.png</normaloff>:/assets/mouse.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnKeyboard">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Insert keyboard action</string>
+          </property>
+          <property name="statusTip">
+           <string>Insert keyboard action</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover
+{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed
+{
+border-radius:10px;
+background:#7F7F7F;
+}</string>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
+            <normaloff>:/assets/keyboard.png</normaloff>:/assets/keyboard.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnDelay">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Insert delay action</string>
+          </property>
+          <property name="statusTip">
+           <string>Insert delay action</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover
+{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed
+{
+border-radius:10px;
+background:#7F7F7F;
+}</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
+            <normaloff>:/assets/delay.png</normaloff>:/assets/delay.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnPaste">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Paste text</string>
+          </property>
+          <property name="statusTip">
+           <string>Paste text</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover
+{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed
+{
+border-radius:10px;
+background:#7F7F7F;
+}</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
+            <normaloff>:/assets/paste.png</normaloff>:/assets/paste.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnOpenLink">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Open website</string>
+          </property>
+          <property name="statusTip">
+           <string>Open website</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover
+{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed
+{
+border-radius:10px;
+background:#7F7F7F;
+}</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
+            <normaloff>:/assets/website.png</normaloff>:/assets/website.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnFind">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Insert find action</string>
+          </property>
+          <property name="statusTip">
+           <string>Insert find action</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover
+{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed
+{
+border-radius:10px;
+background:#7F7F7F;
+}</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
+            <normaloff>:/assets/find.png</normaloff>:/assets/find.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnIf">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Insert if action</string>
+          </property>
+          <property name="statusTip">
+           <string>Insert if action</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover
+{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed
+{
+border-radius:10px;
+background:#7F7F7F;
+}</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
+            <normaloff>:/assets/if.png</normaloff>:/assets/if.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnLoop">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Insert loop action</string>
+          </property>
+          <property name="statusTip">
+           <string>Insert loop action</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover
+{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed
+{
+border-radius:10px;
+background:#7F7F7F;
+}</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
+            <normaloff>:/assets/loop.png</normaloff>:/assets/loop.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnBracket">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Add opening/closing brace</string>
+          </property>
+          <property name="statusTip">
+           <string>Add opening/closing brace</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover
+{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed
+{
+border-radius:10px;
+background:#7F7F7F;
+}</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
+            <normaloff>:/assets/bracket.png</normaloff>:/assets/bracket.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnLabel">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Insert a label</string>
+          </property>
+          <property name="statusTip">
+           <string>Insert a label</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover
+{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed
+{
+border-radius:10px;
+background:#7F7F7F;
+}</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
+            <normaloff>:/assets/label.png</normaloff>:/assets/label.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnGoto">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Go to label</string>
+          </property>
+          <property name="statusTip">
+           <string>Go to label</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover
+{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed
+{
+border-radius:10px;
+background:#7F7F7F;
+}</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
+            <normaloff>:/assets/goto.png</normaloff>:/assets/goto.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnBreak_Continue">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Insert break/continue action</string>
+          </property>
+          <property name="statusTip">
+           <string>Insert break/continue action</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover
+{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed
+{
+border-radius:10px;
+background:#7F7F7F;
+}</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
+            <normaloff>:/assets/break-continue.png</normaloff>:/assets/break-continue.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnStop">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Insert stop action</string>
+          </property>
+          <property name="statusTip">
+           <string>Insert stop action</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover
+{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed
+{
+border-radius:10px;
+background:#7F7F7F;
+}</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
+            <normaloff>:/assets/stop.png</normaloff>:/assets/stop.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnCode">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="toolTip">
+           <string>Run a code</string>
+          </property>
+          <property name="statusTip">
+           <string>Run a code</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton
+{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover
+{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed
+{
+border-radius:10px;
+background:#7F7F7F;
+}</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
+            <normaloff>:/assets/code.png</normaloff>:/assets/code.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="verticalSpacer">
+          <property name="orientation">
+           <enum>Qt::Orientation::Vertical</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>40</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>641</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuOpen">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionNew"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_As"/>
+    <addaction name="actionExit"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionCut"/>
+    <addaction name="actionCopy"/>
+    <addaction name="actionPaste"/>
+    <addaction name="actionDelete"/>
+    <addaction name="actionMove_up"/>
+    <addaction name="actionMove_down"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="actionHow_to_use"/>
+   </widget>
+   <addaction name="menuOpen"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionNew">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::DocumentNew"/>
+   </property>
+   <property name="text">
+    <string>New</string>
+   </property>
+   <property name="statusTip">
+    <string>Create new macro</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::DocumentOpen"/>
+   </property>
+   <property name="text">
+    <string>Open</string>
+   </property>
+   <property name="statusTip">
+    <string>Open a macro</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+O</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::DocumentSave"/>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
+   <property name="statusTip">
+    <string>Save macro</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
+  </action>
+  <action name="actionSave_As">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::DocumentSaveAs"/>
+   </property>
+   <property name="text">
+    <string>Save As</string>
+   </property>
+   <property name="statusTip">
+    <string>Save macro as</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Shift+S</string>
+   </property>
+  </action>
+  <action name="actionExit">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::ApplicationExit"/>
+   </property>
+   <property name="text">
+    <string>Exit</string>
+   </property>
+   <property name="statusTip">
+    <string>Exit Macro Editor</string>
+   </property>
+   <property name="shortcut">
+    <string>Alt+F4</string>
+   </property>
+  </action>
+  <action name="actionCut">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::EditCut"/>
+   </property>
+   <property name="text">
+    <string>Cut</string>
+   </property>
+   <property name="statusTip">
+    <string>Cut</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="actionCopy">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::EditCopy"/>
+   </property>
+   <property name="text">
+    <string>Copy</string>
+   </property>
+   <property name="statusTip">
+    <string>Copy</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+C</string>
+   </property>
+  </action>
+  <action name="actionPaste">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::EditPaste"/>
+   </property>
+   <property name="text">
+    <string>Paste</string>
+   </property>
+   <property name="statusTip">
+    <string>Paste</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+V</string>
+   </property>
+  </action>
+  <action name="actionDelete">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::EditDelete"/>
+   </property>
+   <property name="text">
+    <string>Delete</string>
+   </property>
+   <property name="statusTip">
+    <string>Delete</string>
+   </property>
+   <property name="shortcut">
+    <string>Del</string>
+   </property>
+  </action>
+  <action name="actionMove_up">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::GoUp"/>
+   </property>
+   <property name="text">
+    <string>Move up</string>
+   </property>
+   <property name="statusTip">
+    <string>Move up</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Up</string>
+   </property>
+  </action>
+  <action name="actionMove_down">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::GoDown"/>
+   </property>
+   <property name="text">
+    <string>Move down</string>
+   </property>
+   <property name="statusTip">
+    <string>Move down</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Down</string>
+   </property>
+  </action>
+  <action name="actionHow_to_use">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::HelpFaq"/>
+   </property>
+   <property name="text">
+    <string>How to use</string>
+   </property>
+   <property name="statusTip">
+    <string>How to use Macro Editor</string>
+   </property>
+  </action>
+ </widget>
+ <resources>
+  <include location="../out/build/release/.qt/rcc/icon.qrc"/>
+ </resources>
+ <connections/>
+</ui>

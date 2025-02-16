@@ -3,6 +3,7 @@
 
 #include "DialogBase.h"
 
+#include <memory>
 #include <QDialog>
 #include <QCloseEvent>
 
@@ -24,7 +25,8 @@ protected:
 private:
     explicit DialogHowToUse(QWidget *parent = nullptr);
     Ui::DialogHowToUse *ui;
-    static DialogHowToUse* uniqueInstance;
+    static std::unique_ptr<DialogHowToUse> uniqueInstance;
+    friend std::unique_ptr<DialogHowToUse> std::make_unique<DialogHowToUse>();
 };
 
 #endif // DIALOGHOWTOUSE_H

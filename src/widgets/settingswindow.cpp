@@ -1,12 +1,12 @@
 #include "settingswindow.h"
 #include "ui_settingswindow.h"
 
-SettingsWindow* SettingsWindow::uniqueInstance = nullptr;
+std::unique_ptr<SettingsWindow> SettingsWindow::uniqueInstance = nullptr;
 
 SettingsWindow::SettingsWindow(QWidget *parent)
     : QWidget(parent)
     , ui(new Ui::SettingsWindow)
-    , configManager(new ConfigManager(FILEPATH))
+    , configManager(new ConfigManager(SETTINGFILEPATH))
 {
     ui->setupUi(this);
     initWidget();
@@ -15,19 +15,14 @@ SettingsWindow::SettingsWindow(QWidget *parent)
 SettingsWindow::~SettingsWindow()
 {
     delete ui;
-    if (uniqueInstance == this) {
-        uniqueInstance = nullptr;
-    }
-    delete configManager;
-    configManager = nullptr;
 }
 
 SettingsWindow* SettingsWindow::getInstance()
 {
-    if (uniqueInstance == nullptr) {
-        uniqueInstance = new SettingsWindow();
+    if (!uniqueInstance) {
+        uniqueInstance = std::make_unique<SettingsWindow>();
     }
-    return uniqueInstance;
+    return uniqueInstance.get();
 }
 
 bool SettingsWindow::getReset()
@@ -69,7 +64,8 @@ void SettingsWindow::closeEvent(QCloseEvent *event)
         this->setMainWindowOpacity(configManager->getOpacity() / 100.0);
         this->initWidget();
     }
-    this->close();
+    uniqueInstance.reset();
+    event->accept();
 }
 
 void SettingsWindow::on_sliderOpacity_sliderMoved(int position)
@@ -97,4 +93,7 @@ void SettingsWindow::on_btnSave_clicked()
     configManager->setPinCorner(ui->cbPinCorner->currentText());
     configManager->setOpacity(ui->sliderOpacity->value());
     configManager->setHide(ui->checkBoxHide->isChecked());
+    if (isReset){
+        configManager->saveSettings(DWIDTH, DHEIGHT, DPOSX, DPOSY, DPIN, DOPACITY, DHIDE);
+    }
 }

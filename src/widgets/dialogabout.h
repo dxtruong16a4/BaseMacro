@@ -3,6 +3,7 @@
 
 #include "DialogBase.h"
 
+#include <memory>
 #include <QDialog>
 #include <QCloseEvent>
 #include <QDesktopServices>
@@ -29,6 +30,7 @@ private slots:
 private:
     explicit DialogAbout(QWidget *parent = nullptr);
     Ui::DialogAbout *ui;
-    static DialogAbout* uniqueInstance;
+    static std::unique_ptr<DialogAbout> uniqueInstance;
+    friend std::unique_ptr<DialogAbout> std::make_unique<DialogAbout>();
 };
 #endif // DIALOGABOUT_H

@@ -8,7 +8,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    configManager = new ConfigManager(FILEPATH);
+    configManager = new ConfigManager(SETTINGFILEPATH);
     this->setGeometry(
         configManager->getX(),
         configManager->getY() + 31,
@@ -32,26 +32,6 @@ MainWindow* MainWindow::getInstance()
         uniqueInstance = new MainWindow();
     }
     return uniqueInstance;
-}
-
-void MainWindow::cleanUp()
-{
-    QVector<DialogBase*> dialogs = {
-        DialogHowToUse::getInstance(),
-        DialogTips::getInstance(),
-        DialogAbout::getInstance(),
-    };
-    for (DialogBase*& dlg : dialogs) {
-        if (dlg) {
-            delete dlg;
-            dlg = nullptr;
-        }
-    }
-    SettingsWindow *sw = SettingsWindow::getInstance();
-    if (sw) {
-        delete sw;
-        sw = nullptr;
-    }
 }
 
 void MainWindow::SaveConfig()
@@ -88,6 +68,17 @@ void MainWindow::PinWindow(bool pinned)
     this->show();
 }
 
+QPoint MainWindow::getCenteredPosition(QWidget *parent, QWidget *child)
+{
+    if (!parent || !child)
+        return QPoint(0, 0);
+    QRect parentRect = parent->geometry();
+    QRect childRect = child->geometry();
+    int x = parentRect.x() + (parentRect.width() - childRect.width()) / 2;
+    int y = parentRect.y() + (parentRect.height() - childRect.height()) / 2;
+    return QPoint(x, y);
+}
+
 QPoint MainWindow::getCorner(const QString &key)
 {
     return DCORNER.value(key, QPoint(0, 0));
@@ -107,13 +98,7 @@ void MainWindow::closeEvent(QCloseEvent *event)
         this->show();
     }
     else {
-        SettingsWindow *sw = SettingsWindow::getInstance();
-        if (sw->getReset()) {
-            configManager->saveSettings(DWIDTH, DHEIGHT, DPOSX, DPOSY, DPIN, DOPACITY, DHIDE);
-        } else {
-            SaveConfig();
-        }
-        cleanUp();
+        SaveConfig();
         QMainWindow::closeEvent(event);
     }
 }
@@ -133,6 +118,16 @@ void MainWindow::showEvent(QShowEvent *event){
     if (isPinned) {
         this->activateWindow();
         this->raise();
+    }
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_F1) {
+        MacroEditor *me = MacroEditor::getInstance();
+        if (me){
+            me->show();
+        }
     }
 }
 
@@ -205,8 +200,11 @@ void MainWindow::on_actionMove_down_triggered()
 void MainWindow::on_actionSettings_triggered()
 {
     SettingsWindow *sw = SettingsWindow::getInstance();
-    sw->setSaveToFalse();
-    sw->show();
+    if (sw){
+        sw->setSaveToFalse();
+        sw->move(getCenteredPosition(this, sw));
+        sw->show();
+    }
 }
 
 
@@ -219,20 +217,48 @@ void MainWindow::on_actionPin_window_triggered()
 void MainWindow::on_actionHow_to_use_triggered()
 {
     DialogHowToUse *hwu = DialogHowToUse::getInstance();
-    hwu->show();
+    if (hwu){
+        hwu->move(getCenteredPosition(this, hwu));
+        hwu->show();
+    }
 }
 
 
 void MainWindow::on_actionTips_triggered()
 {
     DialogTips *dt = DialogTips::getInstance();
-    dt->show();
+    if (dt){
+        dt->move(getCenteredPosition(this, dt));
+        dt->show();
+    }
 }
 
 
 void MainWindow::on_actionAbout_triggered()
 {
     DialogAbout *da = DialogAbout::getInstance();
-    da->show();
+    if (da){
+        da->move(getCenteredPosition(this, da));
+        da->show();
+    }
 }
 
+
+void MainWindow::on_btnRun_clicked()
+{
+}
+
+
+void MainWindow::on_btnStop_clicked()
+{
+}
+
+
+void MainWindow::on_btnOpenEditor_clicked()
+{
+    MacroEditor *me = MacroEditor::getInstance();
+    if (me){
+        me->move(getCenteredPosition(this, me));
+        me->show();
+    }
+}

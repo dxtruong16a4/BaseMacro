@@ -28,9 +28,13 @@
   <property name="windowTitle">
    <string>Settings</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="../out/build/debug/.qt/rcc/icon.qrc">
+    <normaloff>:/assets/logo.ico</normaloff>:/assets/logo.ico</iconset>
+  </property>
   <property name="styleSheet">
    <string notr="true">QWidget {
-	background: #1A1A1A
+	background: #1A1A1A;
 }</string>
   </property>
   <widget class="QLabel" name="lbSettings">
@@ -375,6 +379,8 @@ border-radius: 10px;</string>
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="../out/build/debug/.qt/rcc/icon.qrc"/>
+ </resources>
  <connections/>
 </ui>
