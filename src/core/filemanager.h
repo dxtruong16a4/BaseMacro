@@ -1,12 +1,11 @@
 #ifndef FILEMANAGER_H
 #define FILEMANAGER_H
 
-// Not used
-
+// Never used
 #include <QFile>
+#include <QMessageBox>
 #include <QString>
 #include <QTextStream>
-#include <QMessageBox>
 
 class FileManager
 {

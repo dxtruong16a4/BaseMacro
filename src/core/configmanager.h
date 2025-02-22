@@ -3,18 +3,18 @@
 
 #include "DefaultConstants.h"
 
-#include <QString>
 #include <QDebug>
-#include <QSettings>
 #include <QFile>
 #include <QFileInfo>
-#include <QDebug>
 #include <QMessageBox>
+#include <QSettings>
+#include <QString>
 
 class ConfigManager
 {
 public:
     ConfigManager(const QString& filePath);
+    ~ConfigManager();
     bool configFileExists() const;
     bool createDefaultConfig();
     void loadSettings(int& width, int& height, int& x, int& y, QString& pinCorner, int& opac, bool& isHide);

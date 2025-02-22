@@ -1,6 +1,5 @@
 #include "dialogabout.h"
 #include "ui_dialogabout.h"
-#include "../core/DefaultConstants.h"
 
 std::unique_ptr<DialogAbout> DialogAbout::uniqueInstance = nullptr;
 
@@ -22,6 +21,16 @@ DialogAbout* DialogAbout::getInstance()
         uniqueInstance = std::make_unique<DialogAbout>();
     }
     return uniqueInstance.get();
+}
+
+void DialogAbout::setData(const QString &data)
+{
+
+}
+
+void DialogAbout::editItem(QListWidgetItem *item)
+{
+
 }
 
 void DialogAbout::closeEvent(QCloseEvent *event)

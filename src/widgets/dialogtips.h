@@ -1,11 +1,11 @@
 #ifndef DIALOGTIPS_H
 #define DIALOGTIPS_H
 
-#include "DialogBase.h"
+#include "../core/DialogBase.h"
 
 #include <memory>
-#include <QDialog>
 #include <QCloseEvent>
+#include <QDialog>
 
 namespace Ui {
 class DialogTips;
@@ -18,6 +18,8 @@ class DialogTips : public DialogBase
 public:
     ~DialogTips();
     static DialogTips* getInstance();
+    void setData(const QString& data) override;
+    void editItem(QListWidgetItem *item) override;
 
 protected:
     void closeEvent(QCloseEvent *event) override;

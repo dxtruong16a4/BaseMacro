@@ -10,6 +10,11 @@ ConfigManager::ConfigManager(const QString& filePath) : configFilePath(filePath)
     }
 }
 
+ConfigManager::~ConfigManager()
+{
+
+}
+
 bool ConfigManager::configFileExists() const {
     QFileInfo fileInfo(configFilePath);
     return fileInfo.exists() && fileInfo.isFile();

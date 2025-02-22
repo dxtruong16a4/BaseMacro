@@ -1,11 +1,10 @@
 #ifndef DEFAULTCONSTANTS_H
 #define DEFAULTCONSTANTS_H
 
-#include <QString>
-#include <QStringLiteral>
 #include <QMap>
 #include <QPoint>
-#include <iostream>
+#include <QString>
+#include <QStringLiteral>
 #include <unordered_map>
 
 // Value
@@ -44,12 +43,12 @@ const QMap<QString, QPoint> DCORNER = {
 
 // Action type
 
-// Click action
-enum ClickMode {
+// Mouse action
+enum MouseMode {
     LEFT,
     RIGHT,
-    WHEELUP,
-    WHEELDOWN,
+    WHEEL,
+    HORIZONTALWHEEL,
     MOVE,
 };
 
@@ -86,6 +85,15 @@ enum IfMode {
     IFITERATOREQUAL,
     ELSEIF,
     ENDIF
+};
+
+// Switch Action
+
+enum SwitchMode {
+    SWITCH,
+    CASE,
+    CASEDEFAULT,
+    ENDSWITCH
 };
 
 // Loop action
@@ -126,13 +134,13 @@ enum RunCodeMode {
 // Mode to string
 
 template <typename T>
-std::string ModeToString(T mode) {
+std::string modeToString(T mode) {
     static std::unordered_map<int, std::string> enumMap = {
         // MOUSE
         {LEFT           , "LEFT"},
         {RIGHT          , "RIGHT"},
-        {WHEELUP        , "WHEELUP"},
-        {WHEELDOWN      , "WHEELDOWN"},
+        {WHEEL          , "WHEEL"},
+        {HORIZONTALWHEEL, "HORIZONTALWHEEL"},
         {MOVE           , "MOVE"},
         // KEYBOARD
         {KEYPRESS       , "KEYPRESS"},
@@ -154,6 +162,11 @@ std::string ModeToString(T mode) {
         {IFITERATOREQUAL, "IFITERATOREQUAL"},
         {ELSEIF         , "ELSEIF"},
         {ENDIF          , "ENDIF"},
+        // SWITCH
+        {SWITCH         , "SWITCH"},
+        {CASE           , "CASE"},
+        {CASEDEFAULT    , "CASEDEFAULT"},
+        {ENDSWITCH      , "ENDSWITCH"},
         // LOOP
         {FOR            , "FOR"},
         {WHILE          , "WHILE"},

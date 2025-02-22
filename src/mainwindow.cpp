@@ -99,7 +99,8 @@ void MainWindow::closeEvent(QCloseEvent *event)
     }
     else {
         SaveConfig();
-        QMainWindow::closeEvent(event);
+        // QMainWindow::closeEvent(event);
+        event->accept();
     }
 }
 
@@ -246,11 +247,14 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::on_btnRun_clicked()
 {
+    // QString otherapp = QDir::currentPath() + "/untitled.exe";
+    // QProcess::startDetached(otherapp);
 }
 
 
 void MainWindow::on_btnStop_clicked()
 {
+
 }
 
 

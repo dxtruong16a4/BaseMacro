@@ -1,0 +1,217 @@
+// QWidget #######################################
+
+QMainWindow{
+background: #1A1A1A;
+color: white;
+}
+QMenuBar{
+color: white;
+}
+QStatusBar{
+color: white;
+}
+
+// QTextBrowser #######################################
+
+QTextBrowser{
+background:#404040;
+}
+
+// QListWidget #######################################
+
+QListWidget{
+background:#404040;
+color: white;
+}
+
+// QGroupBox #######################################
+
+QGroupBox{
+border-radius:10px;
+}
+
+// QLabel #######################################
+
+QLabel{
+border-radius:10px;
+color: white;
+}
+
+// sample 2
+
+QLabel{
+background: #363636;
+font: 700 12pt "Arial";
+border-radius: 10px;
+color: white;
+}
+
+// QPushButton #######################################
+
+QPushButton{
+border-radius:10px;
+background:#7F7F7F;
+color: white;
+}
+QPushButton:hover{
+border-radius:10px;
+background:#A1A1A1
+}
+QPushButton:pressed{
+border-radius:10px;
+background:#7F7F7F
+}
+
+// Sample 2
+
+QPushButton{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed{
+border-radius:10px;
+background:#7F7F7F;
+}
+
+// QComboBox #######################################
+
+QComboBox{
+background: #363636;
+font: 700 12pt "Arial";
+border-radius: 10px
+}
+QComboBox:Hover{
+background: #696969;
+font: 700 12pt "Arial";
+border-radius: 10px
+}
+
+// QCheckBox #######################################
+
+QCheckBox{
+background: #363636;
+font: 700 12pt "Arial";
+border-radius: 10px;
+padding: 10px;
+}
+
+// QSlider #######################################
+
+QSlider{
+background: #363636;
+border-radius: 10px;
+}
+
+// QScrollArea #######################################
+
+QScrollArea {
+background: #333333;
+border: 1px solid #444;
+}
+
+QScrollBar::handle:vertical {
+background: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 1,
+        stop: 0 #666, stop: 1 #222
+);
+border-radius: 6px;
+min-height: 25px;
+}
+
+QScrollBar::handle:vertical:hover {
+background: qlineargradient(
+        x1: 0, y1: 0, x2: 1, y2: 1,
+        stop: 0 #999, stop: 1 #444
+);
+}
+
+QScrollBar::handle:vertical:hover {
+background: #222;
+min-height: 35px;
+}
+
+// QListWidget #######################################
+
+QListWidget{
+background:#333333;
+border-radius:10px;
+border: 1px solid #555;
+}
+QListWidget::item{
+background: #505050;
+color: white;
+border-radius: 5px;
+padding: 4px;
+}
+QListWidget::item:hover {
+background: #F0F0F0;
+color: black;
+}
+QListWidget::item:selected{
+background: #0078D7;
+color: white;
+border: 1px solid #005A9E;
+}
+
+// QDialog #######################################
+
+QDialog {
+background: #1A1A1A;
+}
+
+// QCommandLinkButton #######################################
+
+QCommandLinkButton{
+background: #363636;
+font: 700 12pt "Arial";
+border-radius: 10px;
+color: white;
+}
+QPushButton{
+color: white;
+}
+QPushButton:Hover{
+background: #696969;
+font: 700 12pt "Arial";
+border-radius: 10px;
+color: white;
+}
+QPushButton:pressed{
+background: #363636;
+font: 700 12pt "Arial";
+border-radius: 10px;
+color: white;
+}
+
+// QSpinBox #######################################
+
+QSpinBox {
+    font: 700 11pt "Arial";
+    border-radius: 5px;
+}
+
+QSpinBox::up-button, QSpinBox::down-button {
+        width: 16px;
+    background-color: #7F7F7F;
+}
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+    background-color: #A1A1A1;
+}
+
+QSpinBox::up-arrow {
+    image: url(:/assets/arrow_up.png);
+    width: 10px;
+    height: 10px;
+}
+
+QSpinBox::down-arrow {
+    image: url(:/assets/arrow_down.png);
+    width: 10px;
+    height: 10px;
+}

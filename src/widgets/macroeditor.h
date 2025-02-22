@@ -2,14 +2,20 @@
 #define MACROEDITOR_H
 
 #include "../core/filemanager.h"
+#include "../core/dialogpool.h"
+#include "../core/DialogBase.h"
+#include "../actionmode/dialogclick.h"
+#include "../actionmode/dialogkeyboard.h"
 
 #include <memory>
-#include <QMainWindow>
-#include <QCloseEvent>
-#include <QListWidgetItem>
-#include <QFileDialog>
-#include <QMessageBox>
 #include <QClipboard>
+#include <QCloseEvent>
+#include <QFileDialog>
+#include <QKeyEvent>
+#include <QMainWindow>
+#include <QListWidgetItem>
+#include <QMessageBox>
+#include <QString>
 
 namespace Ui {
 class MacroEditor;
@@ -22,9 +28,13 @@ class MacroEditor : public QMainWindow
 public:
     static MacroEditor* getInstance();
     ~MacroEditor();
+    void setIsChanged(bool changed);
+    void addItemToList(QString item);
+    QString getIndentation(const QString& text);
 
 protected:
     void closeEvent(QCloseEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
 private slots:
     // QT generator
@@ -56,9 +66,6 @@ private slots:
 
     void on_btnClick_clicked();
 
-    // Custom
-    void checkAnyChange(QListWidgetItem *item);
-
     void on_btnKeyboard_clicked();
 
     void on_btnDelay_clicked();
@@ -85,6 +92,9 @@ private slots:
 
     void on_btnCode_clicked();
 
+    // Custom
+    void checkAnyChange(QListWidgetItem *item);
+
 private:
     Ui::MacroEditor *ui;
     explicit MacroEditor(QWidget *parent = nullptr);
@@ -92,11 +102,20 @@ private:
     friend std::unique_ptr<MacroEditor> std::make_unique<MacroEditor>();
 
     QString currentFilePath = "";
-    bool isChange = false;
+    bool isChanged = false;
     void New();
     void Open();
     void Save();
     void SaveAs();
+    void Cut();
+    void Copy();
+    void Paste();
+    void Delete();
+    void MoveUp();
+    void MoveDown();
+    void ChangeIndentLevelUp();
+    void ChangeIndentLevelDown();
+    DialogBase* getDialogByMode(const QString& mode);
 };
 
 #endif // MACROEDITOR_H

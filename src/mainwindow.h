@@ -18,6 +18,7 @@
 #include <QUrl>
 #include <QString>
 #include <QVector>
+#include <QProcess>
 #include <QDebug>
 
 QT_BEGIN_NAMESPACE
@@ -33,6 +34,12 @@ class MainWindow : public QMainWindow
 public:
     ~MainWindow();
     static MainWindow* getInstance();
+
+protected:
+    void closeEvent(QCloseEvent *event) override;
+    void moveEvent(QMoveEvent *event) override;
+    void showEvent(QShowEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
 private slots:
 
@@ -87,12 +94,6 @@ private:
     void SaveConfig();
     void PinWindow(bool pinned);
     QPoint getCenteredPosition(QWidget *parent, QWidget *child);
-
-protected:
-    void closeEvent(QCloseEvent *event) override;
-    void moveEvent(QMoveEvent *event) override;
-    void showEvent(QShowEvent *event) override;
-    void keyPressEvent(QKeyEvent *event) override;
 };
 
 #endif // MAINWINDOW_H

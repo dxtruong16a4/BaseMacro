@@ -23,6 +23,16 @@ DialogHowToUse* DialogHowToUse::getInstance()
     return uniqueInstance.get();
 }
 
+void DialogHowToUse::setData(const QString &data)
+{
+
+}
+
+void DialogHowToUse::editItem(QListWidgetItem *item)
+{
+
+}
+
 void DialogHowToUse::closeEvent(QCloseEvent *event)
 {
     uniqueInstance.reset();

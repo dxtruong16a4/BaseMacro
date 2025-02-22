@@ -23,6 +23,16 @@ DialogTips* DialogTips::getInstance()
     return uniqueInstance.get();
 }
 
+void DialogTips::setData(const QString &data)
+{
+
+}
+
+void DialogTips::editItem(QListWidgetItem *item)
+{
+
+}
+
 void DialogTips::closeEvent(QCloseEvent *event)
 {
     uniqueInstance.reset();

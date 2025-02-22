@@ -23,8 +23,8 @@
    <string>Macro Editor</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
-    <normaloff>:/assets/logo.ico</normaloff>:/assets/logo.ico</iconset>
+   <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+    <normaloff>:/resources/icon/logo.ico</normaloff>:/resources/icon/logo.ico</iconset>
   </property>
   <property name="toolTip">
    <string/>
@@ -33,8 +33,15 @@
    <string>Welcome to Macro Editor!</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QMainWindow {
-	background: #1A1A1A;
+   <string notr="true">QMainWindow{
+background: #1A1A1A;
+color: white;
+}
+QMenuBar{
+color: white;
+}
+QStatusBar{
+color: white;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -53,30 +60,29 @@
            <pointsize>12</pointsize>
           </font>
          </property>
+         <property name="focusPolicy">
+          <enum>Qt::FocusPolicy::StrongFocus</enum>
+         </property>
          <property name="styleSheet">
-          <string notr="true">QListWidget
-{
-	background:#333333;
-	border-radius:10px;
-	border: 1px solid #555;
+          <string notr="true">QListWidget{
+background:#333333;
+border-radius:10px;
+border: 1px solid #555;
 }
-QListWidget::item
-{
-    background: #505050;
-    color: white;
-    border-radius: 5px;
-	padding: 4px;
+QListWidget::item{
+background: #505050;
+color: white;
+border-radius: 5px;
+padding: 4px;
 }
-QListWidget::item:hover 
-{
-    background: #F0F0F0;
- 	color: black;
+QListWidget::item:hover {
+background: #F0F0F0;
+color: black;
 }
-QListWidget::item:selected
-{
-    background: #0078D7;
-    color: white;
-    border: 1px solid #005A9E;
+QListWidget::item:selected{
+background: #0078D7;
+color: white;
+border: 1px solid #005A9E;
 }</string>
          </property>
          <property name="dragDropMode">
@@ -116,35 +122,37 @@ QListWidget::item:selected
         <height>0</height>
        </size>
       </property>
+      <property name="focusPolicy">
+       <enum>Qt::FocusPolicy::StrongFocus</enum>
+      </property>
       <property name="layoutDirection">
        <enum>Qt::LayoutDirection::LeftToRight</enum>
       </property>
       <property name="styleSheet">
        <string notr="true">QScrollArea {
-    background: #333333;
-    border-radius: 10px;
-    border: 1px solid #444;
+background: #333333;
+border: 1px solid #444;
 }
 
 QScrollBar::handle:vertical {
-    background: qlineargradient(
+background: qlineargradient(
         x1: 0, y1: 0, x2: 1, y2: 1,
         stop: 0 #666, stop: 1 #222
-    );
-    border-radius: 6px;
-    min-height: 25px;
+);
+border-radius: 6px;
+min-height: 25px;
 }
 
 QScrollBar::handle:vertical:hover {
-    background: qlineargradient(
+background: qlineargradient(
         x1: 0, y1: 0, x2: 1, y2: 1,
         stop: 0 #999, stop: 1 #444
-    );
+);
 }
 
 QScrollBar::handle:vertical:hover {
-    background: #222;
-    min-height: 35px;
+background: #222;
+min-height: 35px;
 }
 </string>
       </property>
@@ -160,13 +168,13 @@ QScrollBar::handle:vertical:hover {
          <x>0</x>
          <y>0</y>
          <width>50</width>
-         <height>550</height>
+         <height>588</height>
         </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">QWidget
-{
-	background: #333333;
+        <string notr="true">QWidget{
+background: #333333;
+border-radius: 10px;
 }</string>
        </property>
        <layout class="QVBoxLayout" name="verticalLayout">
@@ -189,6 +197,9 @@ QScrollBar::handle:vertical:hover {
             <pointsize>8</pointsize>
            </font>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::FocusPolicy::StrongFocus</enum>
+          </property>
           <property name="toolTip">
            <string>Insert click action</string>
           </property>
@@ -196,19 +207,16 @@ QScrollBar::handle:vertical:hover {
            <string>Insert click action</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton
-{
+           <string notr="true">QPushButton{
 border-radius:10px;
 background:#7F7F7F;
 }
-QPushButton:hover
-{
+QPushButton:hover{
 border: 3px solid #6AB2FF;
 border-radius:10px;
 background:#A1A1A1;
 }
-QPushButton:pressed
-{
+QPushButton:pressed{
 border-radius:10px;
 background:#7F7F7F;
 }</string>
@@ -217,8 +225,8 @@ background:#7F7F7F;
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
-            <normaloff>:/assets/mouse.png</normaloff>:/assets/mouse.png</iconset>
+           <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+            <normaloff>:/resources/icon/mouse.png</normaloff>:/resources/icon/mouse.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -247,6 +255,9 @@ background:#7F7F7F;
             <pointsize>8</pointsize>
            </font>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::FocusPolicy::StrongFocus</enum>
+          </property>
           <property name="toolTip">
            <string>Insert keyboard action</string>
           </property>
@@ -254,19 +265,16 @@ background:#7F7F7F;
            <string>Insert keyboard action</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton
-{
+           <string notr="true">QPushButton{
 border-radius:10px;
 background:#7F7F7F;
 }
-QPushButton:hover
-{
+QPushButton:hover{
 border: 3px solid #6AB2FF;
 border-radius:10px;
 background:#A1A1A1;
 }
-QPushButton:pressed
-{
+QPushButton:pressed{
 border-radius:10px;
 background:#7F7F7F;
 }</string>
@@ -275,8 +283,8 @@ background:#7F7F7F;
            <string/>
           </property>
           <property name="icon">
-           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
-            <normaloff>:/assets/keyboard.png</normaloff>:/assets/keyboard.png</iconset>
+           <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+            <normaloff>:/resources/icon/keyboard.png</normaloff>:/resources/icon/keyboard.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -305,6 +313,9 @@ background:#7F7F7F;
             <pointsize>8</pointsize>
            </font>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::FocusPolicy::StrongFocus</enum>
+          </property>
           <property name="toolTip">
            <string>Insert delay action</string>
           </property>
@@ -312,26 +323,23 @@ background:#7F7F7F;
            <string>Insert delay action</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton
-{
+           <string notr="true">QPushButton{
 border-radius:10px;
 background:#7F7F7F;
 }
-QPushButton:hover
-{
+QPushButton:hover{
 border: 3px solid #6AB2FF;
 border-radius:10px;
 background:#A1A1A1;
 }
-QPushButton:pressed
-{
+QPushButton:pressed{
 border-radius:10px;
 background:#7F7F7F;
 }</string>
           </property>
           <property name="icon">
-           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
-            <normaloff>:/assets/delay.png</normaloff>:/assets/delay.png</iconset>
+           <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+            <normaloff>:/resources/icon/delay.png</normaloff>:/resources/icon/delay.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -360,6 +368,9 @@ background:#7F7F7F;
             <pointsize>8</pointsize>
            </font>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::FocusPolicy::StrongFocus</enum>
+          </property>
           <property name="toolTip">
            <string>Paste text</string>
           </property>
@@ -367,26 +378,23 @@ background:#7F7F7F;
            <string>Paste text</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton
-{
+           <string notr="true">QPushButton{
 border-radius:10px;
 background:#7F7F7F;
 }
-QPushButton:hover
-{
+QPushButton:hover{
 border: 3px solid #6AB2FF;
 border-radius:10px;
 background:#A1A1A1;
 }
-QPushButton:pressed
-{
+QPushButton:pressed{
 border-radius:10px;
 background:#7F7F7F;
 }</string>
           </property>
           <property name="icon">
-           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
-            <normaloff>:/assets/paste.png</normaloff>:/assets/paste.png</iconset>
+           <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+            <normaloff>:/resources/icon/paste.png</normaloff>:/resources/icon/paste.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -415,6 +423,9 @@ background:#7F7F7F;
             <pointsize>8</pointsize>
            </font>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::FocusPolicy::StrongFocus</enum>
+          </property>
           <property name="toolTip">
            <string>Open website</string>
           </property>
@@ -422,26 +433,23 @@ background:#7F7F7F;
            <string>Open website</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton
-{
+           <string notr="true">QPushButton{
 border-radius:10px;
 background:#7F7F7F;
 }
-QPushButton:hover
-{
+QPushButton:hover{
 border: 3px solid #6AB2FF;
 border-radius:10px;
 background:#A1A1A1;
 }
-QPushButton:pressed
-{
+QPushButton:pressed{
 border-radius:10px;
 background:#7F7F7F;
 }</string>
           </property>
           <property name="icon">
-           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
-            <normaloff>:/assets/website.png</normaloff>:/assets/website.png</iconset>
+           <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+            <normaloff>:/resources/icon/website.png</normaloff>:/resources/icon/website.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -470,6 +478,9 @@ background:#7F7F7F;
             <pointsize>8</pointsize>
            </font>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::FocusPolicy::StrongFocus</enum>
+          </property>
           <property name="toolTip">
            <string>Insert find action</string>
           </property>
@@ -477,26 +488,23 @@ background:#7F7F7F;
            <string>Insert find action</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton
-{
+           <string notr="true">QPushButton{
 border-radius:10px;
 background:#7F7F7F;
 }
-QPushButton:hover
-{
+QPushButton:hover{
 border: 3px solid #6AB2FF;
 border-radius:10px;
 background:#A1A1A1;
 }
-QPushButton:pressed
-{
+QPushButton:pressed{
 border-radius:10px;
 background:#7F7F7F;
 }</string>
           </property>
           <property name="icon">
-           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
-            <normaloff>:/assets/find.png</normaloff>:/assets/find.png</iconset>
+           <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+            <normaloff>:/resources/icon/find.png</normaloff>:/resources/icon/find.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -525,6 +533,9 @@ background:#7F7F7F;
             <pointsize>8</pointsize>
            </font>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::FocusPolicy::StrongFocus</enum>
+          </property>
           <property name="toolTip">
            <string>Insert if action</string>
           </property>
@@ -532,26 +543,78 @@ background:#7F7F7F;
            <string>Insert if action</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton
-{
+           <string notr="true">QPushButton{
 border-radius:10px;
 background:#7F7F7F;
 }
-QPushButton:hover
-{
+QPushButton:hover{
 border: 3px solid #6AB2FF;
 border-radius:10px;
 background:#A1A1A1;
 }
-QPushButton:pressed
-{
+QPushButton:pressed{
 border-radius:10px;
 background:#7F7F7F;
 }</string>
           </property>
           <property name="icon">
-           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
-            <normaloff>:/assets/if.png</normaloff>:/assets/if.png</iconset>
+           <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+            <normaloff>:/resources/icon/if.png</normaloff>:/resources/icon/if.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnSwitch">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::FocusPolicy::StrongFocus</enum>
+          </property>
+          <property name="toolTip">
+           <string>Insert switch action</string>
+          </property>
+          <property name="statusTip">
+           <string>Insert switch action</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed{
+border-radius:10px;
+background:#7F7F7F;
+}</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+            <normaloff>:/resources/icon/switch.png</normaloff>:/resources/icon/switch.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -580,6 +643,9 @@ background:#7F7F7F;
             <pointsize>8</pointsize>
            </font>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::FocusPolicy::StrongFocus</enum>
+          </property>
           <property name="toolTip">
            <string>Insert loop action</string>
           </property>
@@ -587,26 +653,23 @@ background:#7F7F7F;
            <string>Insert loop action</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton
-{
+           <string notr="true">QPushButton{
 border-radius:10px;
 background:#7F7F7F;
 }
-QPushButton:hover
-{
+QPushButton:hover{
 border: 3px solid #6AB2FF;
 border-radius:10px;
 background:#A1A1A1;
 }
-QPushButton:pressed
-{
+QPushButton:pressed{
 border-radius:10px;
 background:#7F7F7F;
 }</string>
           </property>
           <property name="icon">
-           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
-            <normaloff>:/assets/loop.png</normaloff>:/assets/loop.png</iconset>
+           <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+            <normaloff>:/resources/icon/loop.png</normaloff>:/resources/icon/loop.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -635,6 +698,9 @@ background:#7F7F7F;
             <pointsize>8</pointsize>
            </font>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::FocusPolicy::StrongFocus</enum>
+          </property>
           <property name="toolTip">
            <string>Add opening/closing brace</string>
           </property>
@@ -642,26 +708,23 @@ background:#7F7F7F;
            <string>Add opening/closing brace</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton
-{
+           <string notr="true">QPushButton{
 border-radius:10px;
 background:#7F7F7F;
 }
-QPushButton:hover
-{
+QPushButton:hover{
 border: 3px solid #6AB2FF;
 border-radius:10px;
 background:#A1A1A1;
 }
-QPushButton:pressed
-{
+QPushButton:pressed{
 border-radius:10px;
 background:#7F7F7F;
 }</string>
           </property>
           <property name="icon">
-           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
-            <normaloff>:/assets/bracket.png</normaloff>:/assets/bracket.png</iconset>
+           <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+            <normaloff>:/resources/icon/bracket.png</normaloff>:/resources/icon/bracket.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -690,6 +753,9 @@ background:#7F7F7F;
             <pointsize>8</pointsize>
            </font>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::FocusPolicy::StrongFocus</enum>
+          </property>
           <property name="toolTip">
            <string>Insert a label</string>
           </property>
@@ -697,26 +763,23 @@ background:#7F7F7F;
            <string>Insert a label</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton
-{
+           <string notr="true">QPushButton{
 border-radius:10px;
 background:#7F7F7F;
 }
-QPushButton:hover
-{
+QPushButton:hover{
 border: 3px solid #6AB2FF;
 border-radius:10px;
 background:#A1A1A1;
 }
-QPushButton:pressed
-{
+QPushButton:pressed{
 border-radius:10px;
 background:#7F7F7F;
 }</string>
           </property>
           <property name="icon">
-           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
-            <normaloff>:/assets/label.png</normaloff>:/assets/label.png</iconset>
+           <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+            <normaloff>:/resources/icon/label.png</normaloff>:/resources/icon/label.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -745,6 +808,9 @@ background:#7F7F7F;
             <pointsize>8</pointsize>
            </font>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::FocusPolicy::StrongFocus</enum>
+          </property>
           <property name="toolTip">
            <string>Go to label</string>
           </property>
@@ -752,26 +818,23 @@ background:#7F7F7F;
            <string>Go to label</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton
-{
+           <string notr="true">QPushButton{
 border-radius:10px;
 background:#7F7F7F;
 }
-QPushButton:hover
-{
+QPushButton:hover{
 border: 3px solid #6AB2FF;
 border-radius:10px;
 background:#A1A1A1;
 }
-QPushButton:pressed
-{
+QPushButton:pressed{
 border-radius:10px;
 background:#7F7F7F;
 }</string>
           </property>
           <property name="icon">
-           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
-            <normaloff>:/assets/goto.png</normaloff>:/assets/goto.png</iconset>
+           <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+            <normaloff>:/resources/icon/goto.png</normaloff>:/resources/icon/goto.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -800,6 +863,9 @@ background:#7F7F7F;
             <pointsize>8</pointsize>
            </font>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::FocusPolicy::StrongFocus</enum>
+          </property>
           <property name="toolTip">
            <string>Insert break/continue action</string>
           </property>
@@ -807,26 +873,23 @@ background:#7F7F7F;
            <string>Insert break/continue action</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton
-{
+           <string notr="true">QPushButton{
 border-radius:10px;
 background:#7F7F7F;
 }
-QPushButton:hover
-{
+QPushButton:hover{
 border: 3px solid #6AB2FF;
 border-radius:10px;
 background:#A1A1A1;
 }
-QPushButton:pressed
-{
+QPushButton:pressed{
 border-radius:10px;
 background:#7F7F7F;
 }</string>
           </property>
           <property name="icon">
-           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
-            <normaloff>:/assets/break-continue.png</normaloff>:/assets/break-continue.png</iconset>
+           <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+            <normaloff>:/resources/icon/break-continue.png</normaloff>:/resources/icon/break-continue.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -855,6 +918,9 @@ background:#7F7F7F;
             <pointsize>8</pointsize>
            </font>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::FocusPolicy::StrongFocus</enum>
+          </property>
           <property name="toolTip">
            <string>Insert stop action</string>
           </property>
@@ -862,26 +928,23 @@ background:#7F7F7F;
            <string>Insert stop action</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton
-{
+           <string notr="true">QPushButton{
 border-radius:10px;
 background:#7F7F7F;
 }
-QPushButton:hover
-{
+QPushButton:hover{
 border: 3px solid #6AB2FF;
 border-radius:10px;
 background:#A1A1A1;
 }
-QPushButton:pressed
-{
+QPushButton:pressed{
 border-radius:10px;
 background:#7F7F7F;
 }</string>
           </property>
           <property name="icon">
-           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
-            <normaloff>:/assets/stop.png</normaloff>:/assets/stop.png</iconset>
+           <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+            <normaloff>:/resources/icon/stop.png</normaloff>:/resources/icon/stop.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -910,6 +973,9 @@ background:#7F7F7F;
             <pointsize>8</pointsize>
            </font>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::FocusPolicy::StrongFocus</enum>
+          </property>
           <property name="toolTip">
            <string>Run a code</string>
           </property>
@@ -917,26 +983,23 @@ background:#7F7F7F;
            <string>Run a code</string>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton
-{
+           <string notr="true">QPushButton{
 border-radius:10px;
 background:#7F7F7F;
 }
-QPushButton:hover
-{
+QPushButton:hover{
 border: 3px solid #6AB2FF;
 border-radius:10px;
 background:#A1A1A1;
 }
-QPushButton:pressed
-{
+QPushButton:pressed{
 border-radius:10px;
 background:#7F7F7F;
 }</string>
           </property>
           <property name="icon">
-           <iconset resource="../out/build/release/.qt/rcc/icon.qrc">
-            <normaloff>:/assets/code.png</normaloff>:/assets/code.png</iconset>
+           <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+            <normaloff>:/resources/icon/code.png</normaloff>:/resources/icon/code.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -1173,7 +1236,7 @@ background:#7F7F7F;
   </action>
  </widget>
  <resources>
-  <include location="../out/build/release/.qt/rcc/icon.qrc"/>
+  <include location="../../out/build/debug/.qt/rcc/icon.qrc"/>
  </resources>
  <connections/>
 </ui>

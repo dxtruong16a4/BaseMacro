@@ -2,6 +2,7 @@
 #define DIALOGBASE_H
 
 #include <QDialog>
+#include <QListWidgetItem>
 
 class DialogBase : public QDialog
 {
@@ -9,8 +10,13 @@ class DialogBase : public QDialog
 public:
     explicit DialogBase(QWidget *parent = nullptr) : QDialog(parent) {}
     virtual ~DialogBase() {}
+    virtual void editItem(QListWidgetItem *item) = 0;
+    virtual void setData(const QString&) = 0;
 
-    virtual void closeEvent(QCloseEvent *event) override {}
+protected:
+    void closeEvent(QCloseEvent *event) override {
+        QDialog::closeEvent(event);
+    }
 };
 
 #endif // DIALOGBASE_H
