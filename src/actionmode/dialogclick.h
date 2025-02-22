@@ -2,17 +2,12 @@
 #define DIALOGCLICK_H
 
 #include "../core/DialogBase.h"
-#include "../widgets/macroeditor.h"
+// #include "../widgets/macroeditor.h"
+/**
+ * the line include mainwindow below has already included macroeditor.
+ * if we separate main window and macroeditor window, you can include it.
+ */
 #include "../mainwindow.h"
-
-#include <QAbstractButton>
-#include <QCloseEvent>
-#include <QCursor>
-#include <QDialog>
-#include <QKeyEvent>
-#include <QListWidgetItem>
-#include <QString>
-#include <QTimer>
 
 namespace Ui {
 class DialogClick;

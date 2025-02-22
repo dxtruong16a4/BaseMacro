@@ -1,21 +1,10 @@
 #ifndef MACROEDITOR_H
 #define MACROEDITOR_H
 
-#include "../core/filemanager.h"
 #include "../core/dialogpool.h"
-#include "../core/DialogBase.h"
 #include "../actionmode/dialogclick.h"
 #include "../actionmode/dialogkeyboard.h"
-
-#include <memory>
-#include <QClipboard>
-#include <QCloseEvent>
-#include <QFileDialog>
-#include <QKeyEvent>
-#include <QMainWindow>
-#include <QListWidgetItem>
-#include <QMessageBox>
-#include <QString>
+#include "../actionmode/dialogdelay.h"
 
 namespace Ui {
 class MacroEditor;
@@ -28,15 +17,18 @@ class MacroEditor : public QMainWindow
 public:
     static MacroEditor* getInstance();
     ~MacroEditor();
-    void setIsChanged(bool changed);
     void addItemToList(QString item);
     QString getIndentation(const QString& text);
+    void setIsChanged(bool changed);
 
 protected:
     void closeEvent(QCloseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
 
 private slots:
+    // Custom
+    void checkAnyChange(QListWidgetItem *item);
+
     // QT generator
     void on_actionNew_triggered();
 
@@ -70,9 +62,11 @@ private slots:
 
     void on_btnDelay_clicked();
 
-    void on_btnPaste_clicked();
+    void on_btnWindow_clicked();
 
-    void on_btnOpenLink_clicked();
+    void on_btnClipboard_clicked();
+
+    void on_btnOpen_clicked();
 
     void on_btnFind_clicked();
 
@@ -91,9 +85,6 @@ private slots:
     void on_btnStop_clicked();
 
     void on_btnCode_clicked();
-
-    // Custom
-    void checkAnyChange(QListWidgetItem *item);
 
 private:
     Ui::MacroEditor *ui;
@@ -116,6 +107,7 @@ private:
     void ChangeIndentLevelUp();
     void ChangeIndentLevelDown();
     DialogBase* getDialogByMode(const QString& mode);
+    QPoint getCenteredPosition(QWidget *parent, QWidget *child);
 };
 
 #endif // MACROEDITOR_H

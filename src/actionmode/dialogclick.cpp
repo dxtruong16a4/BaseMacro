@@ -38,15 +38,6 @@ void DialogClick::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void DialogClick::editItem(QListWidgetItem *item)
-{
-    if (!item) return;
-    isEditing = true;
-    editingItem = item;
-    setData(item->text());
-    this->show();
-}
-
 void DialogClick::eventTypeChange()
 {
     int index = ui->cbEventType->currentIndex();
@@ -169,6 +160,46 @@ void DialogClick::hideOtherWindow()
 }
 
 /**
+ * @brief Retrieves mouse action data from the UI and formats it into a command string.
+ *
+ * The returned string follows these formats:
+ * - If `EVENTTYPEINDEX == 0` or `1`: `"MOUSE EVENTTYPEINDEX TIMES MS X Y FLAG 0"`
+ * - If `EVENTTYPEINDEX == 2` or `3`: `"MOUSE EVENTTYPEINDEX TIMES MS X Y FLAG WHEEL"`
+ * - If `EVENTTYPEINDEX == 4`: `"MOUSE EVENTTYPEINDEX 0 0 X Y 0 0"`
+ *
+ * @return QString A formatted string representing the mouse action data.
+ */
+QString DialogClick::getData()
+{
+    int index = ui->cbEventType->currentIndex();
+    int flag = (index != 4) ? ui->chbCurrentPos->isChecked() : 0;
+    int wheel = (index == 2 || index == 3) ? ui->sbWheel->value() : 0;
+
+    QString times = (index == 4) ? "0" : ui->sbTimes->text();
+    QString ms = (index == 4) ? "0" : ui->sbMs->text();
+
+    QString data = "MOUSE";
+    data += " " + QString::number(index);
+    data += " " + times;
+    data += " " + ms;
+    data += " " + ui->sbXPos->text();
+    data += " " + ui->sbYPos->text();
+    data += " " + QString::number(flag);
+    data += " " + QString::number(wheel);
+
+    return data;
+}
+
+void DialogClick::editItem(QListWidgetItem *item)
+{
+    if (!item) return;
+    isEditing = true;
+    editingItem = item;
+    setData(item->text());
+    this->show();
+}
+
+/**
  * @brief Parses a command string and updates the UI elements accordingly.
  *
  * @param data The input string must follow one of these formats:
@@ -211,35 +242,4 @@ void DialogClick::setData(const QString& data)
 
     int wheel = (index == 2 || index == 3) ? parts[7].toInt(&ok) : 0;
     if (ok) ui->sbWheel->setValue(wheel);
-}
-
-/**
- * @brief Retrieves mouse action data from the UI and formats it into a command string.
- *
- * The returned string follows these formats:
- * - If `EVENTTYPEINDEX == 0` or `1`: `"MOUSE EVENTTYPEINDEX TIMES MS X Y FLAG 0"`
- * - If `EVENTTYPEINDEX == 2` or `3`: `"MOUSE EVENTTYPEINDEX TIMES MS X Y FLAG WHEEL"`
- * - If `EVENTTYPEINDEX == 4`: `"MOUSE EVENTTYPEINDEX 0 0 X Y 0 0"`
- *
- * @return QString A formatted string representing the mouse action data.
- */
-QString DialogClick::getData()
-{
-    int index = ui->cbEventType->currentIndex();
-    int flag = (index != 4) ? ui->chbCurrentPos->isChecked() : 0;
-    int wheel = (index == 2 || index == 3) ? ui->sbWheel->value() : 0;
-
-    QString times = (index == 4) ? "0" : ui->sbTimes->text();
-    QString ms = (index == 4) ? "0" : ui->sbMs->text();
-
-    QString data = "MOUSE";
-    data += " " + QString::number(index);
-    data += " " + times;
-    data += " " + ms;
-    data += " " + ui->sbXPos->text();
-    data += " " + ui->sbYPos->text();
-    data += " " + QString::number(flag);
-    data += " " + QString::number(wheel);
-
-    return data;
 }

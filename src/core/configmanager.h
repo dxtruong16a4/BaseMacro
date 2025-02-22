@@ -3,13 +3,6 @@
 
 #include "DefaultConstants.h"
 
-#include <QDebug>
-#include <QFile>
-#include <QFileInfo>
-#include <QMessageBox>
-#include <QSettings>
-#include <QString>
-
 class ConfigManager
 {
 public:

@@ -10,11 +10,6 @@ DialogTips::DialogTips(QWidget *parent)
     ui->setupUi(this);
 }
 
-DialogTips::~DialogTips()
-{
-    delete ui;
-}
-
 DialogTips* DialogTips::getInstance()
 {
     if (!uniqueInstance) {
@@ -23,9 +18,15 @@ DialogTips* DialogTips::getInstance()
     return uniqueInstance.get();
 }
 
-void DialogTips::setData(const QString &data)
+DialogTips::~DialogTips()
 {
+    delete ui;
+}
 
+void DialogTips::closeEvent(QCloseEvent *event)
+{
+    uniqueInstance.reset();
+    event->accept();
 }
 
 void DialogTips::editItem(QListWidgetItem *item)
@@ -33,8 +34,7 @@ void DialogTips::editItem(QListWidgetItem *item)
 
 }
 
-void DialogTips::closeEvent(QCloseEvent *event)
+void DialogTips::setData(const QString &data)
 {
-    uniqueInstance.reset();
-    event->accept();
+
 }

@@ -36,6 +36,7 @@ set(PROJECT_SOURCES
         # Action mode
         src/actionmode/dialogclick.cpp
         src/actionmode/dialogkeyboard.cpp
+        src/actionmode/dialogdelay.cpp
 )
 
 set(PROJECT_HEADERS
@@ -59,6 +60,7 @@ set(PROJECT_HEADERS
         # Action mode
         src/actionmode/dialogclick.h
         src/actionmode/dialogkeyboard.h
+        src/actionmode/dialogdelay.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -77,6 +79,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         # Action mode UI
         src/ui/dialogclick.ui
         src/ui/dialogkeyboard.ui
+        src/ui/dialogdelay.ui
     )
 else()
     if(ANDROID)
@@ -101,6 +104,7 @@ qt_add_resources(BaseMacro "icon"
         resources/icon/logo.png
         resources/icon/bracket.png
         resources/icon/break-continue.png
+        resources/icon/clipboard.png
         resources/icon/code.png
         resources/icon/connected.png
         resources/icon/delay.png
@@ -112,11 +116,11 @@ qt_add_resources(BaseMacro "icon"
         resources/icon/label.png
         resources/icon/loop.png
         resources/icon/mouse.png
-        resources/icon/paste.png
+        resources/icon/open.png
         resources/icon/playing.gif
         resources/icon/stop.png
         resources/icon/switch.png
-        resources/icon/website.png
+        resources/icon/window.png
         # style.qss
         resources/style.qss
 )

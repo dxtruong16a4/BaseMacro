@@ -1,13 +1,8 @@
 #ifndef DIALOGABOUT_H
 #define DIALOGABOUT_H
 
-#include "../core/DialogBase.h"
 #include "../core/DefaultConstants.h"
-
-#include <memory>
-#include <QCloseEvent>
-#include <QDesktopServices>
-#include <QUrl>
+#include "../core/DialogBase.h"
 
 namespace Ui {
 class DialogAbout;
@@ -18,10 +13,10 @@ class DialogAbout : public DialogBase
     Q_OBJECT
 
 public:
-    ~DialogAbout();
     static DialogAbout* getInstance();
-    void setData(const QString& data) override;
+    ~DialogAbout();
     void editItem(QListWidgetItem *item) override;
+    void setData(const QString& data) override;
 
 protected:
     void closeEvent(QCloseEvent *event) override;

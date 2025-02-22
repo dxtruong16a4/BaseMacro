@@ -1,6 +1,5 @@
 #include "macroeditor.h"
 #include "ui_macroeditor.h"
-#include <QDebug>
 
 std::unique_ptr<MacroEditor> MacroEditor::uniqueInstance = nullptr;
 
@@ -13,53 +12,6 @@ MacroEditor::MacroEditor(QWidget *parent)
     connect(ui->listMacro, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(checkAnyChange(QListWidgetItem*)));
 }
 
-MacroEditor::~MacroEditor()
-{
-    DialogPool::instance().releaseAllDialogs();
-    delete ui;
-}
-
-void MacroEditor::setIsChanged(bool changed)
-{
-    isChanged = changed;
-}
-
-void MacroEditor::addItemToList(QString item)
-{
-    QList<QListWidgetItem *> selectedItems = ui->listMacro->selectedItems();
-    if (selectedItems.isEmpty()) {
-        ui->listMacro->addItem(item);
-        return;
-    }
-    int maxRow = -1;
-    for (QListWidgetItem *selectedItem : selectedItems) {
-        int row = ui->listMacro->row(selectedItem);
-        if (row > maxRow) {
-            maxRow = row;
-        }
-    }
-    ui->listMacro->insertItem(maxRow + 1, item);
-}
-
-/**
- * @brief Extracts the leading whitespace (indentation) from a given string.
- *
- * This function returns the leading spaces or tabs at the beginning of the input text.
- * It is useful for preserving indentation when editing macro items.
- *
- * @param text The input string from which to extract indentation.
- * @return A QString containing the leading whitespace (indentation) of the input text.
- */
-QString MacroEditor::getIndentation(const QString &text)
-{
-    if (text.isEmpty()) return "";
-
-    QRegularExpression regex(R"(^(\s*))");
-    QRegularExpressionMatch match = regex.match(text);
-
-    return match.hasMatch() ? match.captured(1) : "";
-}
-
 MacroEditor *MacroEditor::getInstance()
 {
     if (!uniqueInstance) {
@@ -68,10 +20,10 @@ MacroEditor *MacroEditor::getInstance()
     return uniqueInstance.get();
 }
 
-void MacroEditor::checkAnyChange(QListWidgetItem *item)
+MacroEditor::~MacroEditor()
 {
-    Q_UNUSED(item);
-    isChanged = true;
+    DialogPool::instance().releaseAllDialogs();
+    delete ui;
 }
 
 void MacroEditor::closeEvent(QCloseEvent *event)
@@ -110,6 +62,172 @@ void MacroEditor::keyPressEvent(QKeyEvent *event)
     } else {
         QWidget::keyPressEvent(event);
     }
+}
+
+void MacroEditor::checkAnyChange(QListWidgetItem *item)
+{
+    Q_UNUSED(item);
+    isChanged = true;
+}
+
+void MacroEditor::on_actionNew_triggered()
+{
+    New();
+}
+
+void MacroEditor::on_actionOpen_triggered()
+{
+    Open();
+}
+
+void MacroEditor::on_actionSave_triggered()
+{
+    Save();
+}
+
+void MacroEditor::on_actionSave_As_triggered()
+{
+    SaveAs();
+}
+
+void MacroEditor::on_actionExit_triggered()
+{
+    this->close();
+}
+
+void MacroEditor::on_actionCut_triggered()
+{
+    Cut();
+}
+
+void MacroEditor::on_actionCopy_triggered()
+{
+    Copy();
+}
+
+void MacroEditor::on_actionPaste_triggered()
+{
+    Paste();
+}
+
+void MacroEditor::on_actionDelete_triggered()
+{
+    Delete();
+}
+
+void MacroEditor::on_actionMove_up_triggered()
+{
+    MoveUp();
+}
+
+void MacroEditor::on_actionMove_down_triggered()
+{
+    MoveDown();
+}
+
+void MacroEditor::on_actionHow_to_use_triggered()
+{
+
+}
+
+void MacroEditor::on_listMacro_itemDoubleClicked(QListWidgetItem *item)
+{
+    if (!item) return;
+
+    QString mode = item->text().trimmed().split(" ").first();
+    DialogBase *dialog = dynamic_cast<DialogBase*>(getDialogByMode(mode));
+
+    if (dialog) {
+        dialog->move(getCenteredPosition(this, dialog));
+        dialog->editItem(item);
+    }
+}
+
+void MacroEditor::on_btnClick_clicked()
+{
+    DialogClick *d = DialogPool::instance().acquireDialog<DialogClick>("MOUSE");
+    if (d) {
+        d->move(getCenteredPosition(this, d));
+        d->show();
+    }
+}
+
+void MacroEditor::on_btnKeyboard_clicked()
+{
+    DialogKeyboard *d = DialogPool::instance().acquireDialog<DialogKeyboard>("KEYBOARD");
+    if (d) {
+        d->move(getCenteredPosition(this, d));
+        d->show();
+    }
+}
+
+void MacroEditor::on_btnDelay_clicked()
+{
+    // DialogDelay *d = DialogPool::instance().acquireDialog<DialogDelay>("DELAY");
+    // if (d) {
+    //     d->move(getCenteredPosition(this, d));
+    //     d->show();
+    // }
+}
+
+void MacroEditor::on_btnWindow_clicked()
+{
+
+}
+
+void MacroEditor::on_btnClipboard_clicked()
+{
+
+}
+
+void MacroEditor::on_btnOpen_clicked()
+{
+
+}
+
+void MacroEditor::on_btnFind_clicked()
+{
+
+}
+
+void MacroEditor::on_btnIf_clicked()
+{
+
+}
+
+void MacroEditor::on_btnLoop_clicked()
+{
+
+}
+
+void MacroEditor::on_btnBracket_clicked()
+{
+
+}
+
+void MacroEditor::on_btnLabel_clicked()
+{
+
+}
+
+void MacroEditor::on_btnGoto_clicked()
+{
+
+}
+
+void MacroEditor::on_btnBreak_Continue_clicked()
+{
+
+}
+
+void MacroEditor::on_btnStop_clicked()
+{
+
+}
+
+void MacroEditor::on_btnCode_clicked()
+{
+
 }
 
 void MacroEditor::New()
@@ -272,155 +390,6 @@ void MacroEditor::MoveDown()
     setIsChanged(true);
 }
 
-void MacroEditor::on_actionNew_triggered()
-{
-    New();
-}
-
-void MacroEditor::on_actionOpen_triggered()
-{
-    Open();
-}
-
-void MacroEditor::on_actionSave_triggered()
-{
-    Save();
-}
-
-void MacroEditor::on_actionSave_As_triggered()
-{
-    SaveAs();
-}
-
-void MacroEditor::on_actionExit_triggered()
-{
-    this->close();
-}
-
-void MacroEditor::on_actionCut_triggered()
-{
-    Cut();
-}
-
-void MacroEditor::on_actionCopy_triggered()
-{
-    Copy();
-}
-
-void MacroEditor::on_actionPaste_triggered()
-{
-    Paste();
-}
-
-void MacroEditor::on_actionDelete_triggered()
-{
-    Delete();
-}
-
-void MacroEditor::on_actionMove_up_triggered()
-{
-    MoveUp();
-}
-
-void MacroEditor::on_actionMove_down_triggered()
-{
-    MoveDown();
-}
-
-void MacroEditor::on_actionHow_to_use_triggered()
-{
-
-}
-
-void MacroEditor::on_listMacro_itemDoubleClicked(QListWidgetItem *item)
-{
-    if (!item) return;
-
-    QString mode = item->text().trimmed().split(" ").first();
-    DialogBase *dialog = dynamic_cast<DialogBase*>(getDialogByMode(mode));
-
-    if (dialog) {
-        dialog->editItem(item);
-    }
-}
-
-void MacroEditor::on_btnClick_clicked()
-{
-    DialogClick *d = DialogPool::instance().acquireDialog<DialogClick>("MOUSE");
-    if (d) {
-        d->show();
-    }
-}
-
-void MacroEditor::on_btnKeyboard_clicked()
-{
-    DialogKeyboard *d = DialogPool::instance().acquireDialog<DialogKeyboard>("KEYBOARD");
-    if (d) {
-        d->show();
-    }
-}
-
-void MacroEditor::on_btnDelay_clicked()
-{
-    // show list of dialog pool
-    // DialogPool::instance().showPool();
-}
-
-void MacroEditor::on_btnPaste_clicked()
-{
-
-}
-
-void MacroEditor::on_btnOpenLink_clicked()
-{
-
-}
-
-void MacroEditor::on_btnFind_clicked()
-{
-
-}
-
-void MacroEditor::on_btnIf_clicked()
-{
-
-}
-
-void MacroEditor::on_btnLoop_clicked()
-{
-
-}
-
-void MacroEditor::on_btnBracket_clicked()
-{
-
-}
-
-void MacroEditor::on_btnLabel_clicked()
-{
-
-}
-
-void MacroEditor::on_btnGoto_clicked()
-{
-
-}
-
-void MacroEditor::on_btnBreak_Continue_clicked()
-{
-
-}
-
-void MacroEditor::on_btnStop_clicked()
-{
-
-}
-
-void MacroEditor::on_btnCode_clicked()
-{
-
-}
-
 void MacroEditor::ChangeIndentLevelUp()
 {
     QList<QListWidgetItem *> selectedItems = ui->listMacro->selectedItems();
@@ -473,4 +442,56 @@ DialogBase *MacroEditor::getDialogByMode(const QString &mode)
     }
     // Thêm các loại dialog khác tại đây nếu cần
     return nullptr;
+}
+
+QPoint MacroEditor::getCenteredPosition(QWidget *parent, QWidget *child)
+{
+    if (!parent || !child)
+        return QPoint(0, 0);
+    QRect parentRect = parent->geometry();
+    QRect childRect = child->geometry();
+    int x = parentRect.x() + (parentRect.width() - childRect.width()) / 2;
+    int y = parentRect.y() + (parentRect.height() - childRect.height()) / 2;
+    return QPoint(x, y);
+}
+
+void MacroEditor::addItemToList(QString item)
+{
+    QList<QListWidgetItem *> selectedItems = ui->listMacro->selectedItems();
+    if (selectedItems.isEmpty()) {
+        ui->listMacro->addItem(item);
+        return;
+    }
+    int maxRow = -1;
+    for (QListWidgetItem *selectedItem : selectedItems) {
+        int row = ui->listMacro->row(selectedItem);
+        if (row > maxRow) {
+            maxRow = row;
+        }
+    }
+    ui->listMacro->insertItem(maxRow + 1, item);
+}
+
+/**
+ * @brief Extracts the leading whitespace (indentation) from a given string.
+ *
+ * This function returns the leading spaces or tabs at the beginning of the input text.
+ * It is useful for preserving indentation when editing macro items.
+ *
+ * @param text The input string from which to extract indentation.
+ * @return A QString containing the leading whitespace (indentation) of the input text.
+ */
+QString MacroEditor::getIndentation(const QString &text)
+{
+    if (text.isEmpty()) return "";
+
+    QRegularExpression regex(R"(^(\s*))");
+    QRegularExpressionMatch match = regex.match(text);
+
+    return match.hasMatch() ? match.captured(1) : "";
+}
+
+void MacroEditor::setIsChanged(bool changed)
+{
+    isChanged = changed;
 }

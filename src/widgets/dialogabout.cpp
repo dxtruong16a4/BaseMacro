@@ -8,11 +8,7 @@ DialogAbout::DialogAbout(QWidget *parent)
     , ui(new Ui::DialogAbout)
 {
     ui->setupUi(this);
-}
-
-DialogAbout::~DialogAbout()
-{
-    delete ui;
+    ui->lbAbout_2->setText(ABOUT);
 }
 
 DialogAbout* DialogAbout::getInstance()
@@ -23,14 +19,9 @@ DialogAbout* DialogAbout::getInstance()
     return uniqueInstance.get();
 }
 
-void DialogAbout::setData(const QString &data)
+DialogAbout::~DialogAbout()
 {
-
-}
-
-void DialogAbout::editItem(QListWidgetItem *item)
-{
-
+    delete ui;
 }
 
 void DialogAbout::closeEvent(QCloseEvent *event)
@@ -42,4 +33,14 @@ void DialogAbout::closeEvent(QCloseEvent *event)
 void DialogAbout::on_commandLinkButton_clicked()
 {
     QDesktopServices::openUrl(QUrl(MYGITHUBURL));
+}
+
+void DialogAbout::editItem(QListWidgetItem *item)
+{
+
+}
+
+void DialogAbout::setData(const QString &data)
+{
+
 }

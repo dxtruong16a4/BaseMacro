@@ -1,11 +1,33 @@
 #ifndef DEFAULTCONSTANTS_H
 #define DEFAULTCONSTANTS_H
 
+#include <QAbstractButton>
+#include <QApplication>
+#include <QClipboard>
+#include <QCloseEvent>
+#include <QCursor>
+#include <QDebug>
+#include <QDesktopServices>
+#include <QDialog>
+#include <QFile>
+#include <QFileDialog>
+#include <QFileInfo>
+#include <QKeyEvent>
+#include <QListWidgetItem>
+#include <QMainWindow>
 #include <QMap>
-#include <QPoint>
+#include <QMessageBox>
+#include <QSettings>
 #include <QString>
 #include <QStringLiteral>
+#include <QPoint>
+#include <QTimer>
+#include <QUrl>
+
+// #include <QWidget>
+
 #include <unordered_map>
+// #include <windows.h> /*do not include window.h lib here*/
 
 // Value
 constexpr int DWIDTH = 800;
@@ -19,9 +41,10 @@ constexpr int DOPACITY = 100;
 constexpr bool DHIDE = true;
 
 // Text
-const QString MYGITHUBURL = "https://github.com/nhanvatphu04";
+const QString MYGITHUBURL = "https://github.com/dxtruong16a4/BaseMacro";
+const QString ABOUT = "Base Macro - Developed by\ndxtruong16a4 & nhanvatphu04\nVersion: 1.0.1";
 
-const QString CWINDOW = QStringLiteral(
+const QString DWINDOW = QStringLiteral(
                             "[Window]\nWidth=%1\nHeight=%2\nX=%3\nY=%4\n\n"
                         ).arg(DWIDTH).arg(DHEIGHT).arg(DPOSX).arg(DPOSY);
 
@@ -29,7 +52,7 @@ const QString DSETTINGS = QStringLiteral(
                             "[Settings]\nPin=%1\nOpa=%2\nHide=%3\n"
                         ).arg(DPIN).arg(DOPACITY).arg(DHIDE ? "true" : "false");
 
-const QString CONFIGSAMPLE = CWINDOW + DSETTINGS;
+const QString CONFIGSAMPLE = DWINDOW + DSETTINGS;
 const QString SETTINGFILEPATH = QStringLiteral("config.ini");
 const QString APPDIRPATH = "";
 
@@ -67,14 +90,26 @@ enum DelayMode {
     DELAYUSERINPUT
 };
 
-// Paste action
-enum PasteMode {
+// Clipboard action
+enum ClipboardMode {
+    CLEARCLIPBOARD,
+    SETCLIPBOARD,
     PASTETEXT
 };
 
-// Open website action
-enum OpenWebsiteMode {
+// Open action
+enum OpenMode {
+    OPENFILE,
+    OPENPROGRAM,
     OPENWEBSITE
+};
+
+// Window action
+enum WindowMode {
+    SWITCHWINDOW,
+    CLOSEWINDOW,
+    MOVEWINDOW,
+    RESIZEWINDOW,
 };
 
 // If action
@@ -88,7 +123,6 @@ enum IfMode {
 };
 
 // Switch Action
-
 enum SwitchMode {
     SWITCH,
     CASE,
@@ -151,10 +185,19 @@ std::string modeToString(T mode) {
         {DELAYTIME      , "DELAYTIME"},
         {DELAYWINDOW    , "DELAYWINDOW"},
         {DELAYUSERINPUT , "DELAYUSERINPUT"},
-        //PASTE
+        //CLIPBOARD
+        {CLEARCLIPBOARD , "CLEARCLIPBOARD"},
+        {SETCLIPBOARD   , "SETCLIPBOARD"},
         {PASTETEXT      , "PASTETEXT"},
-        // OPENWEBSITE
+        // OPEN
+        {OPENFILE       , "OPENFILE"},
+        {OPENPROGRAM    , "OPENPROGRAM"},
         {OPENWEBSITE    , "OPENWEBSITE"},
+        // WINDOW
+        {SWITCHWINDOW   , "SWITCHWINDOW"},
+        {CLOSEWINDOW    , "CLOSEWINDOW"},
+        {MOVEWINDOW     , "MOVEWINDOW"},
+        {RESIZEWINDOW   , "RESIZEWINDOW"},
         // IF
         {IFIMAGEFOUND   , "IFIMAGEFOUND"},
         {IFWINDOWEXIST  , "IFWINDOWEXIST"},
@@ -189,13 +232,5 @@ std::string modeToString(T mode) {
     auto it = enumMap.find(static_cast<int>(mode));
     return (it != enumMap.end()) ? it->second : "UNKNOWN";
 }
-
-/*
-Định nghĩa cho action
-MOUSE: CLICK
-KEYBOARD
-DELAY
-
-*/
 
 #endif // DEFAULTCONSTANTS_H

@@ -1,10 +1,10 @@
 #include "mainwindow.h"
 
-#include "core/dialogpool.h"
+// #include "core/dialogpool.h"
 
 #include <QApplication>
 #include <QSharedMemory>
-#include <QObject>
+// #include <QObject>
 
 int main(int argc, char *argv[])
 {

@@ -3,10 +3,6 @@
 
 #include "../core/DialogBase.h"
 
-#include <memory>
-#include <QCloseEvent>
-#include <QDialog>
-
 namespace Ui {
 class DialogTips;
 }
@@ -16,10 +12,10 @@ class DialogTips : public DialogBase
     Q_OBJECT
 
 public:
-    ~DialogTips();
     static DialogTips* getInstance();
-    void setData(const QString& data) override;
+    ~DialogTips();
     void editItem(QListWidgetItem *item) override;
+    void setData(const QString& data) override;
 
 protected:
     void closeEvent(QCloseEvent *event) override;

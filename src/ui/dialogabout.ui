@@ -35,8 +35,7 @@
    <string>About</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
-    <normaloff>:/resources/icon/logo.ico</normaloff>:/resources/icon/logo.ico</iconset>
+   <iconset theme="QIcon::ThemeIcon::HelpAbout"/>
   </property>
   <property name="styleSheet">
    <string notr="true">QDialog {
@@ -165,8 +164,7 @@ color: white;
     <enum>QFrame::Shadow::Plain</enum>
    </property>
    <property name="text">
-    <string>Base Macro - Developed by Nhanvatphu
-Version: 1.0.0</string>
+    <string>Placeholder</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -179,8 +177,6 @@ Version: 1.0.0</string>
  <tabstops>
   <tabstop>commandLinkButton</tabstop>
  </tabstops>
- <resources>
-  <include location="../../out/build/debug/.qt/rcc/icon.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

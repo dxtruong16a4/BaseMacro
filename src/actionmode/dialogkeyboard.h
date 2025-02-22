@@ -4,13 +4,6 @@
 #include "../core/DialogBase.h"
 #include "../widgets/macroeditor.h"
 
-#include <QDialog>
-#include <QCloseEvent>
-#include <QListWidgetItem>
-#include <QMap>
-#include <QMessageBox>
-#include <QString>
-
 namespace Ui {
 class DialogKeyboard;
 }
@@ -27,6 +20,7 @@ public:
 
 protected:
     void closeEvent(QCloseEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
 private slots:
     void eventTypeChange();

@@ -215,3 +215,21 @@ QSpinBox::down-arrow {
     width: 10px;
     height: 10px;
 }
+
+// QTabBar #######################################
+
+QTabBar::tab {
+    background-color: #1A1A1A;
+    color: white;
+    padding: 10px;
+    border: none;
+}
+
+QTabBar::tab:hover {
+    border-bottom: 2px solid #009FF7;
+}
+
+QTabBar::tab:selected {
+    border-bottom: 3px solid #009FF7;
+    font-weight: bold;
+}

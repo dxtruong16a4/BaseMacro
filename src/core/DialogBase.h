@@ -1,8 +1,14 @@
 #ifndef DIALOGBASE_H
 #define DIALOGBASE_H
 
+#include <memory>
+
+#include <QApplication>
+#include <QCloseEvent>
 #include <QDialog>
 #include <QListWidgetItem>
+#include <QMap>
+#include <QString>
 
 class DialogBase : public QDialog
 {

@@ -3,11 +3,6 @@
 
 #include "DialogBase.h"
 
-#include <QApplication>
-#include <QDialog>
-#include <QMap>
-#include <QString>
-
 class DialogPool {
 public:
     static DialogPool& instance();

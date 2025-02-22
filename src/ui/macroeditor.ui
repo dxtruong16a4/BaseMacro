@@ -49,62 +49,6 @@ color: white;
     <string notr="true"/>
    </property>
    <layout class="QGridLayout" name="gridLayout">
-    <item row="0" column="1">
-     <widget class="QWidget" name="widget" native="true">
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item>
-        <widget class="QListWidget" name="listMacro">
-         <property name="font">
-          <font>
-           <family>Arial</family>
-           <pointsize>12</pointsize>
-          </font>
-         </property>
-         <property name="focusPolicy">
-          <enum>Qt::FocusPolicy::StrongFocus</enum>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">QListWidget{
-background:#333333;
-border-radius:10px;
-border: 1px solid #555;
-}
-QListWidget::item{
-background: #505050;
-color: white;
-border-radius: 5px;
-padding: 4px;
-}
-QListWidget::item:hover {
-background: #F0F0F0;
-color: black;
-}
-QListWidget::item:selected{
-background: #0078D7;
-color: white;
-border: 1px solid #005A9E;
-}</string>
-         </property>
-         <property name="dragDropMode">
-          <enum>QAbstractItemView::DragDropMode::InternalMove</enum>
-         </property>
-         <property name="defaultDropAction">
-          <enum>Qt::DropAction::MoveAction</enum>
-         </property>
-         <property name="selectionMode">
-          <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
-         </property>
-         <property name="selectionBehavior">
-          <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
-         </property>
-         <property name="spacing">
-          <number>4</number>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
     <item row="0" column="0">
      <widget class="QScrollArea" name="scrollArea">
       <property name="enabled">
@@ -168,7 +112,7 @@ min-height: 35px;
          <x>0</x>
          <y>0</y>
          <width>50</width>
-         <height>588</height>
+         <height>626</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -350,7 +294,7 @@ background:#7F7F7F;
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btnPaste">
+         <widget class="QPushButton" name="btnWindow">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
             <horstretch>0</horstretch>
@@ -372,10 +316,10 @@ background:#7F7F7F;
            <enum>Qt::FocusPolicy::StrongFocus</enum>
           </property>
           <property name="toolTip">
-           <string>Paste text</string>
+           <string>Insert window action</string>
           </property>
           <property name="statusTip">
-           <string>Paste text</string>
+           <string>Insert window action</string>
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton{
@@ -392,9 +336,12 @@ border-radius:10px;
 background:#7F7F7F;
 }</string>
           </property>
+          <property name="text">
+           <string/>
+          </property>
           <property name="icon">
            <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
-            <normaloff>:/resources/icon/paste.png</normaloff>:/resources/icon/paste.png</iconset>
+            <normaloff>:/resources/icon/window.png</normaloff>:/resources/icon/window.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -405,7 +352,7 @@ background:#7F7F7F;
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="btnOpenLink">
+         <widget class="QPushButton" name="btnClipboard">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
             <horstretch>0</horstretch>
@@ -427,10 +374,10 @@ background:#7F7F7F;
            <enum>Qt::FocusPolicy::StrongFocus</enum>
           </property>
           <property name="toolTip">
-           <string>Open website</string>
+           <string>Insert clipboard action</string>
           </property>
           <property name="statusTip">
-           <string>Open website</string>
+           <string>Insert clipboard action</string>
           </property>
           <property name="styleSheet">
            <string notr="true">QPushButton{
@@ -449,7 +396,62 @@ background:#7F7F7F;
           </property>
           <property name="icon">
            <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
-            <normaloff>:/resources/icon/website.png</normaloff>:/resources/icon/website.png</iconset>
+            <normaloff>:/resources/icon/clipboard.png</normaloff>:/resources/icon/clipboard.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="btnOpen">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <pointsize>8</pointsize>
+           </font>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::FocusPolicy::StrongFocus</enum>
+          </property>
+          <property name="toolTip">
+           <string>Open...</string>
+          </property>
+          <property name="statusTip">
+           <string>Open...</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+border-radius:10px;
+background:#7F7F7F;
+}
+QPushButton:hover{
+border: 3px solid #6AB2FF;
+border-radius:10px;
+background:#A1A1A1;
+}
+QPushButton:pressed{
+border-radius:10px;
+background:#7F7F7F;
+}</string>
+          </property>
+          <property name="icon">
+           <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+            <normaloff>:/resources/icon/open.png</normaloff>:/resources/icon/open.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -1024,6 +1026,62 @@ background:#7F7F7F;
         </item>
        </layout>
       </widget>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QWidget" name="widget" native="true">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item>
+        <widget class="QListWidget" name="listMacro">
+         <property name="font">
+          <font>
+           <family>Arial</family>
+           <pointsize>12</pointsize>
+          </font>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::FocusPolicy::StrongFocus</enum>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">QListWidget{
+background:#333333;
+border-radius:10px;
+border: 1px solid #555;
+}
+QListWidget::item{
+background: #505050;
+color: white;
+border-radius: 5px;
+padding: 4px;
+}
+QListWidget::item:hover {
+background: #F0F0F0;
+color: black;
+}
+QListWidget::item:selected{
+background: #0078D7;
+color: white;
+border: 1px solid #005A9E;
+}</string>
+         </property>
+         <property name="dragDropMode">
+          <enum>QAbstractItemView::DragDropMode::InternalMove</enum>
+         </property>
+         <property name="defaultDropAction">
+          <enum>Qt::DropAction::MoveAction</enum>
+         </property>
+         <property name="selectionMode">
+          <enum>QAbstractItemView::SelectionMode::ExtendedSelection</enum>
+         </property>
+         <property name="selectionBehavior">
+          <enum>QAbstractItemView::SelectionBehavior::SelectRows</enum>
+         </property>
+         <property name="spacing">
+          <number>4</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>

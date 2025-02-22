@@ -1,6 +1,5 @@
 #include "dialogkeyboard.h"
 #include "ui_dialogkeyboard.h"
-#include <QDebug>
 
 DialogKeyboard::DialogKeyboard(QWidget *parent)
     : DialogBase(parent)
@@ -134,13 +133,15 @@ void DialogKeyboard::closeEvent(QCloseEvent *event)
     event->accept();
 }
 
-void DialogKeyboard::editItem(QListWidgetItem *item)
+void DialogKeyboard::keyPressEvent(QKeyEvent *event)
 {
-    if (!item) return;
-    isEditing = true;
-    editingItem = item;
-    setData(item->text());
-    this->show();
+    int key = event->key();
+
+    if ((key >= Qt::Key_A && key <= Qt::Key_Z) || (key >= Qt::Key_A && key <= Qt::Key_Z)) {
+        ui->cbKey->setFocus();
+    } else {
+        QWidget::keyPressEvent(event);
+    }
 }
 
 void DialogKeyboard::eventTypeChange()
@@ -282,6 +283,15 @@ QString DialogKeyboard::getData()
     return data;
 }
 
+void DialogKeyboard::editItem(QListWidgetItem *item)
+{
+    if (!item) return;
+    isEditing = true;
+    editingItem = item;
+    setData(item->text());
+    this->show();
+}
+
 /**
  * @brief Parses a command string and updates the UI elements accordingly.
  *
@@ -340,4 +350,3 @@ void DialogKeyboard::setData(const QString &data)
         ui->sbMs->setValue(parts[8].toInt(&ok) && ok ? parts[8].toInt() : 0);
     }
 }
-

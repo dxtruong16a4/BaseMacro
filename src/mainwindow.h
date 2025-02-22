@@ -1,25 +1,15 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "./core/DefaultConstants.h"
 #include "./core/ConfigManager.h"
-#include "./widgets/settingswindow.h"
+
 #include "./widgets/dialoghowtouse.h"
 #include "./widgets/dialogabout.h"
 #include "./widgets/dialogtips.h"
 #include "./widgets/macroeditor.h"
+#include "./widgets/settingswindow.h"
 
 #include <QMainWindow>
-#include <QEvent>
-#include <QCloseEvent>
-#include <QKeyEvent>
-#include <QMessageBox>
-#include <QDesktopServices>
-#include <QUrl>
-#include <QString>
-#include <QVector>
-#include <QProcess>
-#include <QDebug>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -32,14 +22,14 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    ~MainWindow();
     static MainWindow* getInstance();
+    ~MainWindow();
 
 protected:
     void closeEvent(QCloseEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
     void moveEvent(QMoveEvent *event) override;
     void showEvent(QShowEvent *event) override;
-    void keyPressEvent(QKeyEvent *event) override;
 
 private slots:
 
@@ -89,11 +79,11 @@ private:
     bool isPinned = false;
     QPoint PosBeforePinned = QPoint(DPOSX, DPOSY);
     QPoint SizeBeforePinned = QPoint(DWIDTH, DHEIGHT);
-    QPoint getCorner(const QString& key);
     ConfigManager *configManager;
-    void SaveConfig();
-    void PinWindow(bool pinned);
+    QPoint getCorner(const QString& key);
     QPoint getCenteredPosition(QWidget *parent, QWidget *child);
+    void pinWindow(bool pinned);
+    void saveConfig();
 };
 
 #endif // MAINWINDOW_H

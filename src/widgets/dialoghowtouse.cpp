@@ -10,11 +10,6 @@ DialogHowToUse::DialogHowToUse(QWidget *parent)
     ui->setupUi(this);
 }
 
-DialogHowToUse::~DialogHowToUse()
-{
-    delete ui;
-}
-
 DialogHowToUse* DialogHowToUse::getInstance()
 {
     if (!uniqueInstance) {
@@ -23,9 +18,15 @@ DialogHowToUse* DialogHowToUse::getInstance()
     return uniqueInstance.get();
 }
 
-void DialogHowToUse::setData(const QString &data)
+DialogHowToUse::~DialogHowToUse()
 {
+    delete ui;
+}
 
+void DialogHowToUse::closeEvent(QCloseEvent *event)
+{
+    uniqueInstance.reset();
+    event->accept();
 }
 
 void DialogHowToUse::editItem(QListWidgetItem *item)
@@ -33,8 +34,7 @@ void DialogHowToUse::editItem(QListWidgetItem *item)
 
 }
 
-void DialogHowToUse::closeEvent(QCloseEvent *event)
+void DialogHowToUse::setData(const QString &data)
 {
-    uniqueInstance.reset();
-    event->accept();
+
 }

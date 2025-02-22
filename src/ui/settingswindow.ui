@@ -29,8 +29,7 @@
    <string>Settings</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
-    <normaloff>:/resources/icon/logo.ico</normaloff>:/resources/icon/logo.ico</iconset>
+   <iconset theme="QIcon::ThemeIcon::DocumentProperties"/>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget {
@@ -375,8 +374,6 @@ border-radius: 10px;
    </property>
   </widget>
  </widget>
- <resources>
-  <include location="../../out/build/debug/.qt/rcc/icon.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
