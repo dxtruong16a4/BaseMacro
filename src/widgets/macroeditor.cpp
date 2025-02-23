@@ -163,16 +163,16 @@ void MacroEditor::on_btnKeyboard_clicked()
 
 void MacroEditor::on_btnDelay_clicked()
 {
-    // DialogDelay *d = DialogPool::instance().acquireDialog<DialogDelay>("DELAY");
-    // if (d) {
-    //     d->move(getCenteredPosition(this, d));
-    //     d->show();
-    // }
+    DialogDelay *d = DialogPool::instance().acquireDialog<DialogDelay>("DELAY");
+    if (d) {
+        d->move(getCenteredPosition(this, d));
+        d->show();
+    }
 }
 
 void MacroEditor::on_btnWindow_clicked()
 {
-
+    DialogPool::instance().showDialog();
 }
 
 void MacroEditor::on_btnClipboard_clicked()
@@ -436,11 +436,11 @@ DialogBase *MacroEditor::getDialogByMode(const QString &mode)
 {
     if (mode == "MOUSE") {
         return DialogPool::instance().acquireDialog<DialogClick>("MOUSE");
-    }
-    if (mode == "KEYBOARD") {
+    } else if (mode == "KEYBOARD") {
         return DialogPool::instance().acquireDialog<DialogKeyboard>("KEYBOARD");
-    }
-    // Thêm các loại dialog khác tại đây nếu cần
+    } else if (mode == "DELAY") {
+        return DialogPool::instance().acquireDialog<DialogDelay>("DELAY");
+    } // Add other dialog types here if needed
     return nullptr;
 }
 

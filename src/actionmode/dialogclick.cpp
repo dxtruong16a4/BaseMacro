@@ -182,8 +182,8 @@ QString DialogClick::getData()
     data += " " + QString::number(index);
     data += " " + times;
     data += " " + ms;
-    data += " " + ui->sbXPos->text();
-    data += " " + ui->sbYPos->text();
+    data += " " + QString::number(ui->sbXPos->value()); // if flag (Execute current position) is true, then X and Y should be set to 0,
+    data += " " + QString::number(ui->sbYPos->value()); // i will fix it later
     data += " " + QString::number(flag);
     data += " " + QString::number(wheel);
 
@@ -211,14 +211,7 @@ void DialogClick::editItem(QListWidgetItem *item)
  */
 void DialogClick::setData(const QString& data)
 {
-    QRegularExpression regex(R"(^(\s*)(\S.*)$)");
-    QRegularExpressionMatch match = regex.match(data);
-
-    if (!match.hasMatch()) return;
-
-    QString content = match.captured(2);
-    QStringList parts = content.split(" ", Qt::SkipEmptyParts);
-
+    QStringList parts = DialogBase::getContent(data);
     if (parts.size() < 8) return;
     bool ok;
 

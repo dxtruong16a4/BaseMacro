@@ -926,7 +926,7 @@ padding: 10px;
     </size>
    </property>
    <property name="focusPolicy">
-    <enum>Qt::FocusPolicy::NoFocus</enum>
+    <enum>Qt::FocusPolicy::ClickFocus</enum>
    </property>
    <property name="styleSheet">
     <string notr="true">QSpinBox {
@@ -993,7 +993,7 @@ height: 10px;
     </size>
    </property>
    <property name="focusPolicy">
-    <enum>Qt::FocusPolicy::NoFocus</enum>
+    <enum>Qt::FocusPolicy::ClickFocus</enum>
    </property>
    <property name="styleSheet">
     <string notr="true">QSpinBox {

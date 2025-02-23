@@ -18,6 +18,12 @@ public:
     void releaseDialog(const QString& type);
     void releaseAllDialogs();
 
+    void showDialog(){
+        for (auto id : pool){
+            qDebug() << id;
+        }
+    }
+
 private:
     QMap<QString, DialogBase*> pool;
 

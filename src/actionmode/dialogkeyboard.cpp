@@ -267,18 +267,18 @@ QString DialogKeyboard::getData()
     if (keyEventType == 0 || keyEventType == 1) {
         data += " 0 0 0 0 0 0";
     }
-    else if (keyEventType == 2) {
+    else if (keyEventType == 2) {        
         data += " 0 0 0 0";
-        data += " " + ui->sbTimes->text();
-        data += " " + ui->sbMs->text();
+        data += " " + QString::number(ui->sbTimes->value());
+        data += " " + QString::number(ui->sbMs->value());
     }
     else if (keyEventType == 3) {
         data += " " + QString::number(ui->chbCtrl->isChecked());
         data += " " + QString::number(ui->chbShift->isChecked());
         data += " " + QString::number(ui->chbAlt->isChecked());
         data += " " + QString::number(ui->chbWin->isChecked());
-        data += " " + ui->sbTimes->text();
-        data += " " + ui->sbMs->text();
+        data += " " + QString::number(ui->sbTimes->value());
+        data += " " + QString::number(ui->sbMs->value());
     }
     return data;
 }
@@ -307,17 +307,10 @@ void DialogKeyboard::editItem(QListWidgetItem *item)
  */
 void DialogKeyboard::setData(const QString &data)
 {
-    QRegularExpression regex(R"(^(\s*)(\S.*)$)");
-    QRegularExpressionMatch match = regex.match(data);
-
-    if (!match.hasMatch()) return;
-
-    QString content = match.captured(2);
-    QStringList parts = content.split(" ", Qt::SkipEmptyParts);
-
+    QStringList parts = DialogBase::getContent(data);
     if (parts.size() < 4) return;
-
     bool ok;
+
     int keyEventType = parts[1].toInt(&ok);
     if (ok) ui->cbKeyEventType->setCurrentIndex(keyEventType);
 

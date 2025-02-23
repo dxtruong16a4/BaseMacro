@@ -103,7 +103,7 @@ void MainWindow::on_actionSave_As_triggered()
 
 void MainWindow::on_actionExit_triggered()
 {
-    QApplication::quit();
+    this->close();
 }
 
 void MainWindow::on_actionCut_triggered()

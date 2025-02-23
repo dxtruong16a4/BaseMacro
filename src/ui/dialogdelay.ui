@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>DialogDelay</class>
  <widget class="QDialog" name="DialogDelay">
+  <property name="windowModality">
+   <enum>Qt::WindowModality::ApplicationModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -46,6 +49,9 @@ color: white;
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTabWidget" name="tabWidget">
+     <property name="focusPolicy">
+      <enum>Qt::FocusPolicy::NoFocus</enum>
+     </property>
      <property name="styleSheet">
       <string notr="true">QTabBar::tab {
     background-color: #1A1A1A;
@@ -114,56 +120,6 @@ QTabBar::tab:selected {
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QPushButton" name="btnOk">
-       <property name="geometry">
-        <rect>
-         <x>270</x>
-         <y>300</y>
-         <width>80</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>80</width>
-         <height>24</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string>OK</string>
-       </property>
-       <property name="shortcut">
-        <string>Return</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btnCancel">
-       <property name="geometry">
-        <rect>
-         <x>360</x>
-         <y>300</y>
-         <width>80</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>80</width>
-         <height>24</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string>Cancel</string>
-       </property>
-       <property name="shortcut">
-        <string>Esc</string>
-       </property>
-      </widget>
       <widget class="QSpinBox" name="sbTotal">
        <property name="geometry">
         <rect>
@@ -184,6 +140,9 @@ QTabBar::tab:selected {
          <width>100</width>
          <height>32</height>
         </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::StrongFocus</enum>
        </property>
        <property name="styleSheet">
         <string notr="true">QSpinBox {
@@ -216,11 +175,14 @@ height: 10px;
        <property name="buttonSymbols">
         <enum>QAbstractSpinBox::ButtonSymbols::UpDownArrows</enum>
        </property>
+       <property name="correctionMode">
+        <enum>QAbstractSpinBox::CorrectionMode::CorrectToPreviousValue</enum>
+       </property>
        <property name="minimum">
-        <number>0</number>
+        <number>1</number>
        </property>
        <property name="maximum">
-        <number>3600000</number>
+        <number>3599999</number>
        </property>
        <property name="singleStep">
         <number>100</number>
@@ -229,10 +191,10 @@ height: 10px;
         <enum>QAbstractSpinBox::StepType::DefaultStepType</enum>
        </property>
        <property name="value">
-        <number>0</number>
+        <number>1</number>
        </property>
       </widget>
-      <widget class="QLabel" name="lbMiliseconds">
+      <widget class="QLabel" name="lbMilliseconds">
        <property name="geometry">
         <rect>
          <x>90</x>
@@ -248,7 +210,7 @@ font: 700 11pt &quot;Arial&quot;;
 </string>
        </property>
        <property name="text">
-        <string>Miliseconds:</string>
+        <string>Milliseconds:</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
@@ -296,6 +258,9 @@ font: 700 11pt &quot;Arial&quot;;
          <width>100</width>
          <height>32</height>
         </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
        </property>
        <property name="styleSheet">
         <string notr="true">QSpinBox {
@@ -365,6 +330,9 @@ height: 10px;
          <height>32</height>
         </size>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
        <property name="styleSheet">
         <string notr="true">QSpinBox {
 background: #1A1A1A;
@@ -412,7 +380,7 @@ height: 10px;
         <number>0</number>
        </property>
       </widget>
-      <widget class="QSpinBox" name="sbMiliseconds">
+      <widget class="QSpinBox" name="sbMilliseconds">
        <property name="geometry">
         <rect>
          <x>190</x>
@@ -432,6 +400,9 @@ height: 10px;
          <width>100</width>
          <height>32</height>
         </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
        </property>
        <property name="styleSheet">
         <string notr="true">QSpinBox {
@@ -464,9 +435,6 @@ height: 10px;
        <property name="buttonSymbols">
         <enum>QAbstractSpinBox::ButtonSymbols::UpDownArrows</enum>
        </property>
-       <property name="minimum">
-        <number>0</number>
-       </property>
        <property name="maximum">
         <number>999</number>
        </property>
@@ -477,7 +445,7 @@ height: 10px;
         <enum>QAbstractSpinBox::StepType::DefaultStepType</enum>
        </property>
        <property name="value">
-        <number>0</number>
+        <number>1</number>
        </property>
       </widget>
       <widget class="QLabel" name="lb2">
@@ -540,7 +508,7 @@ font: 700 11pt &quot;Arial&quot;;
 </string>
        </property>
        <property name="text">
-        <string>miliseconds</string>
+        <string>milliseconds</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
@@ -570,56 +538,6 @@ font: 700 11pt &quot;Arial&quot;;
         <string>Mouse action moves the mouse cursor to the specified coordinates</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="btnOk_2">
-       <property name="geometry">
-        <rect>
-         <x>270</x>
-         <y>300</y>
-         <width>80</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>80</width>
-         <height>24</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string>OK</string>
-       </property>
-       <property name="shortcut">
-        <string>Return</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btnCancel_2">
-       <property name="geometry">
-        <rect>
-         <x>360</x>
-         <y>300</y>
-         <width>80</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>80</width>
-         <height>24</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string>Cancel</string>
-       </property>
-       <property name="shortcut">
-        <string>Esc</string>
-       </property>
-      </widget>
      </widget>
      <widget class="QWidget" name="DelayUserInput">
       <attribute name="title">
@@ -628,8 +546,8 @@ font: 700 11pt &quot;Arial&quot;;
       <widget class="QLabel" name="lbTitle_3">
        <property name="geometry">
         <rect>
-         <x>0</x>
-         <y>50</y>
+         <x>10</x>
+         <y>10</y>
          <width>471</width>
          <height>20</height>
         </rect>
@@ -644,57 +562,128 @@ font: 700 11pt &quot;Arial&quot;;
         <string>Mouse action moves the mouse cursor to the specified coordinates</string>
        </property>
       </widget>
-      <widget class="QPushButton" name="btnOk_3">
-       <property name="geometry">
-        <rect>
-         <x>270</x>
-         <y>300</y>
-         <width>80</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>80</width>
-         <height>24</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string>OK</string>
-       </property>
-       <property name="shortcut">
-        <string>Return</string>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btnCancel_3">
-       <property name="geometry">
-        <rect>
-         <x>360</x>
-         <y>300</y>
-         <width>80</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>80</width>
-         <height>24</height>
-        </size>
-       </property>
-       <property name="styleSheet">
-        <string notr="true"/>
-       </property>
-       <property name="text">
-        <string>Cancel</string>
-       </property>
-       <property name="shortcut">
-        <string>Esc</string>
-       </property>
-      </widget>
      </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="styleSheet">
+      <string notr="true">QGroupBox{
+border-radius:10px;
+}</string>
+     </property>
+     <property name="title">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <spacer name="hSpacer1">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnOk">
+        <property name="maximumSize">
+         <size>
+          <width>80</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::FocusPolicy::NoFocus</enum>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>OK</string>
+        </property>
+        <property name="shortcut">
+         <string>Return</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="hSpacer2">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnCancel">
+        <property name="maximumSize">
+         <size>
+          <width>80</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::FocusPolicy::NoFocus</enum>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>Cancel</string>
+        </property>
+        <property name="shortcut">
+         <string>Esc</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="hSpacer3">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

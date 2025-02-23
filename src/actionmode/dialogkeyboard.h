@@ -16,7 +16,7 @@ public:
     explicit DialogKeyboard(QWidget *parent = nullptr);
     ~DialogKeyboard();
     void editItem(QListWidgetItem *item);
-    void setData(const QString& data) override;    
+    void setData(const QString& data) override;
 
 protected:
     void closeEvent(QCloseEvent *event) override;
