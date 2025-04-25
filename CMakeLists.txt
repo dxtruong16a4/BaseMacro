@@ -37,6 +37,8 @@ set(PROJECT_SOURCES
         src/actionmode/dialogclick.cpp
         src/actionmode/dialogkeyboard.cpp
         src/actionmode/dialogdelay.cpp
+        # utils
+        src/utils/helper.cpp
 )
 
 set(PROJECT_HEADERS
@@ -61,6 +63,8 @@ set(PROJECT_HEADERS
         src/actionmode/dialogclick.h
         src/actionmode/dialogkeyboard.h
         src/actionmode/dialogdelay.h
+        # utils
+        src/utils/helper.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -109,11 +113,13 @@ qt_add_resources(BaseMacro "icon"
         resources/icon/connected.png
         resources/icon/delay.png
         resources/icon/disconnected.png
+        resources/icon/exe.png
         resources/icon/find.png
         resources/icon/goto.png
         resources/icon/if.png
         resources/icon/keyboard.png
         resources/icon/label.png
+        resources/icon/location.png
         resources/icon/loop.png
         resources/icon/mouse.png
         resources/icon/open.png

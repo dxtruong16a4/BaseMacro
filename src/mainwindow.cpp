@@ -180,13 +180,12 @@ void MainWindow::on_actionAbout_triggered()
 
 void MainWindow::on_btnRun_clicked()
 {
-    // QString otherapp = QDir::currentPath() + "/untitled.exe";
-    // QProcess::startDetached(otherapp);
+    
 }
 
 void MainWindow::on_btnStop_clicked()
 {
-
+    
 }
 
 void MainWindow::on_btnOpenEditor_clicked()

@@ -1,5 +1,6 @@
 #include "dialogclick.h"
 #include "ui_dialogclick.h"
+#include "../utils/helper.h"
 
 DialogClick::DialogClick(QWidget *parent)
     : DialogBase(parent)
@@ -7,6 +8,18 @@ DialogClick::DialogClick(QWidget *parent)
 {
     ui->setupUi(this);
     disableWheelWidget();
+
+    // Initialize the icon for dragging to get the window title
+    lbGetWindowTitle = new QLabel(this);
+    lbGetWindowTitle->setPixmap(QPixmap(":/resources/icon/location").scaled(32, 32));
+    lbGetWindowTitle->setGeometry(360, 260, 32, 32);
+    lbGetWindowTitle->setAttribute(Qt::WA_TransparentForMouseEvents, false);
+
+    disableFocusWidget();
+
+    // Initialize the tracking timer
+    trackingTimer = new QTimer(this);
+    connect(trackingTimer, &QTimer::timeout, this, &DialogClick::updateWindowTitle);
 
     connect(ui->cbEventType, &QComboBox::currentIndexChanged, this, &DialogClick::eventTypeChange);
 
@@ -17,11 +30,16 @@ DialogClick::DialogClick(QWidget *parent)
 
 DialogClick::~DialogClick()
 {
+    trackingTimer->stop();
+    delete trackingTimer;
+    delete lbGetWindowTitle;
     delete ui;
 }
 
 void DialogClick::closeEvent(QCloseEvent *event)
 {
+    isEditing = false;
+    editingItem = nullptr;
     resetToDefault();
     event->accept();
 }
@@ -38,6 +56,27 @@ void DialogClick::keyPressEvent(QKeyEvent *event)
     }
 }
 
+void DialogClick::mousePressEvent(QMouseEvent *event) {
+    QPoint labelPosInDialog = lbGetWindowTitle->mapTo(this, QPoint(0, 0));
+    QRect labelRect(labelPosInDialog, lbGetWindowTitle->size());
+    if (lbGetWindowTitle->isEnabled() && labelRect.contains(event->pos()) && event->button() == Qt::LeftButton) {
+        QPixmap pix(":/resources/icon/location");
+        QCursor customCursor(pix.scaled(32, 32), 16, 16);
+        QApplication::setOverrideCursor(customCursor);
+        tracking = true;
+        trackingTimer->start(100);
+    }
+}
+
+void DialogClick::mouseReleaseEvent(QMouseEvent *event) {
+    if (tracking) {
+        QApplication::restoreOverrideCursor();
+        tracking = false;
+        trackingTimer->stop();
+        lbGetWindowTitle->move(360, 260);
+    }
+}
+
 void DialogClick::eventTypeChange()
 {
     int index = ui->cbEventType->currentIndex();
@@ -46,18 +85,18 @@ void DialogClick::eventTypeChange()
     case 1:
         disableWheelWidget();
         enableRepeatWidget();
-        ui->chbCurrentPos->setEnabled(true);
+        ui->chbFocusWindow->setEnabled(true);
         break;
     case 4:
         disableWheelWidget();
         disableRepeatWidget();
-        ui->chbCurrentPos->setEnabled(false);
+        ui->chbFocusWindow->setEnabled(false);
         break;
     case 2:
     case 3:
         enableWheelWidget();
         enableRepeatWidget();
-        ui->chbCurrentPos->setEnabled(true);
+        ui->chbFocusWindow->setEnabled(true);
         break;
     default:
         break;
@@ -71,6 +110,16 @@ void DialogClick::getMousePos()
     ui->lbYPos->setText(QString::number(globalPos.y()));
 }
 
+void DialogClick::on_chbFocusWindow_clicked(bool checked)
+{
+    if (checked) {
+        enableFocusWidget();
+    }
+    else {
+        disableFocusWidget();
+    }
+}
+
 void DialogClick::on_btnOk_clicked()
 {
     MacroEditor *me = MacroEditor::getInstance();
@@ -80,7 +129,7 @@ void DialogClick::on_btnOk_clicked()
     } else {
         me->addItemToList(getData());
     }
-    me->setIsChanged(true);
+    me->setChanged(true);
     this->close();
     showOtherWindow();
     resetToDefault();
@@ -90,8 +139,27 @@ void DialogClick::on_btnOk_clicked()
 
 void DialogClick::on_btnCancel_clicked()
 {
+    isEditing = false;
+    editingItem = nullptr;
     this->close();
     showOtherWindow();
+}
+
+void DialogClick::startTracking() {
+    trackingTimer->start(100);
+    startTrackingDrag(this, lbGetWindowTitle);
+    stopTracking();
+}
+
+void DialogClick::updateWindowTitle() {
+    ui->tfWindowTitle->setText(getWindowTitle());
+}
+
+void DialogClick::stopTracking() {
+    if (trackingTimer->isActive()) {
+        trackingTimer->stop();
+        updateWindowTitle();
+    }
 }
 
 void DialogClick::resetToDefault()
@@ -100,9 +168,10 @@ void DialogClick::resetToDefault()
     ui->sbTimes->setValue(1);
     ui->sbMs->setValue(50);
     ui->sbXPos->setValue(0);
-    ui->sbYPos->setValue(0);
-    ui->chbCurrentPos->setChecked(false);
+    ui->sbYPos->setValue(0);    
     ui->sbWheel->setValue(0);
+    ui->chbFocusWindow->setChecked(false);
+    ui->tfWindowTitle->setText("");
 }
 
 void DialogClick::disableWheelWidget()
@@ -135,6 +204,20 @@ void DialogClick::enableRepeatWidget()
     ui->sbMs->setEnabled(true);
 }
 
+void DialogClick::disableFocusWidget()
+{
+    ui->lbWindowTitle->setEnabled(false);
+    ui->tfWindowTitle->setEnabled(false);
+    lbGetWindowTitle->setEnabled(false);
+}
+
+void DialogClick::enableFocusWidget()
+{
+    ui->lbWindowTitle->setEnabled(true);
+    ui->tfWindowTitle->setEnabled(true);
+    lbGetWindowTitle->setEnabled(true);
+}
+
 void DialogClick::showOtherWindow()
 {
     MacroEditor *me = MacroEditor::getInstance();
@@ -162,31 +245,29 @@ void DialogClick::hideOtherWindow()
 /**
  * @brief Retrieves mouse action data from the UI and formats it into a command string.
  *
- * The returned string follows these formats:
- * - If `EVENTTYPEINDEX == 0` or `1`: `"MOUSE EVENTTYPEINDEX TIMES MS X Y FLAG 0"`
- * - If `EVENTTYPEINDEX == 2` or `3`: `"MOUSE EVENTTYPEINDEX TIMES MS X Y FLAG WHEEL"`
- * - If `EVENTTYPEINDEX == 4`: `"MOUSE EVENTTYPEINDEX 0 0 X Y 0 0"`
+ * Format:
+ * MOUSE EVENTTYPEINDEX TIMES MS X Y WHEEL "WINDOW_TITLE"
  *
  * @return QString A formatted string representing the mouse action data.
  */
 QString DialogClick::getData()
 {
     int index = ui->cbEventType->currentIndex();
-    int flag = (index != 4) ? ui->chbCurrentPos->isChecked() : 0;
-    int wheel = (index == 2 || index == 3) ? ui->sbWheel->value() : 0;
-
     QString times = (index == 4) ? "0" : ui->sbTimes->text();
     QString ms = (index == 4) ? "0" : ui->sbMs->text();
-
+    int wheel = (index == 2 || index == 3) ? ui->sbWheel->value() : 0;
+    QString title = ui->chbFocusWindow->isChecked() ? ui->tfWindowTitle->text() : "None";
+    if (title.isEmpty()) {
+        title = "None";
+    }
     QString data = "MOUSE";
     data += " " + QString::number(index);
     data += " " + times;
     data += " " + ms;
-    data += " " + QString::number(ui->sbXPos->value()); // if flag (Execute current position) is true, then X and Y should be set to 0,
-    data += " " + QString::number(ui->sbYPos->value()); // i will fix it later
-    data += " " + QString::number(flag);
+    data += " " + QString::number(ui->sbXPos->value());
+    data += " " + QString::number(ui->sbYPos->value());
     data += " " + QString::number(wheel);
-
+    data += " " + title;
     return data;
 }
 
@@ -200,18 +281,27 @@ void DialogClick::editItem(QListWidgetItem *item)
 }
 
 /**
- * @brief Parses a command string and updates the UI elements accordingly.
+ * @brief Parses and sets the UI elements based on the provided command string.
  *
- * @param data The input string must follow one of these formats:
- * - `"MOUSE EVENTTYPEINDEX TIMES MS X Y FLAG 0"`
- * - `"MOUSE EVENTTYPEINDEX TIMES MS X Y FLAG WHEEL"`
- * - `"MOUSE EVENTTYPEINDEX 0 0 X Y 0 0"`
+ * This method extracts data from the input string and updates the corresponding
+ * UI elements in the dialog. The input string is expected to follow a specific
+ * format with up to 8 parts:
  *
- * @note This function checks `parts.size()` before accessing elements to prevent out-of-bounds errors.
+ * Format:
+ * MOUSE EVENTTYPEINDEX TIMES MS X Y WHEEL "WINDOW_TITLE"
+ *
+ * - EVENTTYPEINDEX: The index of the event type (e.g., click, scroll).
+ * - TIMES: The number of repetitions for the event (ignored for certain event types).
+ * - MS: The delay in milliseconds between repetitions (ignored for certain event types).
+ * - X, Y: The coordinates for the mouse action.
+ * - WHEEL: The wheel scroll value (used for scroll events).
+ * - WINDOW_TITLE: The title of the window to focus on (or "None" if no focus is required).
+ *
+ * @param data The input command string containing the mouse action data.
  */
 void DialogClick::setData(const QString& data)
 {
-    QStringList parts = DialogBase::getContent(data);
+    QStringList parts = DialogBase::getContent(data, 8);
     if (parts.size() < 8) return;
     bool ok;
 
@@ -230,9 +320,16 @@ void DialogClick::setData(const QString& data)
     int y = parts[5].toInt(&ok);
     if (ok) ui->sbYPos->setValue(y);
 
-    int posFlag = (index != 4) ? parts[6].toInt(&ok) : 0;
-    if (ok) ui->chbCurrentPos->setChecked(posFlag);
-
-    int wheel = (index == 2 || index == 3) ? parts[7].toInt(&ok) : 0;
+    int wheel = (index == 2 || index == 3) ? parts[6].toInt(&ok) : 0;
     if (ok) ui->sbWheel->setValue(wheel);
+
+    QString title = parts[7];
+    if (title == "None") {
+        ui->chbFocusWindow->setChecked(false);
+        disableFocusWidget();
+    } else {
+        ui->chbFocusWindow->setChecked(true);
+        enableFocusWidget();
+        ui->tfWindowTitle->setText(title);
+    }
 }

@@ -8,8 +8,8 @@ MacroEditor::MacroEditor(QWidget *parent)
     , ui(new Ui::MacroEditor)
 {
     ui->setupUi(this);
-    setIsChanged(false);
-    connect(ui->listMacro, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(checkAnyChange(QListWidgetItem*)));
+    setChanged(false);
+    connect(ui->listMacro, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(markChanged(QListWidgetItem*)));
 }
 
 MacroEditor *MacroEditor::getInstance()
@@ -52,19 +52,19 @@ void MacroEditor::closeEvent(QCloseEvent *event)
 void MacroEditor::keyPressEvent(QKeyEvent *event)
 {
     if (event->key() == Qt::Key_Right) {
-        ChangeIndentLevelUp();
-        setIsChanged(true);
+        increaseIndent();
+        setChanged(true);
         event->accept();
     } else if (event->key() == Qt::Key_Left){
-        ChangeIndentLevelDown();
-        setIsChanged(true);
+        decreaseIndent();
+        setChanged(true);
         event->accept();
     } else {
         QWidget::keyPressEvent(event);
     }
 }
 
-void MacroEditor::checkAnyChange(QListWidgetItem *item)
+void MacroEditor::markChanged(QListWidgetItem *item)
 {
     Q_UNUSED(item);
     isChanged = true;
@@ -246,7 +246,7 @@ void MacroEditor::New()
 
     ui->listMacro->clear();
     currentFilePath.clear();
-    setIsChanged(false);
+    setChanged(false);
 }
 
 void MacroEditor::Open()
@@ -281,7 +281,7 @@ void MacroEditor::Open()
     file.close();
 
     currentFilePath = filePath;
-    setIsChanged(false);
+    setChanged(false);
 }
 
 void MacroEditor::Save()
@@ -299,7 +299,7 @@ void MacroEditor::Save()
             out << ui->listMacro->item(i)->text() << "\n";
         }
         file.close();
-        setIsChanged(false);
+        setChanged(false);
     }
 }
 
@@ -325,7 +325,7 @@ void MacroEditor::Cut()
         for (QListWidgetItem *item : selectedItems) {
             delete item;
         }
-        setIsChanged(true);
+        setChanged(true);
     }
 }
 
@@ -348,7 +348,7 @@ void MacroEditor::Paste()
     QString text = clipboard->text();
     if (!text.isEmpty()) {
         ui->listMacro->addItem(text);
-        setIsChanged(true);
+        setChanged(true);
     }
 }
 
@@ -359,7 +359,7 @@ void MacroEditor::Delete()
         for (QListWidgetItem *item : selectedItems) {
             delete item;
         }
-        setIsChanged(true);
+        setChanged(true);
     }
 }
 
@@ -373,7 +373,7 @@ void MacroEditor::MoveUp()
             ui->listMacro->insertItem(currentRow - 1, item);
         }
     }
-    setIsChanged(true);
+    setChanged(true);
 }
 
 void MacroEditor::MoveDown()
@@ -387,10 +387,10 @@ void MacroEditor::MoveDown()
             ui->listMacro->insertItem(currentRow + 1, item);
         }
     }
-    setIsChanged(true);
+    setChanged(true);
 }
 
-void MacroEditor::ChangeIndentLevelUp()
+void MacroEditor::increaseIndent()
 {
     QList<QListWidgetItem *> selectedItems = ui->listMacro->selectedItems();
     if (!selectedItems.isEmpty()){
@@ -408,10 +408,10 @@ void MacroEditor::ChangeIndentLevelUp()
             selectedItem->setText(newText);
         }
     }
-    setIsChanged(true);
+    setChanged(true);
 }
 
-void MacroEditor::ChangeIndentLevelDown()
+void MacroEditor::decreaseIndent()
 {
     QList<QListWidgetItem *> selectedItems = ui->listMacro->selectedItems();
     if (!selectedItems.isEmpty()){
@@ -429,7 +429,7 @@ void MacroEditor::ChangeIndentLevelDown()
             selectedItem->setText(newText);
         }
     }
-    setIsChanged(true);
+    setChanged(true);
 }
 
 DialogBase *MacroEditor::getDialogByMode(const QString &mode)
@@ -491,7 +491,13 @@ QString MacroEditor::getIndentation(const QString &text)
     return match.hasMatch() ? match.captured(1) : "";
 }
 
-void MacroEditor::setIsChanged(bool changed)
+void MacroEditor::setChanged(bool changed)
 {
     isChanged = changed;
 }
+
+void MacroEditor::on_actionBuild_to_exe_triggered()
+{
+
+}
+

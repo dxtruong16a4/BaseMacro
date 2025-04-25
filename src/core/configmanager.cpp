@@ -2,7 +2,7 @@
 
 ConfigManager::ConfigManager(const QString& filePath) : configFilePath(filePath), settings(filePath, QSettings::IniFormat) {
     if (!configFileExists()) {
-        if (createDefaultConfig()) {
+        if (ensureDefaultConfigCreated()) {
             // qDebug() << "File config.ini created successfully.";
         }
     } else {
@@ -20,7 +20,7 @@ bool ConfigManager::configFileExists() const {
     return fileInfo.exists() && fileInfo.isFile();
 }
 
-bool ConfigManager::createDefaultConfig() {
+bool ConfigManager::ensureDefaultConfigCreated() {
     QFile configFile(configFilePath);
     if (!configFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
         QMessageBox::warning(nullptr, QLatin1String("Error"),

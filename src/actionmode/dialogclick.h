@@ -27,10 +27,16 @@ protected:
     void closeEvent(QCloseEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
 
+    // Method for dragging the icon to get the window title
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
+
 private slots:
     void eventTypeChange();
 
     void getMousePos();
+
+    void on_chbFocusWindow_clicked(bool checked);
 
     void on_btnOk_clicked();
 
@@ -42,6 +48,16 @@ private:
     bool isEditing = false;
     QListWidgetItem *editingItem = nullptr;
 
+    // Attribute for dragging the icon to get the window title
+    bool tracking = false;
+    QLabel *lbGetWindowTitle;
+    QTimer *trackingTimer;
+
+    // Method for dragging the icon to get the window title
+    void startTracking();
+    void updateWindowTitle();
+    void stopTracking();
+
     void resetToDefault();
 
     void disableWheelWidget();
@@ -49,6 +65,9 @@ private:
 
     void disableRepeatWidget();
     void enableRepeatWidget();
+
+    void disableFocusWidget();
+    void enableFocusWidget();
 
     void showOtherWindow();
     void hideOtherWindow();

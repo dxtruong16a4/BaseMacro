@@ -9,14 +9,18 @@
 #include <QDebug>
 #include <QDesktopServices>
 #include <QDialog>
+#include <QDrag>
 #include <QFile>
 #include <QFileDialog>
 #include <QFileInfo>
 #include <QKeyEvent>
+#include <QLabel>
 #include <QListWidgetItem>
 #include <QMainWindow>
 #include <QMap>
 #include <QMessageBox>
+#include <QMimeData>
+#include <QMouseEvent>
 #include <QSettings>
 #include <QString>
 #include <QStringLiteral>
@@ -169,7 +173,7 @@ enum RunCodeMode {
 
 template <typename T>
 std::string modeToString(T mode) {
-    static std::unordered_map<int, std::string> enumMap = {
+    static std::unordered_map<int, std::string> actionmodes = {
         // MOUSE
         {LEFT           , "LEFT"},
         {RIGHT          , "RIGHT"},
@@ -229,8 +233,18 @@ std::string modeToString(T mode) {
         {RUNCODE        , "RUNCODE"},
     };
 
-    auto it = enumMap.find(static_cast<int>(mode));
-    return (it != enumMap.end()) ? it->second : "UNKNOWN";
+    auto it = actionmodes.find(static_cast<int>(mode));
+    return (it != actionmodes.end()) ? it->second : "UNKNOWN";
 }
+
+// "MouseMode", "MOUSE <EVENTTYPEINDEX> <TIMES> <MS> <X> <Y> <WHEEL> <WINDOWTITLE>"
+/*
+"KeyboardMode", "KEYBOARD <KEYEVENTTYPEINDEX> <KEYINDEX> <CTRL> <SHIFT> <ALT> <WIN> <TIMES> <MS> <WINDOW TITLE>"
+*/
+/*
+"DelayMode", "DELAY <EVENTTYPEINDEX> <MILLISECONDS>",
+             "DELAY <EVENTTYPEINDEX> <APPEAR/DISAPPEAR> <TIMEOUT> <WINDOW TITLE>",
+             "DELAY <EVENTTYPEINDEX> <ANYINTERACT/PARTICULARINTERACT> <KEYSEQUENCE> <TIMEOUT>"
+*/
 
 #endif // DEFAULTCONSTANTS_H

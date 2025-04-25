@@ -67,7 +67,7 @@ color: white;
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>110</y>
+     <y>70</y>
      <width>150</width>
      <height>32</height>
     </rect>
@@ -89,7 +89,7 @@ font: 700 11pt &quot;Arial&quot;;
    <property name="geometry">
     <rect>
      <x>50</x>
-     <y>150</y>
+     <y>110</y>
      <width>150</width>
      <height>32</height>
     </rect>
@@ -111,7 +111,7 @@ font: 700 11pt &quot;Arial&quot;;
    <property name="geometry">
     <rect>
      <x>210</x>
-     <y>110</y>
+     <y>70</y>
      <width>250</width>
      <height>32</height>
     </rect>
@@ -171,7 +171,7 @@ border-radius: 10px
    <property name="geometry">
     <rect>
      <x>210</x>
-     <y>150</y>
+     <y>110</y>
      <width>250</width>
      <height>32</height>
     </rect>
@@ -764,7 +764,7 @@ border-radius: 10px
    <property name="geometry">
     <rect>
      <x>200</x>
-     <y>190</y>
+     <y>150</y>
      <width>64</width>
      <height>32</height>
     </rect>
@@ -786,7 +786,7 @@ padding: 10px;
    <property name="geometry">
     <rect>
      <x>270</x>
-     <y>190</y>
+     <y>150</y>
      <width>72</width>
      <height>32</height>
     </rect>
@@ -808,7 +808,7 @@ padding: 10px;
    <property name="geometry">
     <rect>
      <x>340</x>
-     <y>190</y>
+     <y>150</y>
      <width>64</width>
      <height>32</height>
     </rect>
@@ -830,7 +830,7 @@ padding: 10px;
    <property name="geometry">
     <rect>
      <x>400</x>
-     <y>190</y>
+     <y>150</y>
      <width>70</width>
      <height>32</height>
     </rect>
@@ -908,7 +908,7 @@ padding: 10px;
    <property name="geometry">
     <rect>
      <x>325</x>
-     <y>230</y>
+     <y>190</y>
      <width>80</width>
      <height>32</height>
     </rect>
@@ -975,7 +975,7 @@ height: 10px;
    <property name="geometry">
     <rect>
      <x>215</x>
-     <y>230</y>
+     <y>190</y>
      <width>60</width>
      <height>32</height>
     </rect>
@@ -1042,7 +1042,7 @@ height: 10px;
    <property name="geometry">
     <rect>
      <x>280</x>
-     <y>230</y>
+     <y>190</y>
      <width>40</width>
      <height>32</height>
     </rect>
@@ -1073,7 +1073,7 @@ font: 700 11pt &quot;Arial&quot;;
    <property name="geometry">
     <rect>
      <x>410</x>
-     <y>230</y>
+     <y>190</y>
      <width>20</width>
      <height>32</height>
     </rect>
@@ -1098,6 +1098,62 @@ font: 700 11pt &quot;Arial&quot;;
    </property>
    <property name="text">
     <string>ms</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="tfWindowTitle">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>270</y>
+     <width>240</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+font: 700 11pt &quot;Arial&quot;;
+background: #363636;
+border-radius: 10px
+}</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbWindowTitle">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>270</y>
+     <width>80</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel
+{
+	font: 11pt &quot;Arial&quot;;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Window title</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="chbFocusWindow">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>230</y>
+     <width>250</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+font: 700 10pt &quot;Arial&quot;;
+padding: 10px;
+}</string>
+   </property>
+   <property name="text">
+    <string>Focus on window</string>
    </property>
   </widget>
  </widget>

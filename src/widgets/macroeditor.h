@@ -19,7 +19,7 @@ public:
     ~MacroEditor();
     void addItemToList(QString item);
     QString getIndentation(const QString& text);
-    void setIsChanged(bool changed);
+    void setChanged(bool changed);
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -27,7 +27,7 @@ protected:
 
 private slots:
     // Custom
-    void checkAnyChange(QListWidgetItem *item);
+    void markChanged(QListWidgetItem *item);
 
     // QT generator
     void on_actionNew_triggered();
@@ -37,6 +37,8 @@ private slots:
     void on_actionSave_triggered();
 
     void on_actionSave_As_triggered();
+
+    void on_actionBuild_to_exe_triggered();
 
     void on_actionExit_triggered();
 
@@ -104,8 +106,8 @@ private:
     void Delete();
     void MoveUp();
     void MoveDown();
-    void ChangeIndentLevelUp();
-    void ChangeIndentLevelDown();
+    void increaseIndent();
+    void decreaseIndent();
     DialogBase* getDialogByMode(const QString& mode);
     QPoint getCenteredPosition(QWidget *parent, QWidget *child);
 };

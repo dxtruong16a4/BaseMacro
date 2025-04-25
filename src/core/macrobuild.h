@@ -1,22 +1,27 @@
 #ifndef MACROBUILD_H
 #define MACROBUILD_H
 
-// #include <memory>
-// #include <vector>
+#include <memory>
+#include <QStringList>
+#include <QRegularExpression>
+#include "filemanager.h"
 
-// class MacroBuild
-// {
-// public:
-//     static MacroBuild* getInstance();
-//     ~MacroBuild();
+class MacroBuild
+{
+public:
+    static MacroBuild* getInstance();
+    ~MacroBuild();
 
-//     void InsertAction(ActionType actionType);
+private:
+    MacroBuild();
+    static std::unique_ptr<MacroBuild> uniqueInstance;
+    friend std::unique_ptr<MacroBuild> std::make_unique<MacroBuild>();
+    FileManager *fm;
+    QString filename;
 
-// private:
-//     MacroBuild();
-//     static std::unique_ptr<MacroBuild> uniqueInstance;
-//     friend std::unique_ptr<MacroBuild> std::make_unique<MacroBuild>();
-//     std::vector<ActionType> actions;
-// };
+    void insertAction(const QString action);
+    QString getActionType(const QString&data);
+    QStringList getContent(const QString& data);
+};
 
 #endif // MACROBUILD_H

@@ -1,11 +1,22 @@
 #include "dialogkeyboard.h"
 #include "ui_dialogkeyboard.h"
+#include "../utils/helper.h"
 
 DialogKeyboard::DialogKeyboard(QWidget *parent)
     : DialogBase(parent)
     , ui(new Ui::DialogKeyboard)
 {
     ui->setupUi(this);
+    disableCombinationWidget();
+
+    // Initialize the icon for dragging to get the window title
+    lbGetWindowTitle = new QLabel(this);
+    lbGetWindowTitle->setPixmap(QPixmap(":/resources/icon/location").scaled(32, 32));
+    lbGetWindowTitle->setGeometry(390, 270, 32, 32);
+    lbGetWindowTitle->setAttribute(Qt::WA_TransparentForMouseEvents, false);
+
+    disableFocusWidget();
+
     keyMap = {
         {Qt::Key_Backspace              , "Back"},
         {Qt::Key_Tab                    , "Tab"},
@@ -118,17 +129,26 @@ DialogKeyboard::DialogKeyboard(QWidget *parent)
         {Qt::Key_NumLock                , "Numlock"},
         {Qt::Key_ScrollLock             , "Scroll"}
     }; // Never used
-    connect(ui->cbKeyEventType, SIGNAL(currentIndexChanged(int)), this, SLOT(eventTypeChange()));
 
+    // Initialize the tracking timer
+    trackingTimer = new QTimer(this);
+    connect(trackingTimer, &QTimer::timeout, this, &DialogKeyboard::updateWindowTitle);
+
+    connect(ui->cbKeyEventType, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &DialogKeyboard::eventTypeChange);
 }
 
 DialogKeyboard::~DialogKeyboard()
 {
+    trackingTimer->stop();
+    delete trackingTimer;
+    delete lbGetWindowTitle;
     delete ui;
 }
 
 void DialogKeyboard::closeEvent(QCloseEvent *event)
 {
+    isEditing = false;
+    editingItem = nullptr;
     resetToDefault();
     event->accept();
 }
@@ -136,11 +156,31 @@ void DialogKeyboard::closeEvent(QCloseEvent *event)
 void DialogKeyboard::keyPressEvent(QKeyEvent *event)
 {
     int key = event->key();
-
     if ((key >= Qt::Key_A && key <= Qt::Key_Z) || (key >= Qt::Key_A && key <= Qt::Key_Z)) {
         ui->cbKey->setFocus();
     } else {
         QWidget::keyPressEvent(event);
+    }
+}
+
+void DialogKeyboard::mousePressEvent(QMouseEvent *event) {
+    QPoint labelPosInDialog = lbGetWindowTitle->mapTo(this, QPoint(0, 0));
+    QRect labelRect(labelPosInDialog, lbGetWindowTitle->size());
+    if (lbGetWindowTitle->isEnabled() && labelRect.contains(event->pos()) && event->button() == Qt::LeftButton) {
+        QPixmap pix(":/resources/icon/location");
+        QCursor customCursor(pix.scaled(32, 32), 16, 16);
+        QApplication::setOverrideCursor(customCursor);
+        tracking = true;
+        trackingTimer->start(100);
+    }
+}
+
+void DialogKeyboard::mouseReleaseEvent(QMouseEvent *event) {
+    if (tracking) {
+        QApplication::restoreOverrideCursor();
+        tracking = false;
+        trackingTimer->stop();
+        lbGetWindowTitle->move(390, 270);
     }
 }
 
@@ -166,6 +206,16 @@ void DialogKeyboard::eventTypeChange()
     }
 }
 
+void DialogKeyboard::on_chbFocusWindow_clicked(bool checked)
+{
+    if (checked) {
+        enableFocusWidget();
+    }
+    else {
+        disableFocusWidget();
+    }
+}
+
 void DialogKeyboard::on_btnOk_clicked()
 {
     QString selectedKey = ui->cbKey->currentText();
@@ -188,7 +238,7 @@ void DialogKeyboard::on_btnOk_clicked()
     } else {
         me->addItemToList(getData());
     }
-    me->setIsChanged(true);
+    me->setChanged(true);
     this->close();
     resetToDefault();
     isEditing = false;
@@ -197,7 +247,26 @@ void DialogKeyboard::on_btnOk_clicked()
 
 void DialogKeyboard::on_btnCancel_clicked()
 {
+    isEditing = false;
+    editingItem = nullptr;
     this->close();
+}
+
+void DialogKeyboard::startTracking() {
+    trackingTimer->start(100);
+    startTrackingDrag(this, lbGetWindowTitle);
+    stopTracking();
+}
+
+void DialogKeyboard::updateWindowTitle() {
+    ui->tfWindowTitle->setText(getWindowTitle());
+}
+
+void DialogKeyboard::stopTracking() {
+    if (trackingTimer->isActive()) {
+        trackingTimer->stop();
+        updateWindowTitle();
+    }
 }
 
 void DialogKeyboard::resetToDefault()
@@ -210,6 +279,8 @@ void DialogKeyboard::resetToDefault()
     ui->chbWin->setChecked(false);
     ui->sbTimes->setValue(1);
     ui->sbMs->setValue(50);
+    ui->chbFocusWindow->setChecked(false);
+    ui->tfWindowTitle->setText("");
 }
 
 void DialogKeyboard::disableCombinationWidget()
@@ -244,16 +315,30 @@ void DialogKeyboard::enableRepeatWidget()
     ui->lbMs->setEnabled(true);
 }
 
+void DialogKeyboard::disableFocusWidget()
+{
+    ui->lbWindowTitle->setEnabled(false);
+    ui->tfWindowTitle->setEnabled(false);
+    lbGetWindowTitle->setEnabled(false);
+}
+
+void DialogKeyboard::enableFocusWidget()
+{
+    ui->lbWindowTitle->setEnabled(true);
+    ui->tfWindowTitle->setEnabled(true);
+    lbGetWindowTitle->setEnabled(true);
+}
+
 /**
  * @brief Retrieves keyboard action data from the UI and formats it into a command string.
  *
  * The returned string follows these formats:
  * - If `KEYEVENTTYPEINDEX == 0` or `1`:
- *   `"KEYBOARD KEYEVENTTYPEINDEX KEYINDEX 0 0 0 0 0 0"`
+ *   `"KEYBOARD KEYEVENTTYPEINDEX KEYINDEX 0 0 0 0 0 0 WINDOWTITLE"`
  * - If `KEYEVENTTYPEINDEX == 2`:
- *   `"KEYBOARD KEYEVENTTYPEINDEX KEYINDEX 0 0 0 0 TIMES MS"`
+ *   `"KEYBOARD KEYEVENTTYPEINDEX KEYINDEX 0 0 0 0 TIMES MS WINDOWTITLE"`
  * - If `KEYEVENTTYPEINDEX == 3`:
- *   `"KEYBOARD KEYEVENTTYPEINDEX KEYINDEX CTRL SHIFT ALT WIN TIMES MS"`
+ *   `"KEYBOARD KEYEVENTTYPEINDEX KEYINDEX CTRL SHIFT ALT WIN TIMES MS WINDOWTITLE"`
  *
  * @return QString A formatted string representing the keyboard action data.
  */
@@ -267,7 +352,7 @@ QString DialogKeyboard::getData()
     if (keyEventType == 0 || keyEventType == 1) {
         data += " 0 0 0 0 0 0";
     }
-    else if (keyEventType == 2) {        
+    else if (keyEventType == 2) {
         data += " 0 0 0 0";
         data += " " + QString::number(ui->sbTimes->value());
         data += " " + QString::number(ui->sbMs->value());
@@ -280,6 +365,11 @@ QString DialogKeyboard::getData()
         data += " " + QString::number(ui->sbTimes->value());
         data += " " + QString::number(ui->sbMs->value());
     }
+    QString title = ui->chbFocusWindow->isChecked() ? ui->tfWindowTitle->text() : "None";
+    if (title.isEmpty()) {
+        title = "None";
+    }
+    data += " " + title;
     return data;
 }
 
@@ -297,17 +387,17 @@ void DialogKeyboard::editItem(QListWidgetItem *item)
  *
  * @param data The input string must follow one of these formats:
  * - If `KEYEVENTTYPEINDEX == 0` or `1`:
- *   `"KEYBOARD KEYEVENTTYPEINDEX KEYINDEX 0 0 0 0 0 0"`
+ *   `"KEYBOARD KEYEVENTTYPEINDEX KEYINDEX 0 0 0 0 0 0 WINDOWTITLE"`
  * - If `KEYEVENTTYPEINDEX == 2`:
- *   `"KEYBOARD KEYEVENTTYPEINDEX KEYINDEX 0 0 0 0 TIMES MS"`
+ *   `"KEYBOARD KEYEVENTTYPEINDEX KEYINDEX 0 0 0 0 TIMES MS WINDOWTITLE"`
  * - If `KEYEVENTTYPEINDEX == 3`:
- *   `"KEYBOARD KEYEVENTTYPEINDEX KEYINDEX CTRL SHIFT ALT WIN TIMES MS"`
+ *   `"KEYBOARD KEYEVENTTYPEINDEX KEYINDEX CTRL SHIFT ALT WIN TIMES MS WINDOWTITLE"`
  *
  * @note This function checks `parts.size()` before accessing elements to prevent out-of-bounds errors.
  */
 void DialogKeyboard::setData(const QString &data)
 {
-    QStringList parts = DialogBase::getContent(data);
+    QStringList parts = DialogBase::getContent(data, 10);
     if (parts.size() < 4) return;
     bool ok;
 
@@ -323,8 +413,7 @@ void DialogKeyboard::setData(const QString &data)
         ui->chbShift->setChecked(parts[4].toInt(&ok) && ok);
         ui->chbAlt->setChecked(parts[5].toInt(&ok) && ok);
         ui->chbWin->setChecked(parts[6].toInt(&ok) && ok);
-    }
-    else if (keyEventType == 2) {
+    } else if (keyEventType == 2) {
         if (parts.size() < 9) return;
         ui->chbCtrl->setChecked(false);
         ui->chbShift->setChecked(false);
@@ -332,8 +421,7 @@ void DialogKeyboard::setData(const QString &data)
         ui->chbWin->setChecked(false);
         ui->sbTimes->setValue(parts[7].toInt(&ok) && ok ? parts[7].toInt() : 0);
         ui->sbMs->setValue(parts[8].toInt(&ok) && ok ? parts[8].toInt() : 0);
-    }
-    else if (keyEventType == 3) {
+    } else if (keyEventType == 3) {
         if (parts.size() < 9) return;
         ui->chbCtrl->setChecked(parts[3].toInt(&ok) && ok);
         ui->chbShift->setChecked(parts[4].toInt(&ok) && ok);
@@ -341,5 +429,21 @@ void DialogKeyboard::setData(const QString &data)
         ui->chbWin->setChecked(parts[6].toInt(&ok) && ok);
         ui->sbTimes->setValue(parts[7].toInt(&ok) && ok ? parts[7].toInt() : 0);
         ui->sbMs->setValue(parts[8].toInt(&ok) && ok ? parts[8].toInt() : 0);
+    }
+
+    if (parts.size() > 9) {
+        QString title = parts[9];
+        if (title == "None") {
+            ui->chbFocusWindow->setChecked(false);
+        } else {
+            ui->chbFocusWindow->setChecked(true);
+            ui->tfWindowTitle->setText(title);
+        }
+    }
+
+    if (ui->chbFocusWindow->isChecked()) {
+        enableFocusWidget();
+    } else {
+        disableFocusWidget();
     }
 }

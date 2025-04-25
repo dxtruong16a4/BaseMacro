@@ -1103,6 +1103,9 @@ border: 1px solid #005A9E;
     <addaction name="actionOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
+    <addaction name="separator"/>
+    <addaction name="actionBuild_to_exe"/>
+    <addaction name="separator"/>
     <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuEdit">
@@ -1290,6 +1293,18 @@ border: 1px solid #005A9E;
    </property>
    <property name="statusTip">
     <string>How to use Macro Editor</string>
+   </property>
+  </action>
+  <action name="actionBuild_to_exe">
+   <property name="icon">
+    <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+     <normaloff>:/resources/icon/exe.png</normaloff>:/resources/icon/exe.png</iconset>
+   </property>
+   <property name="text">
+    <string>Build to exe</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+B</string>
    </property>
   </action>
  </widget>
