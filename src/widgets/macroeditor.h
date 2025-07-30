@@ -1,15 +1,10 @@
 #ifndef MACROEDITOR_H
 #define MACROEDITOR_H
 
-#include "../core/filemanager.h"
-
-#include <memory>
-#include <QMainWindow>
-#include <QCloseEvent>
-#include <QListWidgetItem>
-#include <QFileDialog>
-#include <QMessageBox>
-#include <QClipboard>
+#include "../core/dialogpool.h"
+#include "../actionmode/dialogclick.h"
+#include "../actionmode/dialogkeyboard.h"
+#include "../actionmode/dialogdelay.h"
 
 namespace Ui {
 class MacroEditor;
@@ -22,11 +17,18 @@ class MacroEditor : public QMainWindow
 public:
     static MacroEditor* getInstance();
     ~MacroEditor();
+    void addItemToList(QString item);
+    QString getIndentation(const QString& text);
+    void setChanged(bool changed);
 
 protected:
     void closeEvent(QCloseEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
 
 private slots:
+    // Custom
+    void markChanged(QListWidgetItem *item);
+
     // QT generator
     void on_actionNew_triggered();
 
@@ -35,6 +37,8 @@ private slots:
     void on_actionSave_triggered();
 
     void on_actionSave_As_triggered();
+
+    void on_actionBuild_to_exe_triggered();
 
     void on_actionExit_triggered();
 
@@ -56,16 +60,15 @@ private slots:
 
     void on_btnClick_clicked();
 
-    // Custom
-    void checkAnyChange(QListWidgetItem *item);
-
     void on_btnKeyboard_clicked();
 
     void on_btnDelay_clicked();
 
-    void on_btnPaste_clicked();
+    void on_btnWindow_clicked();
 
-    void on_btnOpenLink_clicked();
+    void on_btnClipboard_clicked();
+
+    void on_btnOpen_clicked();
 
     void on_btnFind_clicked();
 
@@ -92,11 +95,21 @@ private:
     friend std::unique_ptr<MacroEditor> std::make_unique<MacroEditor>();
 
     QString currentFilePath = "";
-    bool isChange = false;
+    bool isChanged = false;
     void New();
     void Open();
     void Save();
     void SaveAs();
+    void Cut();
+    void Copy();
+    void Paste();
+    void Delete();
+    void MoveUp();
+    void MoveDown();
+    void increaseIndent();
+    void decreaseIndent();
+    DialogBase* getDialogByMode(const QString& mode);
+    QPoint getCenteredPosition(QWidget *parent, QWidget *child);
 };
 
 #endif // MACROEDITOR_H

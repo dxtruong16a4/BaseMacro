@@ -1,6 +1,5 @@
 #include "dialogabout.h"
 #include "ui_dialogabout.h"
-#include "../core/DefaultConstants.h"
 
 std::unique_ptr<DialogAbout> DialogAbout::uniqueInstance = nullptr;
 
@@ -9,11 +8,7 @@ DialogAbout::DialogAbout(QWidget *parent)
     , ui(new Ui::DialogAbout)
 {
     ui->setupUi(this);
-}
-
-DialogAbout::~DialogAbout()
-{
-    delete ui;
+    ui->lbAbout_2->setText(ABOUT);
 }
 
 DialogAbout* DialogAbout::getInstance()
@@ -22,6 +17,11 @@ DialogAbout* DialogAbout::getInstance()
         uniqueInstance = std::make_unique<DialogAbout>();
     }
     return uniqueInstance.get();
+}
+
+DialogAbout::~DialogAbout()
+{
+    delete ui;
 }
 
 void DialogAbout::closeEvent(QCloseEvent *event)
@@ -33,4 +33,14 @@ void DialogAbout::closeEvent(QCloseEvent *event)
 void DialogAbout::on_commandLinkButton_clicked()
 {
     QDesktopServices::openUrl(QUrl(MYGITHUBURL));
+}
+
+void DialogAbout::editItem(QListWidgetItem *item)
+{
+
+}
+
+void DialogAbout::setData(const QString &data)
+{
+
 }

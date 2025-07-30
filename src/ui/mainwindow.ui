@@ -20,15 +20,22 @@
    <string>Base Macro</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../out/build/debug/.qt/rcc/icon.qrc">
-    <normaloff>:/assets/logo.ico</normaloff>:/assets/logo.ico</iconset>
+   <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+    <normaloff>:/resources/icon/logo.ico</normaloff>:/resources/icon/logo.ico</iconset>
   </property>
   <property name="statusTip">
    <string>Welcome to Base Macro!</string>
   </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow {
-	background: #1A1A1A;
+background: #1A1A1A;
+color: white;
+}
+QMenuBar{
+color: white;
+}
+QStatusBar{
+color: white;
 }</string>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -98,7 +105,9 @@
           <enum>Qt::LayoutDirection::LeftToRight</enum>
          </property>
          <property name="styleSheet">
-          <string notr="true">border-radius:10px</string>
+          <string notr="true">QGroupBox{
+border-radius:10px;
+}</string>
          </property>
          <property name="title">
           <string/>
@@ -189,6 +198,7 @@
 {
 border-radius:10px;
 background:#7F7F7F;
+color: white;
 }
 QPushButton:hover
 {
@@ -225,6 +235,7 @@ background:#7F7F7F
 {
 border-radius:10px;
 background:#7F7F7F;
+color: white;
 }
 QPushButton:hover
 {
@@ -261,6 +272,7 @@ background:#7F7F7F
 {
 border-radius:10px;
 background:#7F7F7F;
+color: white;
 }
 QPushButton:hover
 {
@@ -353,7 +365,11 @@ background:#7F7F7F
                 <string>Connection</string>
                </property>
                <property name="styleSheet">
-                <string notr="true">border-radius:10px;</string>
+                <string notr="true">QLabel{
+border-radius:10px;
+color: white;
+}
+</string>
                </property>
                <property name="frameShape">
                 <enum>QFrame::Shape::NoFrame</enum>
@@ -421,7 +437,10 @@ background:#7F7F7F
               <string>Task list</string>
              </property>
              <property name="styleSheet">
-              <string notr="true">background:#404040;</string>
+              <string notr="true">QListWidget{
+background:#404040;
+color: white;
+}</string>
              </property>
             </widget>
             <widget class="QTextBrowser" name="Logger">
@@ -450,7 +469,9 @@ background:#7F7F7F
               <string/>
              </property>
              <property name="styleSheet">
-              <string notr="true">background:#404040;</string>
+              <string notr="true">QTextBrowser{
+background:#404040;
+}</string>
              </property>
              <property name="placeholderText">
               <string>Logger</string>
@@ -800,7 +821,7 @@ background:#7F7F7F
   </action>
  </widget>
  <resources>
-  <include location="../out/build/debug/.qt/rcc/icon.qrc"/>
+  <include location="../../out/build/debug/.qt/rcc/icon.qrc"/>
  </resources>
  <connections/>
 </ui>

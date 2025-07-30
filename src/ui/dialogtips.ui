@@ -29,12 +29,11 @@
    <string>Tips</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../out/build/debug/.qt/rcc/icon.qrc">
-    <normaloff>:/assets/logo.ico</normaloff>:/assets/logo.ico</iconset>
+   <iconset theme="QIcon::ThemeIcon::WeatherClear"/>
   </property>
   <property name="styleSheet">
    <string notr="true">QDialog {
-	background: #1A1A1A;
+background: #1A1A1A;
 }</string>
   </property>
   <widget class="QLabel" name="lbAbout">
@@ -56,11 +55,11 @@
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">QLabel
-{
-	background: #363636;
-	font: 700 12pt &quot;Arial&quot;;
-	border-radius: 10px
+    <string notr="true">QLabel{
+background: #363636;
+font: 700 12pt &quot;Arial&quot;;
+border-radius: 10px;
+color: white;
 }</string>
    </property>
    <property name="frameShape">
@@ -80,8 +79,6 @@
    </property>
   </widget>
  </widget>
- <resources>
-  <include location="../out/build/debug/.qt/rcc/icon.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

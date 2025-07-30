@@ -1,8 +1,10 @@
-// Not used
-
 #include "filemanager.h"
 
-FileManager::FileManager(const QString& path) : filePath(path), file(path) {}
+FileManager::FileManager(const QString& path) : filePath(path), file(path) {
+    if (filePath.isEmpty()) {
+        throw std::invalid_argument("File path is empty!");
+    }
+}
 
 FileManager::~FileManager() {
     if (file.isOpen()) {
@@ -11,32 +13,43 @@ FileManager::~FileManager() {
 }
 
 void FileManager::write(const QString& data) {
-    if (filePath.isEmpty()) {
-        QMessageBox::warning(nullptr, "Error", "File path is empty!");
-        return;
-    }
-    QFile file(filePath);
     if (!file.open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)) {
-        QMessageBox::warning(nullptr, "Error", "Cannot open file " + filePath + " to write!");
-        return;
+        throw std::runtime_error("Cannot open file " + filePath.toStdString() + " to write!");
     }
     QTextStream out(&file);
     out << data << "\n";
     file.close();
 }
 
-QString FileManager::read() const {
-    if (filePath.isEmpty()) {
-        QMessageBox::warning(nullptr, "Error", "File path is empty!");
-        return "";
+QString FileManager::read() {
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        throw std::runtime_error("Cannot open file " + filePath.toStdString() + " to read!");
     }
-    QFile readFile(filePath);
-    if (!readFile.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QMessageBox::warning(nullptr, "Error", "Cannot open file " + filePath + " to read!");
-        return "";
-    }
-    QTextStream in(&readFile);
+    QTextStream in(&file);
     QString content = in.readAll();
-    readFile.close();
+    file.close();
     return content;
+}
+
+QString FileManager::createFile(const QString &directory)
+{
+    QString timestamp = QDateTime::currentDateTime().toString("yyyyMMdd_HHmmss");
+    QString fileName = directory + "/" + timestamp + ".txt";
+    QFile newFile(fileName);
+    if (!newFile.open(QIODevice::WriteOnly)) {
+        throw std::runtime_error("Cannot create file " + fileName.toStdString());
+    }
+    newFile.close();
+    return fileName;
+}
+
+void FileManager::deleteFile(const QString &path)
+{
+    QFile fileToDelete(path);
+    if (!fileToDelete.exists()) {
+        throw std::runtime_error("File " + path.toStdString() + " does not exist!");
+    }
+    if (!fileToDelete.remove()) {
+        throw std::runtime_error("Failed to delete file " + path.toStdString());
+    }
 }

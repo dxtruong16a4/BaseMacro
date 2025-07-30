@@ -3,20 +3,13 @@
 
 #include "DefaultConstants.h"
 
-#include <QString>
-#include <QDebug>
-#include <QSettings>
-#include <QFile>
-#include <QFileInfo>
-#include <QDebug>
-#include <QMessageBox>
-
 class ConfigManager
 {
 public:
     ConfigManager(const QString& filePath);
+    ~ConfigManager();
     bool configFileExists() const;
-    bool createDefaultConfig();
+    bool ensureDefaultConfigCreated();
     void loadSettings(int& width, int& height, int& x, int& y, QString& pinCorner, int& opac, bool& isHide);
     void saveSettings(int width, int height, int x, int y, const QString& pinCorner, int opac, bool isHide);
     // Setter
