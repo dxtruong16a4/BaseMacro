@@ -24,4 +24,7 @@ if %ERRORLEVEL% EQU 0 (
     echo Build failed! Check the error messages above.
 )
 
+REM Return to original directory
+cd ..
+
 pause 
