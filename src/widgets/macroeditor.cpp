@@ -8,12 +8,8 @@ MacroEditor::MacroEditor(QWidget *parent)
     , ui(new Ui::MacroEditor)
 {
     ui->setupUi(this);
-    connect(ui->listMacro, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(checkAnyChange(QListWidgetItem*)));
-}
-
-MacroEditor::~MacroEditor()
-{
-    delete ui;
+    setChanged(false);
+    connect(ui->listMacro, SIGNAL(itemChanged(QListWidgetItem*)), this, SLOT(markChanged(QListWidgetItem*)));
 }
 
 MacroEditor *MacroEditor::getInstance()
@@ -24,9 +20,15 @@ MacroEditor *MacroEditor::getInstance()
     return uniqueInstance.get();
 }
 
+MacroEditor::~MacroEditor()
+{
+    DialogPool::instance().releaseAllDialogs();
+    delete ui;
+}
+
 void MacroEditor::closeEvent(QCloseEvent *event)
 {
-    if (isChange) {
+    if (isChanged) {
         QMessageBox::StandardButton resBtn = QMessageBox::question(this, "Macro Editor",
                                                                    "Do you want to save changes?",
                                                                    QMessageBox::Cancel | QMessageBox::No | QMessageBox::Yes,
@@ -47,9 +49,204 @@ void MacroEditor::closeEvent(QCloseEvent *event)
     }
 }
 
+void MacroEditor::keyPressEvent(QKeyEvent *event)
+{
+    if (event->key() == Qt::Key_Right) {
+        increaseIndent();
+        setChanged(true);
+        event->accept();
+    } else if (event->key() == Qt::Key_Left){
+        decreaseIndent();
+        setChanged(true);
+        event->accept();
+    } else {
+        QWidget::keyPressEvent(event);
+    }
+}
+
+void MacroEditor::markChanged(QListWidgetItem *item)
+{
+    Q_UNUSED(item);
+    isChanged = true;
+}
+
+void MacroEditor::on_actionNew_triggered()
+{
+    New();
+}
+
+void MacroEditor::on_actionOpen_triggered()
+{
+    Open();
+}
+
+void MacroEditor::on_actionSave_triggered()
+{
+    Save();
+}
+
+void MacroEditor::on_actionSave_As_triggered()
+{
+    SaveAs();
+}
+
+void MacroEditor::on_actionBuild_to_exe_triggered()
+{
+    // get all actions from listMacro
+    
+    std::vector<std::string> actions;
+    for (int i = 0; i < ui->listMacro->count(); ++i) {
+        actions.push_back(ui->listMacro->item(i)->text().toStdString());
+    }
+    qDebug() << "Actions:\n";
+    for (const auto &action : actions) {
+        qDebug() << QString::fromStdString(action).trimmed();
+    } 
+}
+
+void MacroEditor::on_actionExit_triggered()
+{
+    this->close();
+}
+
+void MacroEditor::on_actionCut_triggered()
+{
+    Cut();
+}
+
+void MacroEditor::on_actionCopy_triggered()
+{
+    Copy();
+}
+
+void MacroEditor::on_actionPaste_triggered()
+{
+    Paste();
+}
+
+void MacroEditor::on_actionDelete_triggered()
+{
+    Delete();
+}
+
+void MacroEditor::on_actionMove_up_triggered()
+{
+    MoveUp();
+}
+
+void MacroEditor::on_actionMove_down_triggered()
+{
+    MoveDown();
+}
+
+void MacroEditor::on_actionHow_to_use_triggered()
+{
+
+}
+
+void MacroEditor::on_listMacro_itemDoubleClicked(QListWidgetItem *item)
+{
+    if (!item) return;
+
+    QString mode = item->text().trimmed().split(" ").first();
+    DialogBase *dialog = dynamic_cast<DialogBase*>(getDialogByMode(mode));
+
+    if (dialog) {
+        dialog->move(getCenteredPosition(this, dialog));
+        dialog->editItem(item);
+    }
+}
+
+void MacroEditor::on_btnClick_clicked()
+{
+    DialogClick *d = DialogPool::instance().acquireDialog<DialogClick>("MOUSE");
+    if (d) {
+        d->move(getCenteredPosition(this, d));
+        d->show();
+    }
+}
+
+void MacroEditor::on_btnKeyboard_clicked()
+{
+    DialogKeyboard *d = DialogPool::instance().acquireDialog<DialogKeyboard>("KEYBOARD");
+    if (d) {
+        d->move(getCenteredPosition(this, d));
+        d->show();
+    }
+}
+
+void MacroEditor::on_btnDelay_clicked()
+{
+    DialogDelay *d = DialogPool::instance().acquireDialog<DialogDelay>("DELAY");
+    if (d) {
+        d->move(getCenteredPosition(this, d));
+        d->show();
+    }
+}
+
+void MacroEditor::on_btnWindow_clicked()
+{
+    DialogPool::instance().showDialog();
+}
+
+void MacroEditor::on_btnClipboard_clicked()
+{
+
+}
+
+void MacroEditor::on_btnOpen_clicked()
+{
+
+}
+
+void MacroEditor::on_btnFind_clicked()
+{
+
+}
+
+void MacroEditor::on_btnIf_clicked()
+{
+
+}
+
+void MacroEditor::on_btnLoop_clicked()
+{
+
+}
+
+void MacroEditor::on_btnBracket_clicked()
+{
+
+}
+
+void MacroEditor::on_btnLabel_clicked()
+{
+
+}
+
+void MacroEditor::on_btnGoto_clicked()
+{
+
+}
+
+void MacroEditor::on_btnBreak_Continue_clicked()
+{
+
+}
+
+void MacroEditor::on_btnStop_clicked()
+{
+
+}
+
+void MacroEditor::on_btnCode_clicked()
+{
+
+}
+
 void MacroEditor::New()
 {
-    if (isChange) {
+    if (isChanged) {
         QMessageBox::StandardButton resBtn = QMessageBox::question(this, "Macro Editor",
                                                                    "Do you want to save changes before creating a new macro?",
                                                                    QMessageBox::No | QMessageBox::Yes | QMessageBox::Cancel,
@@ -63,12 +260,12 @@ void MacroEditor::New()
 
     ui->listMacro->clear();
     currentFilePath.clear();
-    isChange = false;
+    setChanged(false);
 }
 
 void MacroEditor::Open()
 {
-    if (isChange) {
+    if (isChanged) {
         QMessageBox::StandardButton resBtn = QMessageBox::question(this, "Macro Editor",
                                                                    "Do you want to save changes before opening a new file?",
                                                                    QMessageBox::No | QMessageBox::Yes | QMessageBox::Cancel,
@@ -98,7 +295,7 @@ void MacroEditor::Open()
     file.close();
 
     currentFilePath = filePath;
-    isChange = false;
+    setChanged(false);
 }
 
 void MacroEditor::Save()
@@ -116,7 +313,7 @@ void MacroEditor::Save()
             out << ui->listMacro->item(i)->text() << "\n";
         }
         file.close();
-        isChange = false;
+        setChanged(false);
     }
 }
 
@@ -129,222 +326,186 @@ void MacroEditor::SaveAs()
     Save();
 }
 
-void MacroEditor::checkAnyChange(QListWidgetItem *item)
+void MacroEditor::Cut()
 {
-    Q_UNUSED(item);
-    isChange = true;
-}
-
-void MacroEditor::on_actionNew_triggered()
-{
-    New();
-}
-
-
-void MacroEditor::on_actionOpen_triggered()
-{
-    Open();
-}
-
-
-void MacroEditor::on_actionSave_triggered()
-{
-    Save();
-}
-
-
-void MacroEditor::on_actionSave_As_triggered()
-{
-    SaveAs();
-}
-
-
-void MacroEditor::on_actionExit_triggered()
-{
-    this->close();
-}
-
-
-void MacroEditor::on_actionCut_triggered()
-{
-    QList<QListWidgetItem*> selectedItems = ui->listMacro->selectedItems(); // Lấy danh sách các item đã chọn
+    QList<QListWidgetItem*> selectedItems = ui->listMacro->selectedItems();
     if (!selectedItems.isEmpty()) {
-        QClipboard *clipboard = QGuiApplication::clipboard(); // Lấy clipboard
+        QClipboard *clipboard = QGuiApplication::clipboard();
         QStringList textList;
         for (QListWidgetItem *item : selectedItems) {
-            textList << item->text(); // Lưu nội dung vào danh sách
+            textList << item->text();
         }
-        clipboard->setText(textList.join("\n")); // Sao chép nội dung vào clipboard
+        clipboard->setText(textList.join("\n"));
         for (QListWidgetItem *item : selectedItems) {
-            delete item; // Xóa từng item đã chọn khỏi listMacro
+            delete item;
         }
-        isChange = true; // Đặt isChange thành true vì đã có thay đổi
+        setChanged(true);
     }
 }
 
-
-void MacroEditor::on_actionCopy_triggered()
+void MacroEditor::Copy()
 {
-    QList<QListWidgetItem*> selectedItems = ui->listMacro->selectedItems(); // Lấy danh sách các item đã chọn
+    QList<QListWidgetItem*> selectedItems = ui->listMacro->selectedItems();
     if (!selectedItems.isEmpty()) {
-        QClipboard *clipboard = QGuiApplication::clipboard(); // Lấy clipboard
+        QClipboard *clipboard = QGuiApplication::clipboard();
         QStringList textList;
         for (QListWidgetItem *item : selectedItems) {
-            textList << item->text(); // Lưu nội dung vào danh sách
+            textList << item->text();
         }
-        clipboard->setText(textList.join("\n")); // Sao chép nội dung vào clipboard
+        clipboard->setText(textList.join("\n"));
     }
 }
 
-
-void MacroEditor::on_actionPaste_triggered()
+void MacroEditor::Paste()
 {
     QClipboard *clipboard = QGuiApplication::clipboard();
     QString text = clipboard->text();
     if (!text.isEmpty()) {
         ui->listMacro->addItem(text);
-        isChange = true;
+        setChanged(true);
     }
 }
 
-
-void MacroEditor::on_actionDelete_triggered()
+void MacroEditor::Delete()
 {
-    QList<QListWidgetItem*> selectedItems = ui->listMacro->selectedItems(); // Lấy danh sách các item đã chọn
+    QList<QListWidgetItem*> selectedItems = ui->listMacro->selectedItems();
     if (!selectedItems.isEmpty()) {
         for (QListWidgetItem *item : selectedItems) {
-            delete item; // Xóa từng item đã chọn khỏi listMacro
+            delete item;
         }
-        isChange = true; // Đặt isChange thành true vì đã có thay đổi
+        setChanged(true);
     }
 }
 
-
-void MacroEditor::on_actionMove_up_triggered()
+void MacroEditor::MoveUp()
 {
-    QList<QListWidgetItem*> selectedItems = ui->listMacro->selectedItems(); // Lấy danh sách các item đã chọn
+    QList<QListWidgetItem*> selectedItems = ui->listMacro->selectedItems();
     for (QListWidgetItem *item : selectedItems) {
-        int currentRow = ui->listMacro->row(item); // Lấy chỉ số hàng của item
+        int currentRow = ui->listMacro->row(item);
         if (currentRow > 0) {
-            ui->listMacro->takeItem(currentRow); // Lấy item hiện tại
-            ui->listMacro->insertItem(currentRow - 1, item); // Chèn item lên trên
+            ui->listMacro->takeItem(currentRow);
+            ui->listMacro->insertItem(currentRow - 1, item);
         }
     }
-    isChange = true; // Đặt isChange thành true vì đã có thay đổi
+    setChanged(true);
 }
 
-
-void MacroEditor::on_actionMove_down_triggered()
+void MacroEditor::MoveDown()
 {
-    QList<QListWidgetItem*> selectedItems = ui->listMacro->selectedItems(); // Lấy danh sách các item đã chọn
-    for (int i = selectedItems.size() - 1; i >= 0; --i) { // Lặp ngược để tránh thay đổi chỉ số hàng
+    QList<QListWidgetItem*> selectedItems = ui->listMacro->selectedItems();
+    for (int i = selectedItems.size() - 1; i >= 0; --i) {
         QListWidgetItem *item = selectedItems[i];
-        int currentRow = ui->listMacro->row(item); // Lấy chỉ số hàng của item
+        int currentRow = ui->listMacro->row(item);
         if (currentRow < ui->listMacro->count() - 1) {
-            ui->listMacro->takeItem(currentRow); // Lấy item hiện tại
-            ui->listMacro->insertItem(currentRow + 1, item); // Chèn item xuống dưới
+            ui->listMacro->takeItem(currentRow);
+            ui->listMacro->insertItem(currentRow + 1, item);
         }
     }
-    isChange = true; // Đặt isChange thành true vì đã có thay đổi
+    setChanged(true);
 }
 
-
-void MacroEditor::on_actionHow_to_use_triggered()
+void MacroEditor::increaseIndent()
 {
+    QList<QListWidgetItem *> selectedItems = ui->listMacro->selectedItems();
+    if (!selectedItems.isEmpty()){
+        for (QListWidgetItem *selectedItem : selectedItems){
+            QString text = selectedItem->text();
 
+            int spaceCount = 0;
+            while (spaceCount < text.length() && text[spaceCount] == ' ') {
+                spaceCount++;
+            }
+
+            int newSpaceCount = spaceCount + 4;
+            QString newText = QString(" ").repeated(newSpaceCount) + text.trimmed();
+
+            selectedItem->setText(newText);
+        }
+    }
+    setChanged(true);
 }
 
-
-void MacroEditor::on_listMacro_itemDoubleClicked(QListWidgetItem *item)
+void MacroEditor::decreaseIndent()
 {
-    qDebug() << item->text();
+    QList<QListWidgetItem *> selectedItems = ui->listMacro->selectedItems();
+    if (!selectedItems.isEmpty()){
+        for (QListWidgetItem *selectedItem : selectedItems){
+            QString text = selectedItem->text();
+
+            int spaceCount = 0;
+            while (spaceCount < text.length() && text[spaceCount] == ' ') {
+                spaceCount++;
+            }
+
+            int newSpaceCount = qMax(0, spaceCount - 4);
+            QString newText = QString(" ").repeated(newSpaceCount) + text.trimmed();
+
+            selectedItem->setText(newText);
+        }
+    }
+    setChanged(true);
 }
 
-
-void MacroEditor::on_btnClick_clicked()
+DialogBase *MacroEditor::getDialogByMode(const QString &mode)
 {
-    QString txt = "click";
-    ui->listMacro->addItem(txt);
-    isChange = true;
+    if (mode == "MOUSE") {
+        return DialogPool::instance().acquireDialog<DialogClick>("MOUSE");
+    } else if (mode == "KEYBOARD") {
+        return DialogPool::instance().acquireDialog<DialogKeyboard>("KEYBOARD");
+    } else if (mode == "DELAY") {
+        return DialogPool::instance().acquireDialog<DialogDelay>("DELAY");
+    } // Add other dialog types here if needed
+    return nullptr;
 }
 
-
-void MacroEditor::on_btnKeyboard_clicked()
+QPoint MacroEditor::getCenteredPosition(QWidget *parent, QWidget *child)
 {
-    QString txt = "keyboard";
-    ui->listMacro->addItem(txt);
-    isChange = true;
+    if (!parent || !child)
+        return QPoint(0, 0);
+    QRect parentRect = parent->geometry();
+    QRect childRect = child->geometry();
+    int x = parentRect.x() + (parentRect.width() - childRect.width()) / 2;
+    int y = parentRect.y() + (parentRect.height() - childRect.height()) / 2;
+    return QPoint(x, y);
 }
 
-
-void MacroEditor::on_btnDelay_clicked()
+void MacroEditor::addItemToList(QString item)
 {
-
+    QList<QListWidgetItem *> selectedItems = ui->listMacro->selectedItems();
+    if (selectedItems.isEmpty()) {
+        ui->listMacro->addItem(item);
+        return;
+    }
+    int maxRow = -1;
+    for (QListWidgetItem *selectedItem : selectedItems) {
+        int row = ui->listMacro->row(selectedItem);
+        if (row > maxRow) {
+            maxRow = row;
+        }
+    }
+    ui->listMacro->insertItem(maxRow + 1, item);
 }
 
-
-void MacroEditor::on_btnPaste_clicked()
+/**
+ * @brief Extracts the leading whitespace (indentation) from a given string.
+ *
+ * This function returns the leading spaces or tabs at the beginning of the input text.
+ * It is useful for preserving indentation when editing macro items.
+ *
+ * @param text The input string from which to extract indentation.
+ * @return A QString containing the leading whitespace (indentation) of the input text.
+ */
+QString MacroEditor::getIndentation(const QString &text)
 {
+    if (text.isEmpty()) return "";
 
+    QRegularExpression regex(R"(^(\s*))");
+    QRegularExpressionMatch match = regex.match(text);
+
+    return match.hasMatch() ? match.captured(1) : "";
 }
 
-
-void MacroEditor::on_btnOpenLink_clicked()
+void MacroEditor::setChanged(bool changed)
 {
-
+    isChanged = changed;
 }
-
-
-void MacroEditor::on_btnFind_clicked()
-{
-
-}
-
-
-void MacroEditor::on_btnIf_clicked()
-{
-
-}
-
-
-void MacroEditor::on_btnLoop_clicked()
-{
-
-}
-
-
-void MacroEditor::on_btnBracket_clicked()
-{
-
-}
-
-
-void MacroEditor::on_btnLabel_clicked()
-{
-
-}
-
-
-void MacroEditor::on_btnGoto_clicked()
-{
-
-}
-
-
-void MacroEditor::on_btnBreak_Continue_clicked()
-{
-
-}
-
-
-void MacroEditor::on_btnStop_clicked()
-{
-
-}
-
-
-void MacroEditor::on_btnCode_clicked()
-{
-
-}
-

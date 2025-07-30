@@ -1,0 +1,1116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DialogDelay</class>
+ <widget class="QDialog" name="DialogDelay">
+  <property name="windowModality">
+   <enum>Qt::WindowModality::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>500</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Delay Action</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+    <normaloff>:/resources/icon/delay.png</normaloff>:/resources/icon/delay.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow{
+background: #1A1A1A;
+color: white;
+}
+QMenuBar{
+color: white;
+}
+QStatusBar{
+color: white;
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="focusPolicy">
+      <enum>Qt::FocusPolicy::NoFocus</enum>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QTabBar::tab {
+    background-color: #1A1A1A;
+    color: white;
+    padding: 10px;
+    border: none;
+}
+
+QTabBar::tab:hover {
+    border-bottom: 2px solid #009FF7;
+}
+
+QTabBar::tab:selected {
+    border-bottom: 3px solid #009FF7;
+    font-weight: bold;
+}
+</string>
+     </property>
+     <property name="tabPosition">
+      <enum>QTabWidget::TabPosition::North</enum>
+     </property>
+     <property name="tabShape">
+      <enum>QTabWidget::TabShape::Rounded</enum>
+     </property>
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <property name="elideMode">
+      <enum>Qt::TextElideMode::ElideNone</enum>
+     </property>
+     <widget class="QWidget" name="DelayTime">
+      <attribute name="title">
+       <string>Delay</string>
+      </attribute>
+      <widget class="QLabel" name="lbTitleBasicDelay">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>460</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <italic>true</italic>
+        </font>
+       </property>
+       <property name="frameShape">
+        <enum>QFrame::Shape::NoFrame</enum>
+       </property>
+       <property name="frameShadow">
+        <enum>QFrame::Shadow::Plain</enum>
+       </property>
+       <property name="midLineWidth">
+        <number>0</number>
+       </property>
+       <property name="text">
+        <string>Delay action suspends the execution of the current macro for a specified interval, expressed in milliseconds.</string>
+       </property>
+       <property name="scaledContents">
+        <bool>false</bool>
+       </property>
+       <property name="wordWrap">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="sbTotal">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>70</y>
+         <width>100</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::StrongFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QSpinBox {
+background: #1A1A1A;
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+
+QSpinBox::up-button, QSpinBox::down-button {
+width: 16px;
+background-color: #7F7F7F;
+}
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+background-color: #A1A1A1;
+}
+
+QSpinBox::up-arrow {
+image: url(:/resources/icon/arrow_up.png);
+width: 10px;
+height: 10px;
+}
+
+QSpinBox::down-arrow {
+image: url(:/resources/icon/arrow_down.png);
+width: 10px;
+height: 10px;
+}</string>
+       </property>
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::ButtonSymbols::UpDownArrows</enum>
+       </property>
+       <property name="correctionMode">
+        <enum>QAbstractSpinBox::CorrectionMode::CorrectToPreviousValue</enum>
+       </property>
+       <property name="minimum">
+        <number>1</number>
+       </property>
+       <property name="maximum">
+        <number>3599999</number>
+       </property>
+       <property name="singleStep">
+        <number>100</number>
+       </property>
+       <property name="stepType">
+        <enum>QAbstractSpinBox::StepType::DefaultStepType</enum>
+       </property>
+       <property name="value">
+        <number>1</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbMilliseconds">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>70</y>
+         <width>91</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel{
+font: 700 11pt &quot;Arial&quot;;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Milliseconds:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb1">
+       <property name="geometry">
+        <rect>
+         <x>90</x>
+         <y>130</y>
+         <width>91</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel{
+font: 700 11pt &quot;Arial&quot;;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>which is:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="sbMinutes">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>130</y>
+         <width>100</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QSpinBox {
+background: #1A1A1A;
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+
+QSpinBox::up-button, QSpinBox::down-button {
+width: 16px;
+background-color: #7F7F7F;
+}
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+background-color: #A1A1A1;
+}
+
+QSpinBox::up-arrow {
+image: url(:/resources/icon/arrow_up.png);
+width: 10px;
+height: 10px;
+}
+
+QSpinBox::down-arrow {
+image: url(:/resources/icon/arrow_down.png);
+width: 10px;
+height: 10px;
+}</string>
+       </property>
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::ButtonSymbols::UpDownArrows</enum>
+       </property>
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>59</number>
+       </property>
+       <property name="singleStep">
+        <number>1</number>
+       </property>
+       <property name="stepType">
+        <enum>QAbstractSpinBox::StepType::DefaultStepType</enum>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="sbSeconds">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>170</y>
+         <width>100</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QSpinBox {
+background: #1A1A1A;
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+
+QSpinBox::up-button, QSpinBox::down-button {
+width: 16px;
+background-color: #7F7F7F;
+}
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+background-color: #A1A1A1;
+}
+
+QSpinBox::up-arrow {
+image: url(:/resources/icon/arrow_up.png);
+width: 10px;
+height: 10px;
+}
+
+QSpinBox::down-arrow {
+image: url(:/resources/icon/arrow_down.png);
+width: 10px;
+height: 10px;
+}</string>
+       </property>
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::ButtonSymbols::UpDownArrows</enum>
+       </property>
+       <property name="minimum">
+        <number>0</number>
+       </property>
+       <property name="maximum">
+        <number>59</number>
+       </property>
+       <property name="singleStep">
+        <number>1</number>
+       </property>
+       <property name="stepType">
+        <enum>QAbstractSpinBox::StepType::DefaultStepType</enum>
+       </property>
+       <property name="value">
+        <number>0</number>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="sbMilliseconds">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>210</y>
+         <width>100</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QSpinBox {
+background: #1A1A1A;
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+
+QSpinBox::up-button, QSpinBox::down-button {
+width: 16px;
+background-color: #7F7F7F;
+}
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+background-color: #A1A1A1;
+}
+
+QSpinBox::up-arrow {
+image: url(:/resources/icon/arrow_up.png);
+width: 10px;
+height: 10px;
+}
+
+QSpinBox::down-arrow {
+image: url(:/resources/icon/arrow_down.png);
+width: 10px;
+height: 10px;
+}</string>
+       </property>
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::ButtonSymbols::UpDownArrows</enum>
+       </property>
+       <property name="maximum">
+        <number>999</number>
+       </property>
+       <property name="singleStep">
+        <number>10</number>
+       </property>
+       <property name="stepType">
+        <enum>QAbstractSpinBox::StepType::DefaultStepType</enum>
+       </property>
+       <property name="value">
+        <number>1</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb2">
+       <property name="geometry">
+        <rect>
+         <x>300</x>
+         <y>130</y>
+         <width>91</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel{
+font: 700 11pt &quot;Arial&quot;;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>minutes</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb3">
+       <property name="geometry">
+        <rect>
+         <x>300</x>
+         <y>170</y>
+         <width>91</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel{
+font: 700 11pt &quot;Arial&quot;;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>seconds</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lb4">
+       <property name="geometry">
+        <rect>
+         <x>300</x>
+         <y>210</y>
+         <width>91</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel{
+font: 700 11pt &quot;Arial&quot;;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>milliseconds</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="DelayWindow">
+      <attribute name="title">
+       <string>Wait for window</string>
+      </attribute>
+      <widget class="QLabel" name="lbTitleWindowDelay">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>460</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <italic>true</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>Wait for a particular window to appear or disappear.</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbWindowTimeout">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>240</y>
+         <width>100</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel{
+font: 700 11pt &quot;Arial&quot;;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Wait timeout:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="sbWindowTimeout">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>240</y>
+         <width>100</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QSpinBox {
+background: #1A1A1A;
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+
+QSpinBox::up-button, QSpinBox::down-button {
+width: 16px;
+background-color: #7F7F7F;
+}
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+background-color: #A1A1A1;
+}
+
+QSpinBox::up-arrow {
+image: url(:/resources/icon/arrow_up.png);
+width: 10px;
+height: 10px;
+}
+
+QSpinBox::down-arrow {
+image: url(:/resources/icon/arrow_down.png);
+width: 10px;
+height: 10px;
+}</string>
+       </property>
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::ButtonSymbols::UpDownArrows</enum>
+       </property>
+       <property name="correctionMode">
+        <enum>QAbstractSpinBox::CorrectionMode::CorrectToPreviousValue</enum>
+       </property>
+       <property name="minimum">
+        <number>1000</number>
+       </property>
+       <property name="maximum">
+        <number>1000000</number>
+       </property>
+       <property name="singleStep">
+        <number>1000</number>
+       </property>
+       <property name="stepType">
+        <enum>QAbstractSpinBox::StepType::DefaultStepType</enum>
+       </property>
+       <property name="value">
+        <number>1000</number>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="rbtnAppear">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>70</y>
+         <width>270</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QRdaioButton {
+background: #1A1A1A;
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Wait for window to appear</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="rbtnDisappear">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>110</y>
+         <width>270</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QRdaioButton {
+background: #1A1A1A;
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Wait for window to disappear</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbWindowTitle">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>170</y>
+         <width>91</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel{
+font: 11pt &quot;Arial&quot;;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Window title:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="tfWindowTitle">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>170</y>
+         <width>240</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLineEdit {
+font: 700 11pt &quot;Arial&quot;;
+background: #1A1A1A;
+border-radius: 10px
+}</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="DelayUserInput">
+      <attribute name="title">
+       <string>Wait for user input</string>
+      </attribute>
+      <widget class="QLabel" name="lbTitleUserDelay">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>471</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>11</pointsize>
+         <italic>true</italic>
+        </font>
+       </property>
+       <property name="text">
+        <string>This command suspends macro execution and waits for user to press
+a hotkey to resume macro execution.</string>
+       </property>
+       <property name="scaledContents">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="sbUserTimeout">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>240</y>
+         <width>100</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>100</width>
+         <height>32</height>
+        </size>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QSpinBox {
+background: #1A1A1A;
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+
+QSpinBox::up-button, QSpinBox::down-button {
+width: 16px;
+background-color: #7F7F7F;
+}
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+background-color: #A1A1A1;
+}
+
+QSpinBox::up-arrow {
+image: url(:/resources/icon/arrow_up.png);
+width: 10px;
+height: 10px;
+}
+
+QSpinBox::down-arrow {
+image: url(:/resources/icon/arrow_down.png);
+width: 10px;
+height: 10px;
+}</string>
+       </property>
+       <property name="buttonSymbols">
+        <enum>QAbstractSpinBox::ButtonSymbols::UpDownArrows</enum>
+       </property>
+       <property name="correctionMode">
+        <enum>QAbstractSpinBox::CorrectionMode::CorrectToPreviousValue</enum>
+       </property>
+       <property name="minimum">
+        <number>1000</number>
+       </property>
+       <property name="maximum">
+        <number>1000000</number>
+       </property>
+       <property name="singleStep">
+        <number>1000</number>
+       </property>
+       <property name="stepType">
+        <enum>QAbstractSpinBox::StepType::DefaultStepType</enum>
+       </property>
+       <property name="value">
+        <number>1000</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbUserTimeout">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>240</y>
+         <width>100</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel{
+font: 700 11pt &quot;Arial&quot;;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Wait timeout:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="rbtnAnyInteract">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>70</y>
+         <width>270</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QRdaioButton {
+background: #1A1A1A;
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Wait for any interact (keyboard or mouse)</string>
+       </property>
+       <property name="checked">
+        <bool>false</bool>
+       </property>
+      </widget>
+      <widget class="QRadioButton" name="rbtnSpecificKey">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>110</y>
+         <width>270</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QRdaioButton {
+background: #1A1A1A;
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Wait for particular keyboard shortcut</string>
+       </property>
+       <property name="checked">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QKeySequenceEdit" name="keySequenceEdit">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>170</y>
+         <width>200</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="focusPolicy">
+        <enum>Qt::FocusPolicy::ClickFocus</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QKeySequenceEdit{
+font: 11pt &quot;Arial&quot;;
+}
+</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbKeyShortcut">
+       <property name="geometry">
+        <rect>
+         <x>40</x>
+         <y>170</y>
+         <width>91</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel{
+font: 11pt &quot;Arial&quot;;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>Key shorcut</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="lbKeyShortcutTip">
+       <property name="geometry">
+        <rect>
+         <x>350</x>
+         <y>170</y>
+         <width>32</width>
+         <height>32</height>
+        </rect>
+       </property>
+       <property name="toolTip">
+        <string>Make sure to select a key shortcut
+that is not already in use by the
+system or other applications.</string>
+       </property>
+       <property name="layoutDirection">
+        <enum>Qt::LayoutDirection::LeftToRight</enum>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">QLabel{
+font: 11pt &quot;Arial&quot;;
+}
+</string>
+       </property>
+       <property name="text">
+        <string>?</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+       </property>
+      </widget>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="styleSheet">
+      <string notr="true">QGroupBox{
+border-radius:10px;
+}</string>
+     </property>
+     <property name="title">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <property name="spacing">
+       <number>0</number>
+      </property>
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <spacer name="hSpacer1">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnOk">
+        <property name="maximumSize">
+         <size>
+          <width>80</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::FocusPolicy::NoFocus</enum>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>OK</string>
+        </property>
+        <property name="shortcut">
+         <string>Return</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="hSpacer2">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="btnCancel">
+        <property name="maximumSize">
+         <size>
+          <width>80</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::FocusPolicy::NoFocus</enum>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>Cancel</string>
+        </property>
+        <property name="shortcut">
+         <string>Esc</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="hSpacer3">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Policy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources>
+  <include location="../../out/build/debug/.qt/rcc/icon.qrc"/>
+ </resources>
+ <connections/>
+</ui>

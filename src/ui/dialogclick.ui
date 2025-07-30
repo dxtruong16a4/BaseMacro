@@ -1,0 +1,764 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DialogClick</class>
+ <widget class="QDialog" name="DialogClick">
+  <property name="windowModality">
+   <enum>Qt::WindowModality::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>500</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Mouse Action</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+    <normaloff>:/resources/icon/mouse.png</normaloff>:/resources/icon/mouse.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog {
+background: #1A1A1A;
+color: white;
+}</string>
+  </property>
+  <widget class="QLabel" name="lbEventType">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>60</y>
+     <width>80</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+font: 700 11pt &quot;Arial&quot;;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Event type</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="cbEventType">
+   <property name="geometry">
+    <rect>
+     <x>105</x>
+     <y>60</y>
+     <width>150</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>150</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox{
+background: #363636;
+font: 700 10pt &quot;Arial&quot;;
+border-radius: 10px;
+}
+QComboBox:Hover{
+background: #696969;
+font: 700 10pt &quot;Arial&quot;;
+border-radius: 10px
+}</string>
+   </property>
+   <item>
+    <property name="text">
+     <string>Left click</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Right click</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Wheel</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Horizontal Wheel</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Move</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QSpinBox" name="sbXPos">
+   <property name="geometry">
+    <rect>
+     <x>105</x>
+     <y>110</y>
+     <width>80</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>80</width>
+     <height>24</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QSpinBox {
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+
+QSpinBox::up-button, QSpinBox::down-button {
+width: 16px;
+background-color: #7F7F7F;
+}
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+background-color: #A1A1A1;
+}
+
+QSpinBox::up-arrow {
+image: url(:/resources/icon/arrow_up.png);
+width: 10px;
+height: 10px;
+}
+
+QSpinBox::down-arrow {
+image: url(:/resources/icon/arrow_down.png);
+width: 10px;
+height: 10px;
+}</string>
+   </property>
+   <property name="buttonSymbols">
+    <enum>QAbstractSpinBox::ButtonSymbols::PlusMinus</enum>
+   </property>
+   <property name="maximum">
+    <number>1920</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="sbYPos">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>110</y>
+     <width>80</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>80</width>
+     <height>24</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QSpinBox {
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+
+QSpinBox::up-button, QSpinBox::down-button {
+width: 16px;
+background-color: #7F7F7F;
+}
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+background-color: #A1A1A1;
+}
+
+QSpinBox::up-arrow {
+image: url(:/resources/icon/arrow_up.png);
+width: 10px;
+height: 10px;
+}
+
+QSpinBox::down-arrow {
+image: url(:/resources/icon/arrow_down.png);
+width: 10px;
+height: 10px;
+}</string>
+   </property>
+   <property name="buttonSymbols">
+    <enum>QAbstractSpinBox::ButtonSymbols::PlusMinus</enum>
+   </property>
+   <property name="maximum">
+    <number>1080</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="sbTimes">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>60</y>
+     <width>60</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>60</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QSpinBox {
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+
+QSpinBox::up-button, QSpinBox::down-button {
+width: 16px;
+background-color: #7F7F7F;
+}
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+background-color: #A1A1A1;
+}
+
+QSpinBox::up-arrow {
+image: url(:/resources/icon/arrow_up.png);
+width: 10px;
+height: 10px;
+}
+
+QSpinBox::down-arrow {
+image: url(:/resources/icon/arrow_down.png);
+width: 10px;
+height: 10px;
+}</string>
+   </property>
+   <property name="buttonSymbols">
+    <enum>QAbstractSpinBox::ButtonSymbols::UpDownArrows</enum>
+   </property>
+   <property name="minimum">
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
+   <property name="stepType">
+    <enum>QAbstractSpinBox::StepType::DefaultStepType</enum>
+   </property>
+   <property name="value">
+    <number>1</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbTimes">
+   <property name="geometry">
+    <rect>
+     <x>325</x>
+     <y>60</y>
+     <width>40</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>40</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+font: 700 11pt &quot;Arial&quot;;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>times</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbMs">
+   <property name="geometry">
+    <rect>
+     <x>455</x>
+     <y>60</y>
+     <width>20</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>20</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+font: 700 11pt &quot;Arial&quot;;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>ms</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="sbMs">
+   <property name="geometry">
+    <rect>
+     <x>370</x>
+     <y>60</y>
+     <width>80</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>80</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QSpinBox {
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+
+QSpinBox::up-button, QSpinBox::down-button {
+width: 16px;
+background-color: #7F7F7F;
+}
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+background-color: #A1A1A1;
+}
+
+QSpinBox::up-arrow {
+image: url(:/resources/icon/arrow_up.png);
+width: 10px;
+height: 10px;
+}
+
+QSpinBox::down-arrow {
+image: url(:/resources/icon/arrow_down.png);
+width: 10px;
+height: 10px;
+}</string>
+   </property>
+   <property name="buttonSymbols">
+    <enum>QAbstractSpinBox::ButtonSymbols::PlusMinus</enum>
+   </property>
+   <property name="minimum">
+    <number>0</number>
+   </property>
+   <property name="maximum">
+    <number>10000</number>
+   </property>
+   <property name="singleStep">
+    <number>50</number>
+   </property>
+   <property name="value">
+    <number>50</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbF2">
+   <property name="geometry">
+    <rect>
+     <x>285</x>
+     <y>105</y>
+     <width>210</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>210</width>
+     <height>16</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Press F2 to capture current position</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbF3">
+   <property name="geometry">
+    <rect>
+     <x>285</x>
+     <y>120</y>
+     <width>210</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>210</width>
+     <height>16</height>
+    </size>
+   </property>
+   <property name="text">
+    <string>Press F3 to hide main recorder window</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbXPos">
+   <property name="geometry">
+    <rect>
+     <x>105</x>
+     <y>140</y>
+     <width>80</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>210</width>
+     <height>16</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: #7F7F7F;</string>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbYPos">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>140</y>
+     <width>80</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>210</width>
+     <height>16</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">color: #7F7F7F;</string>
+   </property>
+   <property name="text">
+    <string>0</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbTitle">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>30</y>
+     <width>471</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <italic>true</italic>
+    </font>
+   </property>
+   <property name="text">
+    <string>Mouse action moves the mouse cursor to the specified coordinates</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbWheel">
+   <property name="geometry">
+    <rect>
+     <x>25</x>
+     <y>170</y>
+     <width>80</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel
+{
+	font: 11pt &quot;Arial&quot;;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Wheel</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="sbWheel">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>170</y>
+     <width>100</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>100</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QSpinBox {
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+
+QSpinBox::up-button, QSpinBox::down-button {
+width: 16px;
+background-color: #7F7F7F;
+}
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+background-color: #A1A1A1;
+}
+
+QSpinBox::up-arrow {
+image: url(:/resources/icon/arrow_up.png);
+width: 10px;
+height: 10px;
+}
+
+QSpinBox::down-arrow {
+image: url(:/resources/icon/arrow_down.png);
+width: 10px;
+height: 10px;
+}</string>
+   </property>
+   <property name="buttonSymbols">
+    <enum>QAbstractSpinBox::ButtonSymbols::UpDownArrows</enum>
+   </property>
+   <property name="minimum">
+    <number>-1000</number>
+   </property>
+   <property name="maximum">
+    <number>1000</number>
+   </property>
+   <property name="stepType">
+    <enum>QAbstractSpinBox::StepType::DefaultStepType</enum>
+   </property>
+   <property name="value">
+    <number>0</number>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnOk">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>330</y>
+     <width>80</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>80</width>
+     <height>24</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>OK</string>
+   </property>
+   <property name="shortcut">
+    <string>Return</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnCancel">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>330</y>
+     <width>80</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>80</width>
+     <height>24</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>Cancel</string>
+   </property>
+   <property name="shortcut">
+    <string>Esc</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbWheelValue">
+   <property name="geometry">
+    <rect>
+     <x>215</x>
+     <y>170</y>
+     <width>50</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+font: 700 11pt &quot;Arial&quot;;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>px</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="chbFocusWindow">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>220</y>
+     <width>250</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+font: 700 10pt &quot;Arial&quot;;
+padding: 10px;
+}</string>
+   </property>
+   <property name="text">
+    <string>Focus on window</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbWindowTitle">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>260</y>
+     <width>80</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel
+{
+	font: 11pt &quot;Arial&quot;;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Window title</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="tfWindowTitle">
+   <property name="geometry">
+    <rect>
+     <x>110</x>
+     <y>260</y>
+     <width>240</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+font: 700 11pt &quot;Arial&quot;;
+background: #363636;
+border-radius: 10px
+}</string>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../../out/build/debug/.qt/rcc/icon.qrc"/>
+ </resources>
+ <connections/>
+</ui>

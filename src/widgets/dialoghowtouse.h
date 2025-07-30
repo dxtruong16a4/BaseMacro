@@ -1,11 +1,7 @@
 #ifndef DIALOGHOWTOUSE_H
 #define DIALOGHOWTOUSE_H
 
-#include "DialogBase.h"
-
-#include <memory>
-#include <QDialog>
-#include <QCloseEvent>
+#include "../core/DialogBase.h"
 
 namespace Ui {
 class DialogHowToUse;
@@ -16,8 +12,10 @@ class DialogHowToUse : public DialogBase
     Q_OBJECT
 
 public:
-    ~DialogHowToUse();
     static DialogHowToUse* getInstance();
+    ~DialogHowToUse();
+    void editItem(QListWidgetItem *item) override;
+    void setData(const QString& data) override;
 
 protected:
     void closeEvent(QCloseEvent *event) override;

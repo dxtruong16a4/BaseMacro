@@ -1,0 +1,1164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>DialogKeyboard</class>
+ <widget class="QDialog" name="DialogKeyboard">
+  <property name="windowModality">
+   <enum>Qt::WindowModality::ApplicationModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>500</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>500</width>
+    <height>400</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>Keyboard Action</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../out/build/debug/.qt/rcc/icon.qrc">
+    <normaloff>:/resources/icon/keyboard.png</normaloff>:/resources/icon/keyboard.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QDialog {
+background: #1A1A1A;
+color: white;
+}</string>
+  </property>
+  <widget class="QLabel" name="lbTitle">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>30</y>
+     <width>471</width>
+     <height>20</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>11</pointsize>
+     <italic>true</italic>
+    </font>
+   </property>
+   <property name="text">
+    <string>Keyboard action: send keystrokes to the currently active window</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbKeyEventType">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>70</y>
+     <width>150</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+font: 700 11pt &quot;Arial&quot;;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Keyboard event type:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbKey">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>110</y>
+     <width>150</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+font: 700 11pt &quot;Arial&quot;;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Key:</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="cbKeyEventType">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>70</y>
+     <width>250</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>250</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::FocusPolicy::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox{
+background: #363636;
+font: 700 10pt &quot;Arial&quot;;
+border-radius: 10px;
+}
+QComboBox:Hover{
+background: #696969;
+font: 700 10pt &quot;Arial&quot;;
+border-radius: 10px
+}</string>
+   </property>
+   <property name="currentIndex">
+    <number>2</number>
+   </property>
+   <item>
+    <property name="text">
+     <string>Key up</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Key down</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Key press</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Key combination</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QComboBox" name="cbKey">
+   <property name="geometry">
+    <rect>
+     <x>210</x>
+     <y>110</y>
+     <width>250</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>250</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::FocusPolicy::StrongFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QComboBox{
+background: #363636;
+font: 700 10pt &quot;Arial&quot;;
+border-radius: 10px;
+}
+QComboBox:Hover{
+background: #696969;
+font: 700 10pt &quot;Arial&quot;;
+border-radius: 10px
+}</string>
+   </property>
+   <property name="currentIndex">
+    <number>40</number>
+   </property>
+   <property name="maxVisibleItems">
+    <number>15</number>
+   </property>
+   <item>
+    <property name="text">
+     <string>Back</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Tab</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Clear</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Enter</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>LShift</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>RShift</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>LControl</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>RControl</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>LAlt</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>RAlt</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Menu</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Pause</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Capital</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Escape</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Space</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Page UP</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Page DOWN</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>End</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Home</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Left</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Up</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Right</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Down</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Select</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Print</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Execute</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Snapshot</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Insert</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Delete</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Help</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>D0</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>D1</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>D2</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>D3</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>D4</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>D5</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>D6</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>D7</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>D8</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>D9</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>A</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>B</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>C</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>D</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>E</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>G</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>H</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>I</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>J</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>K</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>L</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>M</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>N</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>O</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>P</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Q</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>R</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>S</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>T</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>U</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>V</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>W</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>X</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Y</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Z</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>LWindow</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>RWindow</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Numpad0</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Numpad1</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Numpad2</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Numpad3</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Numpad4</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Numpad5</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Numpad6</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Numpad7</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Numpad8</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Numpad9</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Multiply</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Add</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Separator</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Subtract</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Decimal</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Divide</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F1</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F2</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F3</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F4</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F5</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F6</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F7</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F8</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F9</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F10</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F11</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F12</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F13</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F14</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F15</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F16</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F17</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F18</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F19</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F20</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F21</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F22</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F23</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>F24</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Numlock</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>Scroll</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QCheckBox" name="chbCtrl">
+   <property name="geometry">
+    <rect>
+     <x>200</x>
+     <y>150</y>
+     <width>64</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::FocusPolicy::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+font: 700 10pt &quot;Arial&quot;;
+padding: 10px;
+}</string>
+   </property>
+   <property name="text">
+    <string>Ctrl</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="chbShift">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>150</y>
+     <width>72</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::FocusPolicy::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+font: 700 10pt &quot;Arial&quot;;
+padding: 10px;
+}</string>
+   </property>
+   <property name="text">
+    <string>Shift</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="chbAlt">
+   <property name="geometry">
+    <rect>
+     <x>340</x>
+     <y>150</y>
+     <width>64</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::FocusPolicy::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+font: 700 10pt &quot;Arial&quot;;
+padding: 10px;
+}</string>
+   </property>
+   <property name="text">
+    <string>Alt</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="chbWin">
+   <property name="geometry">
+    <rect>
+     <x>400</x>
+     <y>150</y>
+     <width>70</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::FocusPolicy::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+font: 700 10pt &quot;Arial&quot;;
+padding: 10px;
+}</string>
+   </property>
+   <property name="text">
+    <string>Win</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnOk">
+   <property name="geometry">
+    <rect>
+     <x>270</x>
+     <y>330</y>
+     <width>80</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>80</width>
+     <height>24</height>
+    </size>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::FocusPolicy::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>OK</string>
+   </property>
+   <property name="shortcut">
+    <string>Return</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btnCancel">
+   <property name="geometry">
+    <rect>
+     <x>360</x>
+     <y>330</y>
+     <width>80</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>80</width>
+     <height>24</height>
+    </size>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::FocusPolicy::NoFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <property name="text">
+    <string>Cancel</string>
+   </property>
+   <property name="shortcut">
+    <string>Esc</string>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="sbMs">
+   <property name="geometry">
+    <rect>
+     <x>325</x>
+     <y>190</y>
+     <width>80</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>80</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::FocusPolicy::ClickFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QSpinBox {
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+
+QSpinBox::up-button, QSpinBox::down-button {
+width: 16px;
+background-color: #7F7F7F;
+}
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+background-color: #A1A1A1;
+}
+
+QSpinBox::up-arrow {
+image: url(:/resources/icon/arrow_up.png);
+width: 10px;
+height: 10px;
+}
+
+QSpinBox::down-arrow {
+image: url(:/resources/icon/arrow_down.png);
+width: 10px;
+height: 10px;
+}</string>
+   </property>
+   <property name="buttonSymbols">
+    <enum>QAbstractSpinBox::ButtonSymbols::PlusMinus</enum>
+   </property>
+   <property name="minimum">
+    <number>0</number>
+   </property>
+   <property name="maximum">
+    <number>10000</number>
+   </property>
+   <property name="singleStep">
+    <number>50</number>
+   </property>
+   <property name="value">
+    <number>50</number>
+   </property>
+  </widget>
+  <widget class="QSpinBox" name="sbTimes">
+   <property name="geometry">
+    <rect>
+     <x>215</x>
+     <y>190</y>
+     <width>60</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>60</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="focusPolicy">
+    <enum>Qt::FocusPolicy::ClickFocus</enum>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QSpinBox {
+font: 700 11pt &quot;Arial&quot;;
+border-radius: 5px;
+}
+
+QSpinBox::up-button, QSpinBox::down-button {
+width: 16px;
+background-color: #7F7F7F;
+}
+
+QSpinBox::up-button:hover, QSpinBox::down-button:hover {
+background-color: #A1A1A1;
+}
+
+QSpinBox::up-arrow {
+image: url(:/resources/icon/arrow_up.png);
+width: 10px;
+height: 10px;
+}
+
+QSpinBox::down-arrow {
+image: url(:/resources/icon/arrow_down.png);
+width: 10px;
+height: 10px;
+}</string>
+   </property>
+   <property name="buttonSymbols">
+    <enum>QAbstractSpinBox::ButtonSymbols::UpDownArrows</enum>
+   </property>
+   <property name="minimum">
+    <number>1</number>
+   </property>
+   <property name="maximum">
+    <number>100</number>
+   </property>
+   <property name="stepType">
+    <enum>QAbstractSpinBox::StepType::DefaultStepType</enum>
+   </property>
+   <property name="value">
+    <number>1</number>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbTimes">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>190</y>
+     <width>40</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>40</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+font: 700 11pt &quot;Arial&quot;;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>times</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbMs">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>190</y>
+     <width>20</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>20</width>
+     <height>32</height>
+    </size>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+font: 700 11pt &quot;Arial&quot;;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>ms</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="tfWindowTitle">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>270</y>
+     <width>240</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLineEdit {
+font: 700 11pt &quot;Arial&quot;;
+background: #363636;
+border-radius: 10px
+}</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="lbWindowTitle">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>270</y>
+     <width>80</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel
+{
+	font: 11pt &quot;Arial&quot;;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>Window title</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="chbFocusWindow">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>230</y>
+     <width>250</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QCheckBox{
+font: 700 10pt &quot;Arial&quot;;
+padding: 10px;
+}</string>
+   </property>
+   <property name="text">
+    <string>Focus on window</string>
+   </property>
+  </widget>
+ </widget>
+ <resources>
+  <include location="../../out/build/debug/.qt/rcc/icon.qrc"/>
+ </resources>
+ <connections/>
+</ui>

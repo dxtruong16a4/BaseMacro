@@ -2,7 +2,6 @@
 #define BASEACTION_H
 
 #include "DefaultConstants.h"
-#include <windows.h>
 
 // class BaseAction {
 // public:

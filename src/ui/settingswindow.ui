@@ -29,12 +29,12 @@
    <string>Settings</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../out/build/debug/.qt/rcc/icon.qrc">
-    <normaloff>:/assets/logo.ico</normaloff>:/assets/logo.ico</iconset>
+   <iconset theme="QIcon::ThemeIcon::DocumentProperties"/>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget {
-	background: #1A1A1A;
+background: #1A1A1A;
+color: white;
 }</string>
   </property>
   <widget class="QLabel" name="lbSettings">
@@ -56,11 +56,10 @@
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">QLabel
-{
-	background: #363636;
-	font: 700 12pt &quot;Arial&quot;;
-	border-radius: 10px
+    <string notr="true">QLabel{
+background: #363636;
+font: 700 12pt &quot;Arial&quot;;
+border-radius: 10px
 }</string>
    </property>
    <property name="frameShape">
@@ -92,11 +91,10 @@
     <enum>Qt::LayoutDirection::LeftToRight</enum>
    </property>
    <property name="styleSheet">
-    <string notr="true">QLabel
-{
-	background: #363636;
-	font: 700 12pt &quot;Arial&quot;;
-	border-radius: 10px
+    <string notr="true">QLabel{
+background: #363636;
+font: 700 12pt &quot;Arial&quot;;
+border-radius: 10px
 }</string>
    </property>
    <property name="text">
@@ -119,17 +117,15 @@
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QComboBox
-{
-	background: #363636;
-	font: 700 12pt &quot;Arial&quot;;
-	border-radius: 10px
+    <string notr="true">QComboBox{
+background: #363636;
+font: 700 12pt &quot;Arial&quot;;
+border-radius: 10px
 }
-QComboBox:Hover
-{
-	background: #696969;
-	font: 700 12pt &quot;Arial&quot;;
-	border-radius: 10px
+QComboBox:Hover{
+background: #696969;
+font: 700 12pt &quot;Arial&quot;;
+border-radius: 10px
 }</string>
    </property>
    <property name="currentText">
@@ -152,11 +148,10 @@ QComboBox:Hover
     <enum>Qt::LayoutDirection::LeftToRight</enum>
    </property>
    <property name="styleSheet">
-    <string notr="true">QLabel
-{
-	background: #363636;
-	font: 700 12pt &quot;Arial&quot;;
-	border-radius: 10px
+    <string notr="true">QLabel{
+background: #363636;
+font: 700 12pt &quot;Arial&quot;;
+border-radius: 10px
 }</string>
    </property>
    <property name="text">
@@ -259,11 +254,10 @@ QPushButton:pressed
     <enum>Qt::LayoutDirection::LeftToRight</enum>
    </property>
    <property name="styleSheet">
-    <string notr="true">QLabel
-{
-	background: #363636;
-	font: 700 12pt &quot;Arial&quot;;
-	border-radius: 10px
+    <string notr="true">QLabel{
+background: #363636;
+font: 700 12pt &quot;Arial&quot;;
+border-radius: 10px
 }</string>
    </property>
    <property name="lineWidth">
@@ -295,12 +289,11 @@ QPushButton:pressed
     <enum>Qt::LayoutDirection::LeftToRight</enum>
    </property>
    <property name="styleSheet">
-    <string notr="true">QCheckBox
-{
-	background: #363636;
-	font: 700 12pt &quot;Arial&quot;;
-	border-radius: 10px;
-	padding: 10px;
+    <string notr="true">QCheckBox{
+background: #363636;
+font: 700 12pt &quot;Arial&quot;;
+border-radius: 10px;
+padding: 10px;
 }</string>
    </property>
    <property name="text">
@@ -365,8 +358,10 @@ QPushButton:pressed
     <number>-1</number>
    </property>
    <property name="styleSheet">
-    <string notr="true">background: #363636;
-border-radius: 10px;</string>
+    <string notr="true">QSlider{
+background: #363636;
+border-radius: 10px;
+}</string>
    </property>
    <property name="maximum">
     <number>100</number>
@@ -379,8 +374,6 @@ border-radius: 10px;</string>
    </property>
   </widget>
  </widget>
- <resources>
-  <include location="../out/build/debug/.qt/rcc/icon.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

@@ -35,12 +35,12 @@
    <string>About</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="../out/build/debug/.qt/rcc/icon.qrc">
-    <normaloff>:/assets/logo.ico</normaloff>:/assets/logo.ico</iconset>
+   <iconset theme="QIcon::ThemeIcon::HelpAbout"/>
   </property>
   <property name="styleSheet">
    <string notr="true">QDialog {
-	background: #1A1A1A;
+background: #1A1A1A;
+color: white;
 }</string>
   </property>
   <widget class="QCommandLinkButton" name="commandLinkButton">
@@ -63,23 +63,26 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">QCommandLinkButton
-{
-	background: #363636;
-	font: 700 12pt &quot;Arial&quot;;
-	border-radius: 10px
+    <string notr="true">QCommandLinkButton{
+background: #363636;
+font: 700 12pt &quot;Arial&quot;;
+border-radius: 10px;
+color: white;
 }
-QPushButton:Hover
-{
-	background: #696969;
-	font: 700 12pt &quot;Arial&quot;;
-	border-radius: 10px
+QPushButton{
+color: white;
 }
-QPushButton:pressed
-{
-	background: #363636;
-	font: 700 12pt &quot;Arial&quot;;
-	border-radius: 10px
+QPushButton:Hover{
+background: #696969;
+font: 700 12pt &quot;Arial&quot;;
+border-radius: 10px;
+color: white;
+}
+QPushButton:pressed{
+background: #363636;
+font: 700 12pt &quot;Arial&quot;;
+border-radius: 10px;
+color: white;
 }</string>
    </property>
    <property name="text">
@@ -105,11 +108,11 @@ QPushButton:pressed
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">QLabel
-{
-	background: #363636;
-	font: 700 12pt &quot;Arial&quot;;
-	border-radius: 10px
+    <string notr="true">QLabel{
+background: #363636;
+font: 700 12pt &quot;Arial&quot;;
+border-radius: 10px;
+color: white;
 }</string>
    </property>
    <property name="frameShape">
@@ -147,11 +150,11 @@ QPushButton:pressed
     <bool>false</bool>
    </property>
    <property name="styleSheet">
-    <string notr="true">QLabel
-{
-	background: #363636;
-	font: 700 12pt &quot;Arial&quot;;
-	border-radius: 10px
+    <string notr="true">QLabel{
+background: #363636;
+font: 700 12pt &quot;Arial&quot;;
+border-radius: 10px;
+color: white;
 }</string>
    </property>
    <property name="frameShape">
@@ -161,8 +164,7 @@ QPushButton:pressed
     <enum>QFrame::Shadow::Plain</enum>
    </property>
    <property name="text">
-    <string>Base Macro - Developed by Nhanvatphu
-Version: 1.0.0</string>
+    <string>Placeholder</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignmentFlag::AlignCenter</set>
@@ -175,8 +177,6 @@ Version: 1.0.0</string>
  <tabstops>
   <tabstop>commandLinkButton</tabstop>
  </tabstops>
- <resources>
-  <include location="../out/build/debug/.qt/rcc/icon.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

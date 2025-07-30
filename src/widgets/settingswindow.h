@@ -4,10 +4,6 @@
 #include "../core/configmanager.h"
 #include "../mainwindow.h"
 
-#include <memory>
-#include <QWidget>
-#include <QKeyEvent>
-
 namespace Ui {
 class SettingsWindow;
 }
@@ -20,7 +16,7 @@ public:
     static SettingsWindow* getInstance();
     ~SettingsWindow();
     bool getReset();
-    void setSaveToFalse();
+    void setSave(bool flag);
 
 protected:
     void closeEvent(QCloseEvent *event) override;
@@ -29,9 +25,9 @@ protected:
 private slots:
     void on_btnResetDefault_clicked();
 
-    void on_btnSave_clicked();
-
     void on_sliderOpacity_sliderMoved(int position);
+
+    void on_btnSave_clicked();
 
 private:
     Ui::SettingsWindow *ui;

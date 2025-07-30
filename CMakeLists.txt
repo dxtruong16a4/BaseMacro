@@ -14,43 +14,57 @@ set(CMAKE_AUTOUIC_SEARCH_PATHS ${CMAKE_SOURCE_DIR}/src/ui)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
 
-file(GLOB ASSETS_FILES assets/*)
+file(GLOB RESOURCES_FILES resources/*)
 
 set(PROJECT_SOURCES
+        # main
         src/main.cpp
         src/mainwindow.cpp
-
+        # widgets
         src/widgets/dialoghowtouse.cpp
         src/widgets/dialogtips.cpp
         src/widgets/dialogabout.cpp
         src/widgets/settingswindow.cpp
         src/widgets/macroeditor.cpp
-
-        src/core/actionpool.cpp
+        # core
         src/core/baseaction.cpp
         src/core/configmanager.cpp
+        src/core/dialogpool.cpp
         src/core/filemanager.cpp
         src/core/macrobuild.cpp
         src/core/threadmanager.cpp
+        # Action mode
+        src/actionmode/dialogclick.cpp
+        src/actionmode/dialogkeyboard.cpp
+        src/actionmode/dialogdelay.cpp
+        # utils
+        src/utils/helper.cpp
 )
 
 set(PROJECT_HEADERS
+        # main
         src/mainwindow.h
-
-        src/widgets/DialogBase.h
+        # widgets
         src/widgets/dialoghowtouse.h
         src/widgets/dialogtips.h
         src/widgets/dialogabout.h
         src/widgets/settingswindow.h
         src/widgets/macroeditor.h
-
-        src/core/actionpool.h
+        # core
         src/core/baseaction.h
         src/core/configmanager.h
         src/core/DefaultConstants.h
+        src/core/DialogBase.h
+        src/core/dialogpool.h
         src/core/filemanager.h
         src/core/macrobuild.h
         src/core/threadmanager.h
+        # Action mode
+        src/actionmode/dialogclick.h
+        src/actionmode/dialogkeyboard.h
+        src/actionmode/dialogdelay.h
+        # utils
+        src/utils/helper.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -59,12 +73,17 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         ${PROJECT_HEADERS}
         ${ASSETS_FILES}
+        # Main UI
         src/ui/mainwindow.ui
         src/ui/dialogabout.ui
         src/ui/dialoghowtouse.ui
         src/ui/dialogtips.ui
         src/ui/settingswindow.ui
         src/ui/macroeditor.ui
+        # Action mode UI
+        src/ui/dialogclick.ui
+        src/ui/dialogkeyboard.ui
+        src/ui/dialogdelay.ui
     )
 else()
     if(ANDROID)
@@ -83,22 +102,33 @@ endif()
 qt_add_resources(BaseMacro "icon"
     PREFIX "/"
     FILES
-        assets/logo.ico
-        assets/logo.png
-        assets/bracket.png
-        assets/break-continue.png
-        assets/code.png
-        assets/delay.png
-        assets/find.png
-        assets/goto.png
-        assets/if.png
-        assets/keyboard.png
-        assets/label.png
-        assets/loop.png
-        assets/mouse.png
-        assets/paste.png
-        assets/stop.png
-        assets/website.png
+        resources/icon/arrow_down.png
+        resources/icon/arrow_up.png
+        resources/icon/logo.ico
+        resources/icon/logo.png
+        resources/icon/bracket.png
+        resources/icon/break-continue.png
+        resources/icon/clipboard.png
+        resources/icon/code.png
+        resources/icon/connected.png
+        resources/icon/delay.png
+        resources/icon/disconnected.png
+        resources/icon/exe.png
+        resources/icon/find.png
+        resources/icon/goto.png
+        resources/icon/if.png
+        resources/icon/keyboard.png
+        resources/icon/label.png
+        resources/icon/location.png
+        resources/icon/loop.png
+        resources/icon/mouse.png
+        resources/icon/open.png
+        resources/icon/playing.gif
+        resources/icon/stop.png
+        resources/icon/switch.png
+        resources/icon/window.png
+        # style.qss
+        resources/style.qss
 )
 
 
@@ -125,4 +155,16 @@ install(TARGETS BaseMacro
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(BaseMacro)
+    
+    # Deploy Qt DLLs for Windows
+    if(WIN32)
+        add_custom_command(TARGET BaseMacro POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E echo "Deploying Qt DLLs..."
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                $<TARGET_FILE:Qt6::Core>
+                $<TARGET_FILE:Qt6::Widgets>
+                $<TARGET_FILE:Qt6::Gui>
+                $<TARGET_FILE_DIR:BaseMacro>
+        )
+    endif()
 endif()
