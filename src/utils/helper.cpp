@@ -43,7 +43,9 @@ void startTrackingDrag(QWidget *parent, QLabel *iconLabel)
     drag->exec(Qt::IgnoreAction);
 }
 
-void CompileMacro(QWidget *parent, const QString& sourceFile, const QString& outputFile){
+
+
+void compileMacro(QWidget *parent, const QString& sourceFile, const QString& outputFile){
     QString compilerPath = QCoreApplication::applicationDirPath() + "/mingw/bin/g++.exe";
     QProcess process;
     QProcessEnvironment env = QProcessEnvironment::systemEnvironment();
@@ -60,5 +62,38 @@ void CompileMacro(QWidget *parent, const QString& sourceFile, const QString& out
         QMessageBox::warning(parent, "Error", "Compilation failed: " + process.readAllStandardError());
     } else {
         QMessageBox::information(parent, "Success", "Executable created: " + outputFile);
+    }
+}
+
+void analyseAction(QStringList parts) {
+    if (parts[0] == "MOUSE") {
+        // Handle mouse action
+    } else if (parts[0] == "KEYBOARD") {
+        // Handle keyboard action
+    } else if (parts[0] == "DELAY") {
+        // Handle delay action
+    } else {
+        // Handle other actions
+    }
+}
+
+void buildMouseAction(QStringList parts) {
+    // MOUSE <EVENTTYPEINDEX> <TIMES> <MS> <X> <Y> <WHEEL> <WINDOWTITLE>
+    if (parts.size() < 8) return;
+    int eventTypeIndex = parts[1].toInt();
+    int times = parts[2].toInt();
+    int ms = parts[3].toInt();
+    int x = parts[4].toInt();
+    int y = parts[5].toInt();
+    int wheel = parts[6].toInt();
+    QString windowTitle = parts[7];
+    // Build the mouse action here
+    QString generatedCode = "";
+    if (eventTypeIndex == 0) {
+        // Left click
+    } else if (eventTypeIndex == 1) {
+        // Right click
+    } else if (eventTypeIndex == 2) {
+        // Middle click
     }
 }

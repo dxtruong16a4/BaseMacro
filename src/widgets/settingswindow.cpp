@@ -32,7 +32,6 @@ void SettingsWindow::closeEvent(QCloseEvent *event)
         this->initWidget();
     }
     uniqueInstance.reset();
-    qDebug() << "uniqueInstance after reset:" << uniqueInstance.get();
     event->accept();
 }
 

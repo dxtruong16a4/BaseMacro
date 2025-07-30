@@ -81,7 +81,7 @@ QTabBar::tab:selected {
       <enum>QTabWidget::TabShape::Rounded</enum>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::TextElideMode::ElideNone</enum>
@@ -745,7 +745,7 @@ border-radius: 10px
          <x>10</x>
          <y>10</y>
          <width>471</width>
-         <height>20</height>
+         <height>41</height>
         </rect>
        </property>
        <property name="font">
@@ -755,7 +755,11 @@ border-radius: 10px
         </font>
        </property>
        <property name="text">
-        <string>Mouse action moves the mouse cursor to the specified coordinates</string>
+        <string>This command suspends macro execution and waits for user to press
+a hotkey to resume macro execution.</string>
+       </property>
+       <property name="scaledContents">
+        <bool>false</bool>
        </property>
       </widget>
       <widget class="QSpinBox" name="sbUserTimeout">

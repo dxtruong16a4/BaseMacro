@@ -90,6 +90,20 @@ void MacroEditor::on_actionSave_As_triggered()
     SaveAs();
 }
 
+void MacroEditor::on_actionBuild_to_exe_triggered()
+{
+    // get all actions from listMacro
+    
+    std::vector<std::string> actions;
+    for (int i = 0; i < ui->listMacro->count(); ++i) {
+        actions.push_back(ui->listMacro->item(i)->text().toStdString());
+    }
+    qDebug() << "Actions:\n";
+    for (const auto &action : actions) {
+        qDebug() << QString::fromStdString(action).trimmed();
+    } 
+}
+
 void MacroEditor::on_actionExit_triggered()
 {
     this->close();
@@ -495,9 +509,3 @@ void MacroEditor::setChanged(bool changed)
 {
     isChanged = changed;
 }
-
-void MacroEditor::on_actionBuild_to_exe_triggered()
-{
-
-}
-

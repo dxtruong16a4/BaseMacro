@@ -155,4 +155,16 @@ install(TARGETS BaseMacro
 
 if(QT_VERSION_MAJOR EQUAL 6)
     qt_finalize_executable(BaseMacro)
+    
+    # Deploy Qt DLLs for Windows
+    if(WIN32)
+        add_custom_command(TARGET BaseMacro POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E echo "Deploying Qt DLLs..."
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                $<TARGET_FILE:Qt6::Core>
+                $<TARGET_FILE:Qt6::Widgets>
+                $<TARGET_FILE:Qt6::Gui>
+                $<TARGET_FILE_DIR:BaseMacro>
+        )
+    endif()
 endif()

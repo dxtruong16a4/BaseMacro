@@ -14,8 +14,10 @@
 
 #include <Windows.h>
 
+bool checkData();
+void compileMacro(QWidget *parent, const QString& sourceFile, const QString& outputFile);
 QString getWindowTitle();
 void startTrackingDrag(QWidget *parent, QLabel *iconLabel);
-void CompileMacro(QWidget *parent, const QString& sourceFile, const QString& outputFile);
+void analyseAction(QStringList parts);
 
 #endif
