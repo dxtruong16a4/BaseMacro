@@ -99,7 +99,7 @@ else()
     endif()
 endif()
 
-qt_add_resources(BaseMacro "icon"
+qt_add_resources(BaseMacro "resources"
     PREFIX "/"
     FILES
         resources/icon/arrow_down.png
@@ -127,7 +127,6 @@ qt_add_resources(BaseMacro "icon"
         resources/icon/stop.png
         resources/icon/switch.png
         resources/icon/window.png
-        # style.qss
         resources/style.qss
 )
 

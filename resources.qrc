@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/icon/arrow_down.png</file>
+        <file>resources/icon/arrow_up.png</file>
+        <file>resources/icon/logo.ico</file>
+        <file>resources/icon/logo.png</file>
+        <file>resources/icon/bracket.png</file>
+        <file>resources/icon/break-continue.png</file>
+        <file>resources/icon/clipboard.png</file>
+        <file>resources/icon/code.png</file>
+        <file>resources/icon/connected.png</file>
+        <file>resources/icon/delay.png</file>
+        <file>resources/icon/disconnected.png</file>
+        <file>resources/icon/exe.png</file>
+        <file>resources/icon/find.png</file>
+        <file>resources/icon/goto.png</file>
+        <file>resources/icon/if.png</file>
+        <file>resources/icon/keyboard.png</file>
+        <file>resources/icon/label.png</file>
+        <file>resources/icon/location.png</file>
+        <file>resources/icon/loop.png</file>
+        <file>resources/icon/mouse.png</file>
+        <file>resources/icon/open.png</file>
+        <file>resources/icon/playing.gif</file>
+        <file>resources/icon/stop.png</file>
+        <file>resources/icon/switch.png</file>
+        <file>resources/icon/window.png</file>
+        <file>resources/style.qss</file>
+    </qresource>
+</RCC> 
